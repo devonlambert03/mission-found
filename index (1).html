@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mission: Found</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+  :root {
+    --cream: #F4EFE6;
+    --navy: #0E1730;
+    --navy-deep: #060A16;
+    --blue: #5B7FE0;
+    --muted: #9AA6C4;
+    --charcoal: #23262B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  #what-we-do, #how-it-works { scroll-margin-top: 32px; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
+
+  .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
+
+  canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+  .glow {
+    position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 600px; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(91,127,224,0.10) 0%, transparent 70%);
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 72px;
+    background: rgba(6,10,22,0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo-mark {
+    display: flex; flex-direction: column; line-height: 0.9;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .logo-mark .line1 {
+    font-weight: 600; font-size: 22px; letter-spacing: 0.02em; color: var(--cream);
+  }
+  .logo-mark .line2 {
+    font-weight: 600; font-size: 22px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1.2px var(--blue);
+    margin-left: 1ch;
+  }
+  .menu-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    position: relative; z-index: 60;
+  }
+  .menu-btn div { width: 18px; height: 2px; background: var(--cream); position: relative; transition: transform 0.25s, opacity 0.25s, background 0.25s; }
+  .menu-btn div::before, .menu-btn div::after {
+    content: ''; position: absolute; width: 18px; height: 2px; background: var(--cream); left: 0;
+    transition: transform 0.25s, top 0.25s;
+  }
+  .menu-btn div::before { top: -6px; }
+  .menu-btn div::after { top: 6px; }
+  .menu-btn.open div { background: transparent; }
+  .menu-btn.open div::before { top: 0; transform: rotate(45deg); }
+  .menu-btn.open div::after { top: 0; transform: rotate(-45deg); }
+
+  .nav-menu {
+    position: absolute; top: calc(100% + 16px); left: 0; right: 0; z-index: 55;
+    background-color: #1E2C56; opacity: 1;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 22px; padding: 10px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.75);
+    display: flex; flex-direction: column;
+    visibility: hidden; transform: translateY(-10px);
+    transition: transform 0.22s ease, visibility 0.22s;
+  }
+  .nav-menu.open { visibility: visible; transform: translateY(0); }
+  .nav-menu a {
+    display: flex; align-items: center; gap: 14px;
+    padding: 22px 26px; border-radius: 14px;
+    color: var(--cream); text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .nav-menu a:hover { background: rgba(255,255,255,0.07); }
+  .nav-menu .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.05em; color: var(--blue); border: 1px solid var(--blue);
+    border-radius: 999px; padding: 4px 12px;
+  }
+
+  .hero { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; text-align: center; padding-bottom: 60px; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px; padding: 10px 20px; margin-bottom: 44px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    backdrop-filter: blur(8px);
+  }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+  .badge .arrow { color: var(--blue); }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 64px; font-weight: 700; line-height: 1.06; letter-spacing: -0.02em;
+    color: var(--cream); margin-bottom: 28px;
+  }
+  h1 .accent { color: var(--blue); }
+
+  .hero-sub {
+    font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 540px;
+    margin: 0 auto 40px;
+  }
+  .hero-sub strong { color: var(--cream); font-weight: 700; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--cream); color: var(--navy-deep); font-weight: 600; font-size: 16px;
+    padding: 17px 32px; border-radius: 999px; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(244,239,230,0.15);
+  }
+  .btn-primary .icon-circle {
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(10,18,36,0.12);
+    display: flex; align-items: center; justify-content: center; font-size: 11px;
+  }
+
+  .caption {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 20px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .preview-wrap {
+    position: relative; z-index: 2; max-width: 900px; width: 100%;
+    margin: 24px auto 0; flex: 1; display: flex; min-height: 0;
+  }
+  .preview-frame {
+    background: rgba(13,20,36,0.6); border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.08);
+    border-bottom: none; padding: 16px 24px 0; overflow: hidden; position: relative;
+    backdrop-filter: blur(6px); width: 100%; height: 100%; min-height: 220px; max-height: 340px;
+  }
+  .preview-frame::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+    background: linear-gradient(180deg, transparent, var(--navy-deep));
+  }
+  .dots { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .gbp-mini {
+    background: white; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  .gbp-top { display: flex; gap: 14px; align-items: center; }
+  .gbp-mini .thumb {
+    width: 48px; height: 48px; border-radius: 8px; background: #EEF1FA;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .name-row { display: flex; align-items: center; gap: 6px; }
+  .gbp-mini .name { font-weight: 700; color: var(--charcoal); font-size: 15px; font-family: 'Space Grotesk', sans-serif; }
+  .verified {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--blue); color: white;
+    font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .gbp-mini .stars { color: #f59e0b; font-size: 12px; font-weight: 600; }
+  .gbp-actions {
+    display: flex; gap: 10px; border-top: 1px solid #EEF1F5; padding-top: 12px;
+  }
+  .gbp-action {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; color: var(--blue);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .gbp-action span { font-size: 15px; }
+
+  /* ---- Content sections below the hero ---- */
+  section.block {
+    position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
+    padding: 100px 72px;
+  }
+  #what-we-do { padding-bottom: 50px; }
+  #how-it-works { padding-top: 40px; }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 38px;
+    letter-spacing: -0.01em; color: var(--cream); margin-bottom: 56px; max-width: 560px;
+  }
+
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  .card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
+    padding: 32px; transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(91,127,224,0.4); transform: translateY(-3px); }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue);
+    font-weight: 600; margin-bottom: 18px; letter-spacing: 0.05em;
+  }
+  .card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .card p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+  .steps-row {
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .step { flex: 1; position: relative; }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,224,0.14);
+    border: 1px solid rgba(91,127,224,0.4); color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .step h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600;
+    color: var(--cream); margin-bottom: 8px;
+  }
+  .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; }
+  .step-line {
+    position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
+    height: 1px; background: rgba(255,255,255,0.12);
+  }
+
+  @media (max-width: 640px) {
+    section.block { padding: 64px 20px; }
+    .section-title { font-size: 26px; margin-bottom: 36px; }
+    .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 24px; }
+    .steps-row { flex-direction: column; gap: 32px; }
+    .step-line { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 96px 18px 0; }
+    nav { padding: 16px 18px; }
+    .logo-mark .line1, .logo-mark .line2 { font-size: 16px; }
+    .logo-mark { line-height: 0.88; }
+    .menu-btn { width: 38px; height: 38px; }
+    .nav-menu { top: calc(100% + 12px); border-radius: 18px; padding: 8px; }
+    .nav-menu a { padding: 17px 20px; font-size: 18px; gap: 10px; }
+    .nav-menu .tag { font-size: 9px; padding: 3px 9px; }
+    .badge { padding: 8px 16px; font-size: 10px; gap: 8px; margin-bottom: 28px; }
+    h1 { font-size: 38px; margin-bottom: 18px; letter-spacing: -0.01em; }
+    .hero-sub { font-size: 15px; margin-bottom: 26px; padding: 0 4px; }
+    .btn-primary { padding: 15px 26px; font-size: 15px; }
+    .caption { font-size: 10px; margin-top: 16px; }
+    .hero { padding-bottom: 8px; }
+    .preview-wrap { margin-top: 20px; }
+    .preview-frame { border-radius: 16px 16px 0 0; padding: 12px 16px 0; min-height: 160px; }
+    .gbp-mini { padding: 12px; gap: 10px; }
+    .gbp-top { gap: 10px; }
+    .gbp-mini .thumb { width: 40px; height: 40px; }
+    .gbp-mini .name { font-size: 14px; }
+    .gbp-mini .stars { font-size: 11px; }
+    .gbp-action { font-size: 10px; }
+    .gbp-action span { font-size: 13px; }
+  }
+
+  @media (max-height: 700px) and (max-width: 640px) {
+    h1 { font-size: 32px; }
+    .badge { margin-bottom: 20px; }
+    .hero-sub { margin-bottom: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <canvas id="stars"></canvas>
+  <div class="glow"></div>
+
+  <nav>
+    <div class="logo-mark">
+      <span class="line1">MISSION:</span>
+      <span class="line2">FOUND</span>
+    </div>
+    <div class="menu-btn" id="menuBtn"><div></div></div>
+
+    <div class="nav-menu" id="navMenu">
+      <a href="#what-we-do">What We Do</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="results.html">Results <span class="tag">SOON</span></a>
+      <a href="about.html">About</a>
+      <a href="audit.html">Get Your Free Audit</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="badge">
+      <span class="dot"></span>
+      HELPING LOCAL BUSINESSES GET FOUND
+      <span class="arrow">›</span>
+    </div>
+
+    <h1>Help local customers<br>find <span class="accent">&</span> choose you.</h1>
+
+    <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews so that local searches turn into real calls, not missed opportunities.</p>
+
+    <a href="audit.html" class="btn-primary">
+      <span class="icon-circle">↓</span>
+      Get your free audit
+    </a>
+
+    <div class="caption">
+      ⓘ No obligation, no credit card needed
+    </div>
+  </div>
+
+  <div class="preview-wrap">
+    <div class="preview-frame">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="gbp-mini">
+        <div class="gbp-top">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#5B7FE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h16v5M4 9l1 11h14l1-11M4 9h16M9 20v-6h6v6"/></svg>
+          </div>
+          <div>
+            <div class="name-row">
+              <span class="name">Your Business</span>
+              <span class="verified" title="Actively managed">✓</span>
+            </div>
+            <div class="stars">4.9 ★★★★★ (128) · Local Service Business</div>
+          </div>
+        </div>
+        <div class="gbp-actions">
+          <div class="gbp-action"><span>📞</span>Call</div>
+          <div class="gbp-action"><span>📍</span>Directions</div>
+          <div class="gbp-action"><span>🌐</span>Website</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="what-we-do">
+  <div class="section-eyebrow">What We Do</div>
+  <h2 class="section-title">Everything your Google presence needs, handled every month.</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-num">01</div>
+      <h3>Google Business Profile</h3>
+      <p>Fresh photos, posts, hours, and service updates, keeping your listing active and accurate every week.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <h3>Review Management</h3>
+      <p>Every review answered within 48 hours, plus proactive outreach to happy customers for new ones.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <h3>Website Upkeep</h3>
+      <p>Seasonal updates, testimonials, and before/after photos so your site stays current and convincing.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">04</div>
+      <h3>Monthly Reporting</h3>
+      <p>A simple report showing views, calls, and direction requests so you see exactly what's working.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="how-it-works">
+  <div class="section-eyebrow">How it Works</div>
+  <h2 class="section-title">Three steps to a Google presence that actually works for you.</h2>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Free Audit</h3>
+      <p>We review your current listing and show you exactly where you're losing customers online.</p>
+      <div class="step-line"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Quick Setup</h3>
+      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared.</p>
+      <div class="step-line"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Ongoing Management</h3>
+      <p>We handle photos, posts, and reviews monthly, and send you a simple report showing the results.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    // Sparse, calm field — most stars are dim and static, only a few gently twinkle
+    const count = Math.floor((w * h) / 12000);
+    stars = Array.from({ length: count }, () => {
+      const twinkles = Math.random() < 0.35; // only ~1 in 3 stars actually pulses
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.1 + 0.4,
+        baseAlpha: Math.random() * 0.25 + 0.12,
+        twinkles,
+        twinkleSpeed: Math.random() * 0.0006 + 0.0003, // slow, calm pulse
+        phase: Math.random() * Math.PI * 2,
+        amp: twinkles ? Math.random() * 0.3 + 0.15 : 0
+      };
+    });
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const alpha = s.twinkles
+        ? s.baseAlpha + (Math.sin(time * s.twinkleSpeed + s.phase) * 0.5 + 0.5) * s.amp
+        : s.baseAlpha;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(244,239,230,${Math.max(0, Math.min(1, alpha))})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+
+  const menuBtn = document.getElementById('menuBtn');
+  const navMenu = document.getElementById('navMenu');
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuBtn.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    }
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
