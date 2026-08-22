@@ -156,6 +156,68 @@
   .gbp-mini .name { font-weight: 700; color: var(--charcoal); font-size: 15px; font-family: 'Space Grotesk', sans-serif; }
   .gbp-mini .stars { color: #f59e0b; font-size: 12px; font-weight: 600; }
 
+  /* ---- Content sections below the hero ---- */
+  section.block {
+    position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
+    padding: 100px 72px;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 38px;
+    letter-spacing: -0.01em; color: var(--cream); margin-bottom: 56px; max-width: 560px;
+  }
+
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  .card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
+    padding: 32px; transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(91,127,224,0.4); transform: translateY(-3px); }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue);
+    font-weight: 600; margin-bottom: 18px; letter-spacing: 0.05em;
+  }
+  .card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .card p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+  .steps-row {
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .step { flex: 1; position: relative; }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,224,0.14);
+    border: 1px solid rgba(91,127,224,0.4); color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .step h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600;
+    color: var(--cream); margin-bottom: 8px;
+  }
+  .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; }
+  .step-line {
+    position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
+    height: 1px; background: rgba(255,255,255,0.12);
+  }
+
+  @media (max-width: 640px) {
+    section.block { padding: 64px 20px; }
+    .section-title { font-size: 26px; margin-bottom: 36px; }
+    .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 24px; }
+    .steps-row { flex-direction: column; gap: 32px; }
+    .step-line { display: none; }
+  }
+
   @media (max-width: 640px) {
     .page { padding: 24px 18px 0; }
     nav { margin-bottom: 32px; }
@@ -242,6 +304,57 @@
     </div>
   </div>
 </div>
+
+<section class="block">
+  <div class="section-eyebrow">What We Do</div>
+  <h2 class="section-title">Everything your Google presence needs, handled every month.</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-num">01</div>
+      <h3>Google Business Profile</h3>
+      <p>Fresh photos, posts, hours, and service updates — keeping your listing active and accurate every week.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <h3>Review Management</h3>
+      <p>Every review answered within 48 hours, plus proactive outreach to happy customers for new ones.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <h3>Website Upkeep</h3>
+      <p>Seasonal updates, testimonials, and before/after photos so your site stays current and convincing.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">04</div>
+      <h3>Monthly Reporting</h3>
+      <p>A simple report showing views, calls, and direction requests — so you see exactly what's working.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="section-eyebrow">How it Works</div>
+  <h2 class="section-title">Three steps to a Google presence that actually works for you.</h2>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Free Audit</h3>
+      <p>We review your current listing and show you exactly where you're losing customers online.</p>
+      <div class="step-line"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Quick Setup</h3>
+      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared.</p>
+      <div class="step-line"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Ongoing Management</h3>
+      <p>We handle photos, posts, and reviews monthly, and send you a simple report showing the results.</p>
+    </div>
+  </div>
+</section>
 
 <script>
   const canvas = document.getElementById('stars');
