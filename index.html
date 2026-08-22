@@ -17,6 +17,8 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  #what-we-do, #how-it-works { scroll-margin-top: 32px; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
   .page { position: relative; min-height: 100vh; padding: 56px 72px 0; display: flex; flex-direction: column; }
@@ -262,8 +264,8 @@
     <div class="menu-btn" id="menuBtn"><div></div></div>
 
     <div class="nav-menu" id="navMenu">
-      <a href="how-it-works.html">How it Works</a>
-      <a href="what-we-do.html">What We Do</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#what-we-do">What We Do</a>
       <a href="results.html">Results <span class="tag">SOON</span></a>
       <a href="about.html">About</a>
       <a href="audit.html">Get Your Free Audit</a>
@@ -305,7 +307,7 @@
   </div>
 </div>
 
-<section class="block">
+<section class="block" id="what-we-do">
   <div class="section-eyebrow">What We Do</div>
   <h2 class="section-title">Everything your Google presence needs, handled every month.</h2>
   <div class="cards-grid">
@@ -332,7 +334,7 @@
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="how-it-works">
   <div class="section-eyebrow">How it Works</div>
   <h2 class="section-title">Three steps to a Google presence that actually works for you.</h2>
   <div class="steps-row">
@@ -411,6 +413,12 @@
       menuBtn.classList.remove('open');
       navMenu.classList.remove('open');
     }
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
   });
 </script>
 
