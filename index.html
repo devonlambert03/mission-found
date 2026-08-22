@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mission: Found — Hero Reference v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --cream: #F4EFE6;
+    --navy: #101A33;
+    --navy-deep: #0A1224;
+    --blue: #5B7FE0;
+    --muted: #9AA6C4;
+    --charcoal: #23262B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--navy-deep); }
+
+  .page {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--navy) 0%, var(--navy-deep) 70%);
+    min-height: 100vh; padding: 40px 24px 0;
+  }
+
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1100px; margin: 0 auto 48px;
+  }
+  .logo-mark {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', serif; font-weight: 800; color: var(--navy-deep); font-size: 20px;
+  }
+  .menu-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .menu-btn div { width: 18px; height: 2px; background: var(--cream); position: relative; }
+  .menu-btn div::before, .menu-btn div::after {
+    content: ''; position: absolute; width: 18px; height: 2px; background: var(--cream); left: 0;
+  }
+  .menu-btn div::before { top: -6px; }
+  .menu-btn div::after { top: 6px; }
+
+  .hero { max-width: 780px; margin: 0 auto; text-align: center; padding-bottom: 60px; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px; padding: 10px 20px; margin-bottom: 40px;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+  }
+  .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+  .badge .arrow { color: var(--blue); }
+
+  h1 {
+    font-size: 58px; font-weight: 800; line-height: 1.08; letter-spacing: -0.02em;
+    color: var(--cream); margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--blue); }
+
+  .hero-sub {
+    font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--blue); color: var(--navy-deep); font-weight: 700; font-size: 17px;
+    padding: 18px 34px; border-radius: 999px; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(91,127,224,0.35);
+  }
+  .btn-primary .icon-circle {
+    width: 22px; height: 22px; border-radius: 50%; background: rgba(10,18,36,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 12px;
+  }
+
+  .caption {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 20px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .preview-wrap { max-width: 900px; margin: 20px auto 0; position: relative; }
+  .preview-frame {
+    background: #0d1424; border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.08);
+    border-bottom: none; padding: 16px 24px 0; overflow: hidden; height: 260px; position: relative;
+  }
+  .preview-frame::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+    background: linear-gradient(180deg, transparent, var(--navy-deep));
+  }
+  .dots { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .gbp-mini {
+    background: white; border-radius: 10px; padding: 16px; display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  .gbp-mini .thumb { width: 48px; height: 48px; border-radius: 8px; background: #cbd5e1; flex-shrink: 0; }
+  .gbp-mini .name { font-weight: 700; color: var(--charcoal); font-size: 15px; }
+  .gbp-mini .stars { color: #f59e0b; font-size: 12px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <nav>
+    <div class="logo-mark">M</div>
+    <div class="menu-btn"><div></div></div>
+  </nav>
+
+  <div class="hero">
+    <div class="badge">
+      <span class="dot"></span>
+      HELPING LOCAL BUSINESSES GET FOUND
+      <span class="arrow">›</span>
+    </div>
+
+    <h1>Help local customers<br>find <span class="accent">&</span> choose you.</h1>
+
+    <p class="hero-sub">Mission: Found manages your Google presence, photos, and reviews — so local searches turn into real calls, not missed opportunities.</p>
+
+    <a href="#" class="btn-primary">
+      <span class="icon-circle">↓</span>
+      Get your free audit
+    </a>
+
+    <div class="caption">
+      ⓘ No obligation, no credit card needed
+    </div>
+  </div>
+
+  <div class="preview-wrap">
+    <div class="preview-frame">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="gbp-mini">
+        <div class="thumb"></div>
+        <div>
+          <div class="name">Your Business</div>
+          <div class="stars">4.9 ★★★★★ (128) · Snow Removal Service</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
