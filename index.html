@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mission: Found</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
@@ -18,7 +19,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
-  .page { position: relative; min-height: 100vh; padding: 40px 24px 0; }
+  .page { position: relative; min-height: 100vh; padding: 40px 24px 0; display: flex; flex-direction: column; }
 
   canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 
@@ -94,11 +95,14 @@
     color: var(--muted); font-weight: 500;
   }
 
-  .preview-wrap { position: relative; z-index: 2; max-width: 900px; margin: 24px auto 0; }
+  .preview-wrap {
+    position: relative; z-index: 2; max-width: 900px; width: 100%;
+    margin: 24px auto 0; flex: 1; display: flex; min-height: 0;
+  }
   .preview-frame {
     background: rgba(13,20,36,0.6); border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.08);
-    border-bottom: none; padding: 16px 24px 0; overflow: hidden; height: 260px; position: relative;
-    backdrop-filter: blur(6px);
+    border-bottom: none; padding: 16px 24px 0; overflow: hidden; position: relative;
+    backdrop-filter: blur(6px); width: 100%; height: 100%; min-height: 220px; max-height: 340px;
   }
   .preview-frame::after {
     content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
@@ -113,6 +117,30 @@
   .gbp-mini .thumb { width: 48px; height: 48px; border-radius: 8px; background: #cbd5e1; flex-shrink: 0; }
   .gbp-mini .name { font-weight: 700; color: var(--charcoal); font-size: 15px; font-family: 'Space Grotesk', sans-serif; }
   .gbp-mini .stars { color: #f59e0b; font-size: 12px; font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .page { padding: 24px 18px 0; }
+    nav { margin-bottom: 32px; }
+    .logo-mark, .menu-btn { width: 38px; height: 38px; }
+    .badge { padding: 8px 16px; font-size: 10px; gap: 8px; margin-bottom: 28px; }
+    h1 { font-size: 38px; margin-bottom: 18px; letter-spacing: -0.01em; }
+    .hero-sub { font-size: 15px; margin-bottom: 26px; padding: 0 4px; }
+    .btn-primary { padding: 15px 26px; font-size: 15px; }
+    .caption { font-size: 10px; margin-top: 16px; }
+    .hero { padding-bottom: 8px; }
+    .preview-wrap { margin-top: 20px; }
+    .preview-frame { border-radius: 16px 16px 0 0; padding: 12px 16px 0; min-height: 160px; }
+    .gbp-mini { padding: 12px; gap: 10px; }
+    .gbp-mini .thumb { width: 40px; height: 40px; }
+    .gbp-mini .name { font-size: 14px; }
+    .gbp-mini .stars { font-size: 11px; }
+  }
+
+  @media (max-height: 700px) and (max-width: 640px) {
+    h1 { font-size: 32px; }
+    .badge { margin-bottom: 20px; }
+    .hero-sub { margin-bottom: 20px; }
+  }
 </style>
 </head>
 <body>
