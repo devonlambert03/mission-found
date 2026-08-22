@@ -21,7 +21,7 @@
   #what-we-do, #how-it-works { scroll-margin-top: 32px; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
-  .page { position: relative; min-height: 100vh; padding: 56px 72px 0; display: flex; flex-direction: column; }
+  .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
 
   canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 
@@ -32,9 +32,12 @@
   }
 
   nav {
-    position: relative; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
-    width: 100%; margin: 0 0 48px;
+    padding: 22px 72px;
+    background: rgba(6,10,22,0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .logo-mark {
     display: flex; flex-direction: column; line-height: 0.9;
@@ -240,8 +243,8 @@
   }
 
   @media (max-width: 640px) {
-    .page { padding: 24px 18px 0; }
-    nav { margin-bottom: 32px; }
+    .page { padding: 96px 18px 0; }
+    nav { padding: 16px 18px; }
     .logo-mark .line1, .logo-mark .line2 { font-size: 16px; }
     .logo-mark { line-height: 0.88; }
     .menu-btn { width: 38px; height: 38px; }
