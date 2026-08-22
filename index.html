@@ -18,7 +18,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  #what-we-do, #how-it-works { scroll-margin-top: 32px; }
+  #what-we-do, #how-it-works, #pricing { scroll-margin-top: 32px; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
   .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
@@ -185,8 +185,6 @@
     position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
     padding: 100px 72px;
   }
-  #what-we-do { padding-bottom: 50px; }
-  #how-it-works { padding-top: 40px; }
   .section-eyebrow {
     font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px;
@@ -231,7 +229,45 @@
   }
   .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; }
   .step-line {
-    display: none;
+    position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
+    height: 1px; background: rgba(255,255,255,0.12);
+  }
+
+  /* ---- Pricing ---- */
+  .pricing-eyebrow-wrap { text-align: center; }
+  .pricing-wrap { display: flex; justify-content: center; }
+  .price-card {
+    background: #10192F; border: 1.5px solid var(--blue); border-radius: 24px;
+    padding: 48px 44px; max-width: 420px; width: 100%;
+    box-shadow: 0 30px 80px rgba(91,127,224,0.15);
+  }
+  .price-tier-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+  }
+  .price-amount {
+    display: flex; align-items: baseline; gap: 6px; margin-bottom: 10px;
+    font-family: 'Space Grotesk', sans-serif; color: var(--cream);
+  }
+  .price-amount .num { font-size: 56px; font-weight: 700; letter-spacing: -0.02em; }
+  .price-amount .period { font-size: 16px; color: var(--muted); font-weight: 500; }
+  .price-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+  .price-cta {
+    display: block; text-align: center; background: var(--cream); color: var(--navy-deep);
+    font-weight: 600; font-size: 16px; padding: 16px; border-radius: 999px;
+    text-decoration: none; margin-bottom: 16px;
+  }
+  .price-micro {
+    display: flex; justify-content: center; gap: 18px; margin-bottom: 32px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .price-features { display: flex; flex-direction: column; gap: 16px; }
+  .price-feature { display: flex; align-items: flex-start; gap: 12px; color: var(--cream); font-size: 15px; }
+  .price-feature .check {
+    width: 18px; height: 18px; border-radius: 50%; background: rgba(91,127,224,0.18);
+    color: var(--blue); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; margin-top: 2px;
   }
 
   @media (max-width: 640px) {
@@ -241,6 +277,9 @@
     .card { padding: 24px; }
     .steps-row { flex-direction: column; gap: 32px; }
     .step-line { display: none; }
+    .price-card { padding: 36px 26px; }
+    .price-amount .num { font-size: 44px; }
+    .price-micro { flex-direction: column; align-items: center; gap: 6px; }
   }
 
   @media (max-width: 640px) {
@@ -292,6 +331,7 @@
     <div class="nav-menu" id="navMenu">
       <a href="#what-we-do">What We Do</a>
       <a href="#how-it-works">How it Works</a>
+      <a href="#pricing">Pricing</a>
       <a href="results.html">Results <span class="tag">SOON</span></a>
       <a href="about.html">About</a>
       <a href="audit.html">Get Your Free Audit</a>
@@ -307,7 +347,7 @@
 
     <h1>Help local customers<br>find <span class="accent">&</span> choose you.</h1>
 
-    <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews so that local searches turn into real calls, not missed opportunities.</p>
+    <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews — so local searches turn into real calls, not missed opportunities.</p>
 
     <a href="audit.html" class="btn-primary">
       <span class="icon-circle">↓</span>
@@ -352,7 +392,7 @@
     <div class="card">
       <div class="card-num">01</div>
       <h3>Google Business Profile</h3>
-      <p>Fresh photos, posts, hours, and service updates, keeping your listing active and accurate every week.</p>
+      <p>Fresh photos, posts, hours, and service updates — keeping your listing active and accurate every week.</p>
     </div>
     <div class="card">
       <div class="card-num">02</div>
@@ -367,7 +407,7 @@
     <div class="card">
       <div class="card-num">04</div>
       <h3>Monthly Reporting</h3>
-      <p>A simple report showing views, calls, and direction requests so you see exactly what's working.</p>
+      <p>A simple report showing views, calls, and direction requests — so you see exactly what's working.</p>
     </div>
   </div>
 </section>
@@ -385,13 +425,50 @@
     <div class="step">
       <div class="step-num">02</div>
       <h3>Quick Setup</h3>
-      <p>You add us as a Manager on your Google Business Profile; takes about five minutes, no passwords shared.</p>
+      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared.</p>
       <div class="step-line"></div>
     </div>
     <div class="step">
       <div class="step-num">03</div>
       <h3>Ongoing Management</h3>
       <p>We handle photos, posts, and reviews monthly, and send you a simple report showing the results.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="pricing">
+  <div class="pricing-eyebrow-wrap">
+    <div class="badge" style="margin-bottom: 24px;">
+      <span class="dot"></span>
+      PRICING
+    </div>
+  </div>
+  <h2 class="section-title" style="text-align: center; margin-left: auto; margin-right: auto;">Simple, transparent pricing built for local businesses.</h2>
+
+  <div class="pricing-wrap">
+    <div class="price-card">
+      <div class="price-tier-label">Local Digital Presence Management</div>
+      <div class="price-amount">
+        <span class="num">$149</span>
+        <span class="period">/ month</span>
+      </div>
+      <div class="price-sub">No contract. Cancel anytime.</div>
+
+      <a href="audit.html" class="price-cta">Get Your Free Audit</a>
+      <div class="price-micro">
+        <span>🔒 Secure checkout</span>
+        <span>📅 Cancel anytime</span>
+      </div>
+
+      <div class="price-features">
+        <div class="price-feature"><span class="check">✓</span> Google Business Profile management &amp; optimization</div>
+        <div class="price-feature"><span class="check">✓</span> Review monitoring &amp; response (48hr)</div>
+        <div class="price-feature"><span class="check">✓</span> Review-generation system</div>
+        <div class="price-feature"><span class="check">✓</span> Local search &amp; competitor monitoring</div>
+        <div class="price-feature"><span class="check">✓</span> Website accuracy &amp; content updates</div>
+        <div class="price-feature"><span class="check">✓</span> One-page monthly performance report</div>
+        <div class="price-feature"><span class="check">✓</span> Manager-only access — no passwords shared</div>
+      </div>
     </div>
   </div>
 </section>
