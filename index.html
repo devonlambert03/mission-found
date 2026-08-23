@@ -282,6 +282,38 @@
     .price-micro { flex-direction: column; align-items: center; gap: 6px; }
   }
 
+  /* ---- Footer ---- */
+  .site-footer {
+    position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 72px;
+  }
+  .footer-inner {
+    max-width: 1120px; margin: 0 auto; display: flex; align-items: center;
+    justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .footer-logo { text-decoration: none; }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500; transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-email {
+    color: var(--muted); text-decoration: none; font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 0.02em; transition: color 0.15s;
+  }
+  .footer-email:hover { color: var(--blue); }
+  .footer-bottom {
+    max-width: 1120px; margin: 24px auto 0; text-align: center;
+    color: var(--muted); opacity: 0.6; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    .site-footer { padding: 32px 20px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 18px; }
+  }
+
   @media (max-width: 640px) {
     .page { padding: 96px 18px 0; }
     nav { padding: 16px 18px; }
@@ -472,6 +504,23 @@
     </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="index.html" class="logo-mark footer-logo">
+      <span class="line1">MISSION:</span>
+      <span class="line2">FOUND</span>
+    </a>
+    <nav class="footer-links">
+      <a href="#what-we-do">What We Do</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="about.html">About</a>
+    </nav>
+    <a href="mailto:hello@mission-found.com" class="footer-email">hello@mission-found.com</a>
+  </div>
+  <div class="footer-bottom">© 2026 Mission: Found. All rights reserved.</div>
+</footer>
 
 <script>
   const canvas = document.getElementById('stars');
