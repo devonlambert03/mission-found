@@ -28,7 +28,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  #what-we-do, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
+  #problem, #what-we-do, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
   .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
@@ -237,6 +237,24 @@
   .cards-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
   }
+  .cards-grid-3 {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .problem-card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
+    padding: 32px; transition: border-color 0.2s, transform 0.2s;
+  }
+  .problem-card:hover { border-color: rgba(239,127,127,0.35); transform: translateY(-3px); }
+  .problem-card .problem-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(239,127,127,0.12);
+    color: #EF7F7F; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 20px;
+  }
+  .problem-card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .problem-card p { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
   .card {
     background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
     padding: 32px; transition: border-color 0.2s, transform 0.2s;
@@ -341,6 +359,8 @@
     section.block { padding: 40px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+    .cards-grid-3 { grid-template-columns: 1fr; gap: 14px; }
+    .problem-card { padding: 24px; }
     .card { padding: 24px; }
     .steps-row { flex-direction: column; gap: 32px; }
     .step-line { display: none; }
@@ -458,6 +478,28 @@
     </div>
   </div>
 </div>
+
+<section class="block" id="problem">
+  <div class="section-eyebrow">The Problem</div>
+  <h2 class="section-title">Your business might be better than your online presence makes it look.</h2>
+  <div class="cards-grid-3">
+    <div class="problem-card">
+      <div class="problem-icon">?</div>
+      <h3>Can't Find You</h3>
+      <p>Your Google listing is incomplete, outdated, or buried under competitors who show up first.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">!</div>
+      <h3>Don't Trust You</h3>
+      <p>No recent reviews, no responses to the ones you have, no photos — and customers notice.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">✕</div>
+      <h3>Don't Choose You</h3>
+      <p>Even when they find you, inconsistent info and a stale profile make a competitor feel like the safer choice.</p>
+    </div>
+  </div>
+</section>
 
 <section class="block" id="what-we-do">
   <div class="section-eyebrow">What We Do</div>
