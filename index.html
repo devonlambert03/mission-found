@@ -120,8 +120,8 @@
     padding: 44px 72px; text-align: center;
   }
   footer .footer-logo {
-    display: flex; flex-direction: column; align-items: center; line-height: 0.9;
-    font-family: 'JetBrains Mono', monospace; margin-bottom: 12px;
+    display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 0.9;
+    font-family: 'JetBrains Mono', monospace; margin: 0 auto 12px;
   }
   footer .footer-logo .line1 { font-weight: 600; font-size: 18px; letter-spacing: 0.02em; color: var(--cream); }
   footer .footer-logo .line2 {
@@ -130,8 +130,10 @@
   }
   footer .footer-tagline {
     font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
-    letter-spacing: 0.02em; margin-bottom: 18px;
+    letter-spacing: 0.02em; margin-bottom: 8px;
   }
+  footer .footer-tagline:last-of-type { margin-bottom: 18px; }
+  footer .footer-tagline a:hover { color: var(--blue); }
   footer .footer-meta {
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
     opacity: 0.6; letter-spacing: 0.03em;
@@ -586,6 +588,7 @@
     <span class="line2">FOUND</span>
   </div>
   <div class="footer-tagline">Helping local businesses get found, trusted, and chosen.</div>
+  <div class="footer-tagline"><a href="mailto:hello@mission-found.com" style="color: var(--muted); text-decoration: none;">hello@mission-found.com</a></div>
   <div class="footer-meta">© 2026 Mission: Found. All rights reserved.</div>
 </footer>
 
