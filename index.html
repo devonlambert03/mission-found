@@ -113,6 +113,29 @@
     color: var(--cream); margin-bottom: 28px;
   }
   h1 .accent { color: var(--blue); }
+  h1 em { font-style: italic; }
+
+  footer {
+    position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 44px 72px; text-align: center;
+  }
+  footer .footer-logo {
+    display: flex; flex-direction: column; align-items: center; line-height: 0.9;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 12px;
+  }
+  footer .footer-logo .line1 { font-weight: 600; font-size: 18px; letter-spacing: 0.02em; color: var(--cream); }
+  footer .footer-logo .line2 {
+    font-weight: 600; font-size: 18px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1px var(--blue); margin-left: 1ch;
+  }
+  footer .footer-tagline {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    letter-spacing: 0.02em; margin-bottom: 18px;
+  }
+  footer .footer-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    opacity: 0.6; letter-spacing: 0.03em;
+  }
 
   .hero-sub {
     font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 540px;
@@ -310,6 +333,7 @@
     .faq-question { padding: 18px 20px; }
     .faq-question h3 { font-size: 15.5px; }
     .faq-answer p { padding: 0 20px 18px; font-size: 14px; }
+    footer { padding: 32px 20px; }
   }
 
   @media (max-width: 640px) {
@@ -376,9 +400,9 @@
       <span class="arrow">›</span>
     </div>
 
-    <h1>Help local customers<br>find <span class="accent">&</span> choose you.</h1>
+    <h1>Help local customers<br>find <span class="accent">&</span> choose <em>you</em>.</h1>
 
-    <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews — so local searches turn into real calls, not missed opportunities.</p>
+    <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews so that local searches turn into real calls, not missed opportunities.</p>
 
     <a href="audit.html" class="btn-primary">
       <span class="icon-circle">↓</span>
@@ -555,6 +579,15 @@
     </div>
   </div>
 </section>
+
+<footer>
+  <div class="footer-logo">
+    <span class="line1">MISSION:</span>
+    <span class="line2">FOUND</span>
+  </div>
+  <div class="footer-tagline">Helping local businesses get found, trusted, and chosen.</div>
+  <div class="footer-meta">© 2026 Mission: Found. All rights reserved.</div>
+</footer>
 
 <script>
   const canvas = document.getElementById('stars');
