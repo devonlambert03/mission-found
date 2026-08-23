@@ -18,7 +18,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  #what-we-do, #how-it-works, #pricing { scroll-margin-top: 32px; }
+  #what-we-do, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
 
   .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
@@ -183,7 +183,7 @@
   /* ---- Content sections below the hero ---- */
   section.block {
     position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
-    padding: 36px 72px;
+    padding: 100px 72px;
   }
   .section-eyebrow {
     font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
@@ -228,7 +228,10 @@
     color: var(--cream); margin-bottom: 8px;
   }
   .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; }
-  .step-line { display: none; }
+  .step-line {
+    position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
+    height: 1px; background: rgba(255,255,255,0.12);
+  }
 
   /* ---- Pricing ---- */
   .pricing-eyebrow-wrap { text-align: center; }
@@ -267,51 +270,50 @@
     font-size: 11px; font-weight: 700; margin-top: 2px;
   }
 
+  /* ---- FAQ ---- */
+  .faq-wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+    overflow: hidden;
+  }
+  .faq-question {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 22px 26px; cursor: pointer; user-select: none;
+  }
+  .faq-question h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600;
+    color: var(--cream); margin: 0;
+  }
+  .faq-icon {
+    width: 22px; height: 22px; border-radius: 50%; background: rgba(91,127,224,0.15);
+    color: var(--blue); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600; transition: transform 0.2s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.25s ease;
+  }
+  .faq-answer p {
+    color: var(--muted); font-size: 14.5px; line-height: 1.6; padding: 0 26px 22px;
+  }
+
   @media (max-width: 640px) {
-    section.block { padding: 24px 20px; }
+    section.block { padding: 64px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
     .card { padding: 24px; }
     .steps-row { flex-direction: column; gap: 32px; }
+    .step-line { display: none; }
     .price-card { padding: 36px 26px; }
     .price-amount .num { font-size: 44px; }
     .price-micro { flex-direction: column; align-items: center; gap: 6px; }
-  }
-
-  /* ---- Footer ---- */
-  .site-footer {
-    position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 40px 72px;
-  }
-  .footer-inner {
-    max-width: 1120px; margin: 0 auto; display: flex; align-items: center;
-    justify-content: space-between; gap: 24px; flex-wrap: wrap;
-  }
-  .footer-logo { text-decoration: none; }
-  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
-  .footer-links a {
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    font-family: 'Space Grotesk', sans-serif; font-weight: 500; transition: color 0.15s;
-  }
-  .footer-links a:hover { color: var(--cream); }
-  .footer-email {
-    color: var(--muted); text-decoration: none; font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; letter-spacing: 0.02em; transition: color 0.15s;
-  }
-  .footer-email:hover { color: var(--blue); }
-  .footer-bottom {
-    max-width: 1120px; margin: 24px auto 0; text-align: center;
-    color: var(--muted); opacity: 0.6; font-size: 12px;
-    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.03em;
+    .faq-question { padding: 18px 20px; }
+    .faq-question h3 { font-size: 15.5px; }
+    .faq-answer p { padding: 0 20px 18px; font-size: 14px; }
   }
 
   @media (max-width: 640px) {
-    .site-footer { padding: 32px 20px; }
-    .footer-inner { flex-direction: column; align-items: flex-start; gap: 18px; }
-  }
-
-  @media (max-width: 640px) {
-    .page { padding: 96px 18px 0; min-height: auto; }
+    .page { padding: 96px 18px 0; }
     nav { padding: 16px 18px; }
     .logo-mark .line1, .logo-mark .line2 { font-size: 16px; }
     .logo-mark { line-height: 0.88; }
@@ -360,6 +362,7 @@
       <a href="#what-we-do">What We Do</a>
       <a href="#how-it-works">How it Works</a>
       <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
       <a href="results.html">Results <span class="tag">SOON</span></a>
       <a href="about.html">About</a>
       <a href="audit.html">Get Your Free Audit</a>
@@ -373,13 +376,13 @@
       <span class="arrow">›</span>
     </div>
 
-    <h1>Help local customers<br>find <span class="accent">&</span> choose <em>you</em>.</h1>
+    <h1>Help local customers<br>find <span class="accent">&</span> choose you.</h1>
 
     <p class="hero-sub"><strong>Mission: Found</strong> manages your Google presence, photos, and reviews — so local searches turn into real calls, not missed opportunities.</p>
 
     <a href="audit.html" class="btn-primary">
       <span class="icon-circle">↓</span>
-      Get Your Free Audit
+      Get your free audit
     </a>
 
     <div class="caption">
@@ -453,7 +456,7 @@
     <div class="step">
       <div class="step-num">02</div>
       <h3>Quick Setup</h3>
-      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared.</p>
+      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared. We'll also set up a simple shared photo folder so fresh work photos are easy to send us.</p>
       <div class="step-line"></div>
     </div>
     <div class="step">
@@ -501,22 +504,57 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <a href="index.html" class="logo-mark footer-logo">
-      <span class="line1">MISSION:</span>
-      <span class="line2">FOUND</span>
-    </a>
-    <nav class="footer-links">
-      <a href="#what-we-do">What We Do</a>
-      <a href="#how-it-works">How it Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="about.html">About</a>
-    </nav>
-    <a href="mailto:hello@mission-found.com" class="footer-email">hello@mission-found.com</a>
+<section class="block" id="faq">
+  <div class="pricing-eyebrow-wrap">
+    <div class="badge" style="margin-bottom: 24px;">
+      <span class="dot"></span>
+      FAQ
+    </div>
   </div>
-  <div class="footer-bottom">© 2026 Mission: Found. All rights reserved.</div>
-</footer>
+  <h2 class="section-title" style="text-align: center; margin-left: auto; margin-right: auto;">Questions local business owners actually ask.</h2>
+
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Is this just about Google, or my whole online presence?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>Google is where most of the work happens — it's where local customers actually search and decide. But we also keep your website's business info, photos, and contact details accurate and consistent with your Google listing, so everything a customer sees tells the same story.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>How do you get fresh photos of my business?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>We set up a simple shared photo folder during onboarding — you or your team drop in phone photos whenever you've got a good shot from a job, and we pick the best ones to post. No professional photographer needed, no extra work on your end beyond a quick upload.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>I already have a Google Business listing — what happens to it?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>That's the normal case, not a problem. We start with a full audit of your existing listing, then take over managing and improving it — you don't lose your reviews, history, or search ranking. Think of it as us taking the wheel of something that's already there.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>What if I don't have a Google Business Profile yet?</h3>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">
+        <p>No problem — we'll set one up as part of onboarding. Google's own verification process (postcard, phone, or email depending on your business) can take one to two weeks, which is outside our control, but we handle the setup and keep you posted the whole way.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
   const canvas = document.getElementById('stars');
@@ -578,6 +616,22 @@
     link.addEventListener('click', () => {
       menuBtn.classList.remove('open');
       navMenu.classList.remove('open');
+    });
+  });
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(other => {
+        other.classList.remove('open');
+        other.querySelector('.faq-answer').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
     });
   });
 </script>
