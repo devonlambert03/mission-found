@@ -329,30 +329,70 @@
   }
 
   /* ---- FAQ ---- */
-  .faq-wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  /* ---- FAQ header row: big title + contact card ---- */
+  .faq-header {
+    margin-bottom: 32px;
+  }
+  .faq-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 48px;
+    line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 16px 0 0;
+  }
+  .faq-contact-card {
+    border: 1.5px solid rgba(244,239,230,0.5); border-radius: 22px; padding: 32px;
+    background: rgba(255,255,255,0.02);
+    max-width: 520px; margin: 32px auto 0; text-align: center;
+  }
+  .faq-contact-card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700;
+    color: var(--cream); margin-bottom: 8px;
+  }
+  .faq-contact-card .faq-contact-sub {
+    color: var(--muted); font-size: 14.5px; margin-bottom: 22px;
+  }
+  .faq-contact-card .faq-contact-sub a { color: var(--muted); }
+  .faq-email-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: rgba(255,255,255,0.04); border-radius: 999px; padding: 8px 8px 8px 20px;
+  }
+  .faq-email-row .faq-email-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .faq-email-row .faq-email-label strong { color: var(--cream); font-weight: 600; }
+  .faq-copy-btn {
+    display: flex; align-items: center; gap: 6px; background: var(--blue); color: var(--navy-deep);
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13.5px;
+    border: none; border-radius: 999px; padding: 10px 18px; cursor: pointer;
+    flex-shrink: 0; transition: opacity 0.15s;
+  }
+  .faq-copy-btn:hover { opacity: 0.88; }
+
+  /* ---- FAQ two-column grid ---- */
+  .faq-wrap {
+    display: flex; flex-direction: column; gap: 14px;
+  }
   .faq-item {
-    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
     overflow: hidden;
   }
   .faq-question {
     display: flex; justify-content: space-between; align-items: center; gap: 16px;
-    padding: 22px 26px; cursor: pointer; user-select: none;
+    padding: 24px 26px; cursor: pointer; user-select: none;
   }
   .faq-question h3 {
-    font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600;
-    color: var(--cream); margin: 0;
+    font-family: 'Space Grotesk', sans-serif; font-size: 16.5px; font-weight: 600;
+    color: var(--cream); margin: 0; line-height: 1.4;
   }
   .faq-icon {
-    width: 22px; height: 22px; border-radius: 50%; background: rgba(91,127,224,0.15);
-    color: var(--blue); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 600; transition: transform 0.2s;
+    color: var(--cream); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: transform 0.2s;
   }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-item.open .faq-icon { transform: rotate(180deg); }
   .faq-answer {
     max-height: 0; overflow: hidden; transition: max-height 0.25s ease;
   }
   .faq-answer p {
-    color: var(--muted); font-size: 14.5px; line-height: 1.6; padding: 0 26px 22px;
+    color: var(--muted); font-size: 14.5px; line-height: 1.6; padding: 0 26px 24px;
   }
 
   @media (max-width: 640px) {
@@ -370,6 +410,10 @@
     .faq-question { padding: 18px 20px; }
     .faq-question h3 { font-size: 15.5px; }
     .faq-answer p { padding: 0 20px 18px; font-size: 14px; }
+    .faq-header { margin-bottom: 20px; }
+    .faq-title { font-size: 32px; }
+    .faq-contact-card { padding: 24px; }
+    .faq-wrap { grid-template-columns: 1fr; }
     footer { padding: 32px 20px; }
   }
 
@@ -588,19 +632,21 @@
 </section>
 
 <section class="block" id="faq">
-  <div class="pricing-eyebrow-wrap">
-    <div class="badge" style="margin-bottom: 24px;">
-      <span class="dot"></span>
-      FAQ
+  <div class="faq-header">
+    <div>
+      <div class="badge" style="margin-bottom: 0;">
+        <span class="dot"></span>
+        FREQUENTLY ASKED QUESTIONS
+      </div>
+      <h2 class="faq-title">Got Questions?<br>We've Got Answers.</h2>
     </div>
   </div>
-  <h2 class="section-title" style="text-align: center; margin-left: auto; margin-right: auto;">Questions local business owners actually ask.</h2>
 
   <div class="faq-wrap">
     <div class="faq-item">
       <div class="faq-question">
         <h3>Is this just about Google, or my whole online presence?</h3>
-        <div class="faq-icon">+</div>
+        <div class="faq-icon">⌄</div>
       </div>
       <div class="faq-answer">
         <p>Google is where most of the work happens — it's where local customers actually search and decide. But we also keep your website's business info, photos, and contact details accurate and consistent with your Google listing, so everything a customer sees tells the same story.</p>
@@ -610,7 +656,7 @@
     <div class="faq-item">
       <div class="faq-question">
         <h3>How do you get fresh photos of my business?</h3>
-        <div class="faq-icon">+</div>
+        <div class="faq-icon">⌄</div>
       </div>
       <div class="faq-answer">
         <p>We set up a simple shared photo folder during onboarding — you or your team drop in phone photos whenever you've got a good shot from a job, and we pick the best ones to post. No professional photographer needed, no extra work on your end beyond a quick upload.</p>
@@ -620,7 +666,7 @@
     <div class="faq-item">
       <div class="faq-question">
         <h3>I already have a Google Business listing — what happens to it?</h3>
-        <div class="faq-icon">+</div>
+        <div class="faq-icon">⌄</div>
       </div>
       <div class="faq-answer">
         <p>That's the normal case, not a problem. We start with a full audit of your existing listing, then take over managing and improving it — you don't lose your reviews, history, or search ranking. Think of it as us taking the wheel of something that's already there.</p>
@@ -630,11 +676,22 @@
     <div class="faq-item">
       <div class="faq-question">
         <h3>What if I don't have a Google Business Profile yet?</h3>
-        <div class="faq-icon">+</div>
+        <div class="faq-icon">⌄</div>
       </div>
       <div class="faq-answer">
         <p>No problem — we'll set one up as part of onboarding. Google's own verification process (postcard, phone, or email depending on your business) can take one to two weeks, which is outside our control, but we handle the setup and keep you posted the whole way.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="faq-contact-card">
+    <h3>Couldn't find your answer?</h3>
+    <div class="faq-contact-sub">Send us an email at <a href="mailto:hello@mission-found.com">hello@mission-found.com</a></div>
+    <div class="faq-email-row">
+      <span class="faq-email-label">Email us at: <strong>hello@mission-found.com</strong></span>
+      <button class="faq-copy-btn" id="faqCopyBtn" onclick="copyFaqEmail()">
+        <span id="faqCopyIcon">⧉</span> <span id="faqCopyText">Copy</span>
+      </button>
     </div>
   </div>
 </section>
@@ -727,6 +784,15 @@
       }
     });
   });
+
+  function copyFaqEmail() {
+    navigator.clipboard.writeText('hello@mission-found.com').then(() => {
+      const textEl = document.getElementById('faqCopyText');
+      const original = textEl.textContent;
+      textEl.textContent = 'Copied!';
+      setTimeout(() => { textEl.textContent = original; }, 1800);
+    });
+  }
 </script>
 
 </body>
