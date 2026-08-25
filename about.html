@@ -4,39 +4,372 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Mission: Found</title>
+<meta name="description" content="Mission: Found was started to help local businesses become as visible, credible, and accessible online as they are in person. Here's why.">
+<meta property="og:title" content="About Mission: Found">
+<meta property="og:description" content="A great business doesn't matter if customers can't find it. Here's why we started Mission: Found.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://mission-found.com/about.html">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
   :root {
-    --cream: #F4EFE6; --navy-deep: #060A16; --blue: #5B7FE0; --muted: #9AA6C4;
+    --cream: #F4EFE6; --navy: #0E1730; --navy-deep: #060A16;
+    --blue: #5B7FE0; --muted: #9AA6C4; --charcoal: #23262B;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep);
-    min-height: 100vh; display: flex; flex-direction: column; padding: 56px 72px;
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
+
+  .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
+  canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .glow {
+    position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 600px; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(91,127,224,0.10) 0%, transparent 70%);
   }
-  nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 72px; background: rgba(6,10,22,0.72); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
   .logo-mark { display: flex; flex-direction: column; line-height: 0.9; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
   .logo-mark .line1 { font-weight: 600; font-size: 22px; letter-spacing: 0.02em; color: var(--cream); }
-  .logo-mark .line2 { font-weight: 600; font-size: 22px; letter-spacing: 0.06em; color: transparent; -webkit-text-stroke: 1.2px var(--blue); margin-left: 2px; }
-  .back {
-    color: var(--muted); text-decoration: none; font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 10px 18px;
+  .logo-mark .line2 {
+    font-weight: 600; font-size: 22px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1.2px var(--blue); margin-left: 1ch;
   }
-  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  h1 { color: var(--cream); font-size: 42px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 16px; }
-  p { color: var(--muted); font-size: 17px; max-width: 480px; line-height: 1.6; }
-  @media (max-width: 640px) { body { padding: 24px 20px; } h1 { font-size: 30px; } }
+  .menu-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; z-index: 60;
+  }
+  .menu-btn div { width: 18px; height: 2px; background: var(--cream); position: relative; transition: transform 0.25s, opacity 0.25s, background 0.25s; }
+  .menu-btn div::before, .menu-btn div::after {
+    content: ''; position: absolute; width: 18px; height: 2px; background: var(--cream); left: 0;
+    transition: transform 0.25s, top 0.25s;
+  }
+  .menu-btn div::before { top: -6px; }
+  .menu-btn div::after { top: 6px; }
+  .menu-btn.open div { background: transparent; }
+  .menu-btn.open div::before { top: 0; transform: rotate(45deg); }
+  .menu-btn.open div::after { top: 0; transform: rotate(-45deg); }
+
+  .nav-menu {
+    position: absolute; top: calc(100% + 16px); left: 0; right: 0; z-index: 55;
+    background-color: #1E2C56; opacity: 1; border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 22px; padding: 10px; box-shadow: 0 24px 70px rgba(0,0,0,0.75);
+    display: flex; flex-direction: column; visibility: hidden; transform: translateY(-10px);
+    transition: transform 0.22s ease, visibility 0.22s;
+  }
+  .nav-menu.open { visibility: visible; transform: translateY(0); }
+  .nav-menu a {
+    display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 14px;
+    color: var(--cream); text-decoration: none; font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600; transition: background 0.15s;
+  }
+  .nav-menu a:hover { background: rgba(255,255,255,0.07); }
+  .nav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 10px; }
+  .nav-menu a.nav-cta { color: var(--blue); font-weight: 700; }
+  .nav-menu a.nav-cta:hover { background: rgba(91,127,224,0.1); }
+  .nav-menu .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.05em; color: var(--blue); border: 1px solid var(--blue);
+    border-radius: 999px; padding: 4px 12px;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px; padding: 10px 20px; margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500; backdrop-filter: blur(8px);
+  }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+
+  main { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; padding-bottom: 100px; }
+  .about-hero { text-align: center; margin-bottom: 72px; }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 52px; font-weight: 700;
+    line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin-bottom: 20px;
+  }
+  .about-hero .lede { color: var(--muted); font-size: 18px; line-height: 1.65; max-width: 600px; margin: 0 auto; }
+
+  .founder-block {
+    display: flex; align-items: center; gap: 28px; margin-bottom: 64px;
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px;
+  }
+  .founder-photo {
+    width: 120px; height: 120px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(145deg, #1E2C56, #10192F);
+    border: 1.5px solid rgba(91,127,224,0.4);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .founder-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .founder-photo .placeholder-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted);
+    text-align: center; line-height: 1.4; letter-spacing: 0.02em; padding: 0 10px;
+  }
+  .founder-info h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700;
+    color: var(--cream); margin-bottom: 4px;
+  }
+  .founder-info .founder-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .founder-info p { color: var(--muted); font-size: 14.5px; line-height: 1.6; margin: 0; }
+
+  .story-block { margin-bottom: 56px; }
+  .story-block .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px;
+  }
+  .story-block h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700;
+    color: var(--cream); margin-bottom: 18px; letter-spacing: -0.01em;
+  }
+  .story-block p {
+    color: var(--muted); font-size: 16.5px; line-height: 1.75; margin-bottom: 16px;
+  }
+  .story-block p strong { color: var(--cream); font-weight: 600; }
+
+  .values-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 24px;
+  }
+  .value-card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px;
+  }
+  .value-card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600;
+    color: var(--cream); margin-bottom: 8px;
+  }
+  .value-card p { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0; }
+
+  .about-cta {
+    text-align: center; margin-top: 64px; padding-top: 56px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .about-cta h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700;
+    color: var(--cream); margin-bottom: 14px; letter-spacing: -0.01em;
+  }
+  .about-cta p { color: var(--muted); font-size: 15.5px; margin-bottom: 28px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--cream); color: var(--navy-deep); font-weight: 600; font-size: 16px;
+    padding: 17px 32px; border-radius: 999px; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(244,239,230,0.15);
+  }
+  .btn-primary .icon-circle {
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(10,18,36,0.12);
+    display: flex; align-items: center; justify-content: center; font-size: 11px;
+  }
+
+  footer {
+    position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 44px 72px; text-align: center;
+  }
+  footer .footer-logo {
+    display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 0.9;
+    font-family: 'JetBrains Mono', monospace; margin: 0 auto 12px;
+  }
+  footer .footer-logo .line1 { font-weight: 600; font-size: 18px; letter-spacing: 0.02em; color: var(--cream); }
+  footer .footer-logo .line2 {
+    font-weight: 600; font-size: 18px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1px var(--blue); margin-left: 1ch;
+  }
+  footer .footer-tagline {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    letter-spacing: 0.02em; margin-bottom: 8px;
+  }
+  footer .footer-tagline:last-of-type { margin-bottom: 18px; }
+  footer .footer-tagline a:hover { color: var(--blue); }
+  footer .footer-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    opacity: 0.6; letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 96px 20px 0; }
+    nav { padding: 16px 18px; }
+    .logo-mark .line1, .logo-mark .line2 { font-size: 16px; }
+    .menu-btn { width: 38px; height: 38px; }
+    .nav-menu { top: calc(100% + 12px); border-radius: 18px; padding: 8px; }
+    .nav-menu a { padding: 17px 20px; font-size: 18px; gap: 10px; }
+    h1 { font-size: 32px; }
+    .about-hero { margin-bottom: 48px; }
+    .founder-block { flex-direction: column; text-align: center; padding: 28px 24px; }
+    .founder-photo { width: 96px; height: 96px; }
+    .story-block h2 { font-size: 22px; }
+    .story-block p { font-size: 15.5px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .about-cta h2 { font-size: 24px; }
+    footer { padding: 32px 20px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="page">
+  <canvas id="stars"></canvas>
+  <div class="glow"></div>
+
   <nav>
-    <a href="index.html" class="logo-mark"><span class="line1">MISSION:</span><span class="line2">FOUND</span></a>
-    <a href="index.html" class="back">← Back home</a>
+    <a href="index.html" class="logo-mark" style="text-decoration:none;">
+      <span class="line1">MISSION:</span>
+      <span class="line2">FOUND</span>
+    </a>
+    <div class="menu-btn" id="menuBtn"><div></div></div>
+
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html#what-we-do">What We Do</a>
+      <a href="index.html#how-it-works">How it Works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <div class="nav-divider"></div>
+      <a href="results.html">Results <span class="tag">SOON</span></a>
+      <a href="about.html">About</a>
+      <div class="nav-divider"></div>
+      <a href="audit.html" class="nav-cta">Get Your Free Audit</a>
+    </div>
   </nav>
+
   <main>
-    <h1>About</h1>
-    <p>This page is coming soon. Check back shortly for a the story behind Mission: Found and why we started helping local businesses get found online.</p>
+    <div class="about-hero">
+      <div class="badge"><span class="dot"></span>ABOUT MISSION: FOUND</div>
+      <h1>A great business shouldn't be invisible online.</h1>
+      <p class="lede"><strong><em>Mission: Found</em></strong> started with a simple, frustrating observation: solid local businesses lose customers every day, not because their work isn't great, but because their online presence doesn't reflect it.</p>
+    </div>
+
+    <div class="founder-block">
+      <div class="founder-photo">
+        <img src="devon-headshot.jpg" alt="Devon Lambert">
+      </div>
+      <div class="founder-info">
+        <h3>Devon Lambert</h3>
+        <div class="founder-title">Founder, Mission: Found</div>
+        <p>Army Signal Officer by profession, small business problem solver by habit. I started this after observing my own brother's business get overlooked online for reasons that had nothing to do with the amazing quality of his work.</p>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="eyebrow">The Story</div>
+      <h2>Why I started this</h2>
+      <p>In the Army, I'm a Signal Officer. Strip away the uniform and the job comes down to one thing: making sure the right information reaches the right place, reliably, every time. When communication breaks down, everything downstream of it suffers. That's the whole job. Keep the signal clean.</p>
+      <p>So when I started paying attention to my brother Chris's business, <strong>603 Snow & Ice</strong>, I noticed the exact same issue, just in a different uniform. Chris runs a genuinely solid operation. Reliable, well regarded, the kind of business people are happy to recommend. But his Google listing didn't reveal any of that. Inconsistent phone numbers, one Google review sitting there alone. No recent photos. No signal that anyone was home.</p>
+      <p>To me, that wasn't a marketing problem. It was a communication problem; the same kind I'd spent years being trained to notice and fix, just showing up in a local business instead of a radio network. Customers were searching for exactly what Chris offered, and the signal wasn't always getting through.</p>
+      <p>I started digging into his profile as a side project, mostly out of habit. Helping to fix the basics. Watching what actually moved the needle versus what didn't. It didn't take long to realize this problem set wasn't unique to my brother's business. Almost every local business I looked at had some version of the same gap. Good work, but neglected by an online presence nobody had time to manage.</p>
+      <p><strong><em>Mission: Found</em></strong> exists to close that gap. If your business is better than its online presence lets on, that's exactly the kind of signal loss I built this to fix.</p>
+    </div>
+
+    <div class="story-block">
+      <div class="eyebrow">What I Believe</div>
+      <h2>Ownership, not tasks</h2>
+      <p>I don't think the value here is in any single task. A posted photo, a review reply, an updated hour. The value is in someone actually taking responsibility for how your business looks online, every month, without you having to think about it. That's the whole premise.</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Google-first, on purpose</h3>
+        <p>I don't chase every platform. Google is where local customers actually search and decide, so that's where I focus most of my effort.</p>
+      </div>
+      <div class="value-card">
+        <h3>No scope creep</h3>
+        <p>No social media management, no paid ads, no full website builds. I do one thing: local digital presence—and I do it thoroughly.</p>
+      </div>
+      <div class="value-card">
+        <h3>Real work, not just reports</h3>
+        <p>I don't have to send you a list of things to fix. By way of being a Google Business Profile Manager, I can log in and fix them, then tell you what changed.</p>
+      </div>
+      <div class="value-card">
+        <h3>Proven before pitched</h3>
+        <p>I'm running this exact process on a real local business before asking anyone else to trust it with theirs.</p>
+      </div>
+    </div>
+
+    <div class="about-cta">
+      <h2>Curious what your own listing looks like right now?</h2>
+      <p>No obligation, we'll just show you what's working and what isn't.</p>
+      <a href="audit.html" class="btn-primary">
+        <span class="icon-circle">↓</span>
+        Get Your Free Audit
+      </a>
+    </div>
   </main>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <span class="line1">MISSION:</span>
+    <span class="line2">FOUND</span>
+  </div>
+  <div class="footer-tagline">Get Found. Get Trusted. Get Chosen.</div>
+  <div class="footer-tagline"><a href="mailto:hello@mission-found.com" style="color: var(--muted); text-decoration: none;">hello@mission-found.com</a></div>
+  <div class="footer-meta">© 2026 Mission: Found. All rights reserved.</div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    const count = Math.floor((w * h) / 12000);
+    stars = Array.from({ length: count }, () => {
+      const twinkles = Math.random() < 0.35;
+      return {
+        x: Math.random() * w, y: Math.random() * h,
+        r: Math.random() * 1.1 + 0.4,
+        baseAlpha: Math.random() * 0.25 + 0.12,
+        twinkles,
+        twinkleSpeed: Math.random() * 0.0006 + 0.0003,
+        phase: Math.random() * Math.PI * 2,
+        amp: twinkles ? Math.random() * 0.3 + 0.15 : 0
+      };
+    });
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const alpha = s.twinkles
+        ? s.baseAlpha + (Math.sin(time * s.twinkleSpeed + s.phase) * 0.5 + 0.5) * s.amp
+        : s.baseAlpha;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(244,239,230,${Math.max(0, Math.min(1, alpha))})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+
+  const menuBtn = document.getElementById('menuBtn');
+  const navMenu = document.getElementById('navMenu');
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuBtn.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    }
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+
 </body>
 </html>
