@@ -4,39 +4,351 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Results — Mission: Found</title>
+<meta name="description" content="Mission: Found is currently running a live 60-90 day growth experiment with our first client. Real before-and-after results, coming soon.">
+<meta property="og:title" content="Results — Mission: Found">
+<meta property="og:description" content="Real before-and-after results from our first client experiment. Coming soon.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://mission-found.com/results.html">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
   :root {
-    --cream: #F4EFE6; --navy-deep: #060A16; --blue: #5B7FE0; --muted: #9AA6C4;
+    --cream: #F4EFE6; --navy: #0E1730; --navy-deep: #060A16;
+    --blue: #5B7FE0; --muted: #9AA6C4; --charcoal: #23262B;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep);
-    min-height: 100vh; display: flex; flex-direction: column; padding: 56px 72px;
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
+
+  .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
+  canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .glow {
+    position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 600px; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(91,127,224,0.10) 0%, transparent 70%);
   }
-  nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 72px; background: rgba(6,10,22,0.72); backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
   .logo-mark { display: flex; flex-direction: column; line-height: 0.9; font-family: 'JetBrains Mono', monospace; text-decoration: none; }
   .logo-mark .line1 { font-weight: 600; font-size: 22px; letter-spacing: 0.02em; color: var(--cream); }
-  .logo-mark .line2 { font-weight: 600; font-size: 22px; letter-spacing: 0.06em; color: transparent; -webkit-text-stroke: 1.2px var(--blue); margin-left: 2px; }
-  .back {
-    color: var(--muted); text-decoration: none; font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 10px 18px;
+  .logo-mark .line2 {
+    font-weight: 600; font-size: 22px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1.2px var(--blue); margin-left: 1ch;
   }
-  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  h1 { color: var(--cream); font-size: 42px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 16px; }
-  p { color: var(--muted); font-size: 17px; max-width: 480px; line-height: 1.6; }
-  @media (max-width: 640px) { body { padding: 24px 20px; } h1 { font-size: 30px; } }
+  .menu-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; z-index: 60;
+  }
+  .menu-btn div { width: 18px; height: 2px; background: var(--cream); position: relative; transition: transform 0.25s, opacity 0.25s, background 0.25s; }
+  .menu-btn div::before, .menu-btn div::after {
+    content: ''; position: absolute; width: 18px; height: 2px; background: var(--cream); left: 0;
+    transition: transform 0.25s, top 0.25s;
+  }
+  .menu-btn div::before { top: -6px; }
+  .menu-btn div::after { top: 6px; }
+  .menu-btn.open div { background: transparent; }
+  .menu-btn.open div::before { top: 0; transform: rotate(45deg); }
+  .menu-btn.open div::after { top: 0; transform: rotate(-45deg); }
+
+  .nav-menu {
+    position: absolute; top: calc(100% + 16px); left: 0; right: 0; z-index: 55;
+    background-color: #1E2C56; opacity: 1; border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 22px; padding: 10px; box-shadow: 0 24px 70px rgba(0,0,0,0.75);
+    display: flex; flex-direction: column; visibility: hidden; transform: translateY(-10px);
+    transition: transform 0.22s ease, visibility 0.22s;
+  }
+  .nav-menu.open { visibility: visible; transform: translateY(0); }
+  .nav-menu a {
+    display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 14px;
+    color: var(--cream); text-decoration: none; font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600; transition: background 0.15s;
+  }
+  .nav-menu a:hover { background: rgba(255,255,255,0.07); }
+  .nav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 10px; }
+  .nav-menu a.nav-cta { color: var(--blue); font-weight: 700; }
+  .nav-menu a.nav-cta:hover { background: rgba(91,127,224,0.1); }
+  .nav-menu .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.05em; color: var(--blue); border: 1px solid var(--blue);
+    border-radius: 999px; padding: 4px 12px;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px; padding: 10px 20px; margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500; backdrop-filter: blur(8px);
+  }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+
+  main { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; padding-bottom: 100px; text-align: center; }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.01em; color: var(--cream); margin-bottom: 20px;
+  }
+  h1 em { font-style: italic; }
+  .lede { color: var(--muted); font-size: 17.5px; line-height: 1.65; max-width: 600px; margin: 0 auto 56px; }
+  .lede strong { color: var(--cream); font-weight: 600; }
+
+  .progress-card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
+    padding: 36px 40px; text-align: left; margin-bottom: 56px;
+  }
+  .progress-card .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px;
+  }
+  .progress-card h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700;
+    color: var(--cream); margin-bottom: 14px;
+  }
+  .progress-card p { color: var(--muted); font-size: 15px; line-height: 1.65; margin-bottom: 20px; }
+  .progress-bar-track {
+    height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-bottom: 10px;
+  }
+  .progress-bar-fill {
+    height: 100%; width: 22%; background: var(--blue); border-radius: 999px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.03em;
+  }
+
+  .eyebrow-section { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); font-weight: 600; margin-bottom: 14px; }
+  .preview-title { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--cream); margin-bottom: 32px; }
+
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 64px; text-align: left;
+  }
+  .metric-card {
+    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 22px;
+  }
+  .metric-card .metric-value {
+    font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--muted);
+    margin-bottom: 6px; opacity: 0.5;
+  }
+  .metric-card h3 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 14.5px; font-weight: 600; color: var(--cream); margin: 0;
+  }
+
+  .results-cta { padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .results-cta h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--cream); margin-bottom: 14px; letter-spacing: -0.01em;
+  }
+  .results-cta p { color: var(--muted); font-size: 15px; margin-bottom: 26px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--cream); color: var(--navy-deep); font-weight: 600; font-size: 16px;
+    padding: 17px 32px; border-radius: 999px; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(244,239,230,0.15);
+  }
+  .btn-primary .icon-circle {
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(10,18,36,0.12);
+    display: flex; align-items: center; justify-content: center; font-size: 11px;
+  }
+
+  footer {
+    position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 44px 72px; text-align: center;
+  }
+  footer .footer-logo {
+    display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 0.9;
+    font-family: 'JetBrains Mono', monospace; margin: 0 auto 12px;
+  }
+  footer .footer-logo .line1 { font-weight: 600; font-size: 18px; letter-spacing: 0.02em; color: var(--cream); }
+  footer .footer-logo .line2 {
+    font-weight: 600; font-size: 18px; letter-spacing: 0.06em;
+    color: transparent; -webkit-text-stroke: 1px var(--blue); margin-left: 1ch;
+  }
+  footer .footer-tagline {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    letter-spacing: 0.02em; margin-bottom: 8px;
+  }
+  footer .footer-tagline:last-of-type { margin-bottom: 18px; }
+  footer .footer-tagline a:hover { color: var(--blue); }
+  footer .footer-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    opacity: 0.6; letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 96px 20px 0; }
+    nav { padding: 16px 18px; }
+    .logo-mark .line1, .logo-mark .line2 { font-size: 16px; }
+    .menu-btn { width: 38px; height: 38px; }
+    .nav-menu { top: calc(100% + 12px); border-radius: 18px; padding: 8px; }
+    .nav-menu a { padding: 17px 20px; font-size: 18px; gap: 10px; }
+    h1 { font-size: 32px; }
+    .lede { margin-bottom: 40px; }
+    .progress-card { padding: 26px 24px; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .results-cta h2 { font-size: 22px; }
+    footer { padding: 32px 20px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="page">
+  <canvas id="stars"></canvas>
+  <div class="glow"></div>
+
   <nav>
-    <a href="index.html" class="logo-mark"><span class="line1">MISSION:</span><span class="line2">FOUND</span></a>
-    <a href="index.html" class="back">← Back home</a>
+    <a href="index.html" class="logo-mark" style="text-decoration:none;">
+      <span class="line1">MISSION:</span>
+      <span class="line2">FOUND</span>
+    </a>
+    <div class="menu-btn" id="menuBtn"><div></div></div>
+
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html#what-we-do">What We Do</a>
+      <a href="index.html#how-it-works">How it Works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+      <div class="nav-divider"></div>
+      <a href="results.html">Results <span class="tag">SOON</span></a>
+      <a href="about.html">About</a>
+      <div class="nav-divider"></div>
+      <a href="audit.html" class="nav-cta">Get Your Free Audit</a>
+    </div>
   </nav>
+
   <main>
-    <h1>Results</h1>
-    <p>This page is coming soon. Check back shortly for a real before-and-after results from our pilot clients, including 603 Snow &amp; Ice.</p>
+    <div class="badge"><span class="dot"></span>RESULTS</div>
+    <h1><em>Mission: Found</em> solving real problems.</h1>
+    <p class="lede">We're running a 60-90 day growth experiment with our first client; a local service business. We'll publish exactly what happened here once we have real before-and-after data to show.</p>
+
+    <div class="progress-card">
+      <div class="eyebrow">Current Status</div>
+      <h2>Pilot Client — Baseline Established</h2>
+      <p>We've completed a full audit and recorded a starting Digital Visibility Score, review count, and search performance baseline for our first client. We're now in the active improvement phase, optimizing the profile, building a review system, and tracking what actually moves the needle.</p>
+      <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+      <div class="progress-label">
+        <span>BASELINE ESTABLISHED</span>
+        <span>90-DAY MEASUREMENT IN PROGRESS</span>
+      </div>
+    </div>
+
+    <div class="eyebrow-section">What Will Be Here</div>
+    <div class="preview-title">The metrics we're actually tracking</div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value">01</div>
+        <h3>Digital Visibility Score (before/after)</h3>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">02</div>
+        <h3>Review count &amp; rating trend</h3>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">03</div>
+        <h3>Review response rate</h3>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">04</div>
+        <h3>Google calls &amp; direction requests</h3>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">05</div>
+        <h3>Website leads generated</h3>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">06</div>
+        <h3>Search visibility vs. competitors</h3>
+      </div>
+    </div>
+
+    <div class="results-cta">
+      <h2>Want to see where your own business stands, right now?</h2>
+      <p>No need to wait for the case study — a free audit shows you your own numbers today.</p>
+      <a href="audit.html" class="btn-primary">
+        <span class="icon-circle">↓</span>
+        Get Your Free Audit
+      </a>
+    </div>
   </main>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <span class="line1">MISSION:</span>
+    <span class="line2">FOUND</span>
+  </div>
+  <div class="footer-tagline">Get Found. Get Trusted. Get Chosen.</div>
+  <div class="footer-tagline"><a href="mailto:hello@mission-found.com" style="color: var(--muted); text-decoration: none;">hello@mission-found.com</a></div>
+  <div class="footer-meta">© 2026 Mission: Found. All rights reserved.</div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    const count = Math.floor((w * h) / 12000);
+    stars = Array.from({ length: count }, () => {
+      const twinkles = Math.random() < 0.35;
+      return {
+        x: Math.random() * w, y: Math.random() * h,
+        r: Math.random() * 1.1 + 0.4,
+        baseAlpha: Math.random() * 0.25 + 0.12,
+        twinkles,
+        twinkleSpeed: Math.random() * 0.0006 + 0.0003,
+        phase: Math.random() * Math.PI * 2,
+        amp: twinkles ? Math.random() * 0.3 + 0.15 : 0
+      };
+    });
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const alpha = s.twinkles
+        ? s.baseAlpha + (Math.sin(time * s.twinkleSpeed + s.phase) * 0.5 + 0.5) * s.amp
+        : s.baseAlpha;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(244,239,230,${Math.max(0, Math.min(1, alpha))})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+
+  const menuBtn = document.getElementById('menuBtn');
+  const navMenu = document.getElementById('navMenu');
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuBtn.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    }
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+
 </body>
 </html>
