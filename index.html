@@ -29,7 +29,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   #problem, #what-we-do, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
-  body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; }
+  html { overflow-x: hidden; width: 100%; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; width: 100%; }
 
   .page { position: relative; min-height: 100vh; padding: 128px 72px 0; display: flex; flex-direction: column; }
 
@@ -396,6 +397,7 @@
   }
 
   @media (max-width: 640px) {
+    .glow { width: 100vw; max-width: 500px; }
     section.block { padding: 40px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
