@@ -48,7 +48,7 @@
   .gauge-num .big { font-size: 44px; display: block; line-height: 1; }
   .gauge-num .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 6px; display: block; }
 
-  .breakdown h2 { font-size: 15px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; font-weight: 600; }
+  .breakdown h2 { font-size: 13px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; font-weight: 600; }
   .pillar-row { display: grid; grid-template-columns: 190px 1fr 60px 50px; align-items: center; gap: 14px; margin-bottom: 14px; }
   .pillar-row .pname { font-size: 13.5px; font-weight: 600; }
   .pillar-row .pweight { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); }
@@ -66,7 +66,7 @@
     cursor: pointer; user-select: none;
   }
   .pillar-card-header .title-block { display: flex; align-items: center; gap: 14px; }
-  .pillar-card-header h3 { font-size: 17px; font-weight: 700; }
+  .pillar-card-header h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
   .pillar-card-header .weight-tag {
     font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.04em;
     color: var(--blue); border: 1px solid var(--blue); border-radius: 999px; padding: 3px 10px;
@@ -107,11 +107,62 @@
   .interp-legend span { display: inline-flex; align-items: center; gap: 6px; }
   .interp-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
 
-  .print-btn {
-    display: inline-flex; align-items: center; gap: 8px; background: var(--cream); color: var(--navy-deep);
-    font-weight: 600; font-size: 14px; padding: 12px 22px; border-radius: 999px; border: none;
-    cursor: pointer; font-family: 'Space Grotesk', sans-serif; margin-top: 8px;
+  .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .print-btn, .action-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 13.5px;
+    padding: 12px 20px; border-radius: 999px; cursor: pointer; line-height: 1;
+    transition: opacity 0.15s, border-color 0.15s;
   }
+  .print-btn {
+    background: transparent; color: var(--cream); border: 1px solid rgba(255,255,255,0.18);
+  }
+  .print-btn:hover { border-color: var(--blue); }
+  .action-btn {
+    background: transparent; color: var(--cream); border: 1px solid rgba(255,255,255,0.18);
+  }
+  .action-btn:hover { border-color: var(--blue); }
+  .print-btn .icon, .action-btn .icon { font-size: 15px; display: inline-flex; }
+  #loadFileInput { display: none; }
+
+  .compare-strip {
+    display: none; align-items: center; justify-content: center; gap: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .compare-strip.show { display: flex; flex-wrap: wrap; }
+  .compare-strip .delta-up { color: #6FCF97; font-weight: 700; }
+  .compare-strip .delta-down { color: #EF7F7F; font-weight: 700; }
+  .compare-strip .delta-flat { color: var(--muted); font-weight: 700; }
+
+  .priority-panel {
+    background: #10192F; border: 1px solid rgba(239,127,127,0.3); border-radius: 20px;
+    padding: 30px 32px; margin-bottom: 24px;
+  }
+  .priority-panel h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 20px; letter-spacing: -0.01em;
+    color: var(--cream); margin-bottom: 6px; font-weight: 700;
+  }
+  .priority-panel h2 .warn-icon { color: #EF7F7F; }
+  .priority-panel .sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; line-height: 1.5; }
+  .priority-item {
+    display: flex; align-items: flex-start; gap: 16px; padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .priority-item:last-child { border-bottom: none; }
+  .priority-rank {
+    width: 26px; height: 26px; border-radius: 50%; background: rgba(239,127,127,0.15);
+    color: #EF7F7F; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12.5px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .priority-item .ptext { flex: 1; }
+  .priority-item .pname { color: var(--cream); font-size: 15.5px; font-weight: 600; line-height: 1.4; }
+  .priority-item .ppillar { color: var(--muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+  .priority-item .pgap {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--blue); font-weight: 600;
+    white-space: nowrap; flex-shrink: 0; margin-top: 3px;
+  }
+  .priority-empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
 
   @media print {
     :root {
@@ -130,7 +181,7 @@
     .criterion input[type=range] { display: none; }
     .criterion { grid-template-columns: 1fr 60px !important; }
     .criteria-list { max-height: none !important; }
-    .chevron, .print-btn { display: none; }
+    .chevron, .btn-group { display: none; }
   }
 
   @media (max-width: 760px) {
@@ -138,6 +189,8 @@
     .pillar-row { grid-template-columns: 1fr; text-align: left; gap: 6px; }
     .pillar-row .bar-track { grid-column: 1 / -1; }
     .criterion { grid-template-columns: 1fr; gap: 8px; }
+    .btn-group { justify-content: center; }
+    .print-btn, .action-btn { font-size: 12.5px; padding: 11px 16px; }
   }
 </style>
 </head>
@@ -176,8 +229,20 @@
     <div class="breakdown">
       <h2>Pillar Breakdown</h2>
       <div id="pillarRows"></div>
-      <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+      <div class="btn-group">
+        <button class="print-btn" onclick="window.print()"><span class="icon">🖨</span> Print / Save as PDF</button>
+        <button class="action-btn" onclick="saveAudit()"><span class="icon">💾</span> Save Audit</button>
+        <button class="action-btn" onclick="document.getElementById('loadFileInput').click()"><span class="icon">📂</span> Load Audit</button>
+        <input type="file" id="loadFileInput" accept="application/json" onchange="loadAudit(event)">
+      </div>
+      <div class="compare-strip" id="compareStrip"></div>
     </div>
+  </div>
+
+  <div class="priority-panel">
+    <h2><span class="warn-icon">⚠</span> Top Priorities</h2>
+    <div class="sub">Auto-generated from your lowest-scoring criteria, ranked by point opportunity — fix these first.</div>
+    <div id="priorityList"></div>
   </div>
 
   <div id="pillarCards"></div>
@@ -290,6 +355,109 @@ function render() {
   const offset = circumference - (score/100 * circumference);
   arc.style.strokeDashoffset = offset;
   arc.setAttribute('stroke', interp.color);
+
+  renderPriorities();
+  renderCompareStrip(score);
+}
+
+function renderPriorities() {
+  const gaps = [];
+  PILLARS.forEach(p => {
+    p.criteria.forEach((c, ci) => {
+      const scored = state[p.key][ci];
+      const max = c[1];
+      const gap = max - scored;
+      if (gap > 0) {
+        gaps.push({ pillar: p.name, name: c[0], gap, max, scored });
+      }
+    });
+  });
+  gaps.sort((a, b) => b.gap - a.gap);
+  const top5 = gaps.slice(0, 5);
+
+  const listEl = document.getElementById('priorityList');
+  if (top5.length === 0) {
+    listEl.innerHTML = '<div class="priority-empty">Score every criterion to see your top priorities here.</div>';
+    return;
+  }
+  listEl.innerHTML = top5.map((item, i) => `
+    <div class="priority-item">
+      <div class="priority-rank">${i + 1}</div>
+      <div class="ptext">
+        <div class="pname">${item.name}</div>
+        <div class="ppillar">${item.pillar}</div>
+      </div>
+      <div class="pgap">${item.scored}/${item.max} — ${item.gap} pts open</div>
+    </div>
+  `).join('');
+}
+
+let previousAudit = null;
+
+function renderCompareStrip(currentScore) {
+  const strip = document.getElementById('compareStrip');
+  if (!previousAudit) {
+    strip.classList.remove('show');
+    strip.innerHTML = '';
+    return;
+  }
+  const delta = currentScore - previousAudit.score;
+  const deltaClass = delta > 0.05 ? 'delta-up' : delta < -0.05 ? 'delta-down' : 'delta-flat';
+  const deltaSign = delta > 0 ? '+' : '';
+  strip.classList.add('show');
+  strip.innerHTML = `
+    <span>PREVIOUS (${previousAudit.date || 'undated'}): <strong style="color:var(--cream)">${previousAudit.score.toFixed(1)}</strong></span>
+    <span>→</span>
+    <span>CURRENT: <strong style="color:var(--cream)">${currentScore.toFixed(1)}</strong></span>
+    <span class="${deltaClass}">(${deltaSign}${delta.toFixed(1)})</span>
+  `;
+}
+
+function saveAudit() {
+  const payload = {
+    clientName: document.getElementById('clientName').value || 'Unnamed Client',
+    auditDate: document.getElementById('auditDate').value || '',
+    score: composite(),
+    state: state,
+    savedAt: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = payload.clientName.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+  a.href = url;
+  a.download = `audit-${safeName}-${payload.auditDate || 'undated'}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function loadAudit(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      previousAudit = { score: data.score, date: data.auditDate };
+
+      document.getElementById('clientName').value = data.clientName || '';
+      document.getElementById('auditDate').value = data.auditDate || '';
+
+      PILLARS.forEach(p => {
+        if (data.state && data.state[p.key]) {
+          p.criteria.forEach((c, ci) => {
+            const val = data.state[p.key][ci] ?? 0;
+            setCriterionValue(p.key, ci, val, c[1]);
+          });
+        }
+      });
+      render();
+    } catch (err) {
+      alert('Could not read that file — make sure it\'s a JSON file saved from this tool.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 function buildCards() {
