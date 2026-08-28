@@ -9,7 +9,7 @@
 
   :root {
     --cream: #F4EFE6; --navy: #0E1730; --navy-deep: #060A16;
-    --blue: #5B7FE0; --muted: #9AA6C4; --card: #10192F;
+    --blue: #5B7FE0; --muted: #B3C0DE; --card: #10192F;
     --red: #EF7F7F; --amber: #E8B85B; --green: #6FCF97;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,10 +76,10 @@
   .pillar-card.open .chevron { transform: rotate(180deg); }
 
   .criteria-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .criteria-list-inner { padding: 4px 26px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .criteria-list-inner { padding: 6px 26px 24px; display: flex; flex-direction: column; gap: 20px; }
   .criterion { display: grid; grid-template-columns: 1fr 120px 70px; align-items: center; gap: 16px; }
-  .criterion .cname { font-size: 13.5px; color: var(--cream); }
-  .criterion .cnote { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .criterion .cname { font-size: 15px; font-weight: 500; color: var(--cream); line-height: 1.4; }
+  .criterion .cnote { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
   .criterion input[type=range] {
     -webkit-appearance: none; width: 100%; height: 6px; border-radius: 999px;
     background: rgba(255,255,255,0.1); outline: none;
@@ -88,8 +88,20 @@
     -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
     background: var(--blue); cursor: pointer; border: 2px solid var(--cream);
   }
-  .criterion .cval { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; text-align: right; color: var(--cream); }
-  .criterion .cval .max { color: var(--muted); }
+  .criterion .cval { display: flex; align-items: center; justify-content: flex-end; gap: 5px; }
+  .criterion .cval input[type=number] {
+    width: 34px; background: transparent; border: 1px solid transparent; border-radius: 6px;
+    padding: 4px 2px; color: var(--cream); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    font-weight: 600; text-align: center; outline: none; transition: border-color 0.15s, background 0.15s;
+    -moz-appearance: textfield;
+  }
+  .criterion .cval input[type=number]::-webkit-outer-spin-button,
+  .criterion .cval input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0;
+  }
+  .criterion .cval input[type=number]:hover { background: rgba(255,255,255,0.05); }
+  .criterion .cval input[type=number]:focus { border-color: var(--blue); background: var(--navy); }
+  .criterion .cval .max { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
 
   .interp-legend { display: flex; gap: 14px 18px; flex-wrap: wrap; justify-content: center; margin-top: 14px; max-width: 260px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); }
   .interp-legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -102,9 +114,23 @@
   }
 
   @media print {
-    body { background: white; color: black; padding: 20px; }
+    :root {
+      --cream: #1A1A1A; --navy: #F2F2F2; --navy-deep: #FFFFFF;
+      --card: #F7F7F7; --muted: #555555; --blue: #3355B0;
+    }
+    body { background: white; padding: 10px; }
+    .score-panel, .pillar-card {
+      border: 1px solid #DDDDDD !important; box-shadow: none !important;
+    }
+    .bar-track, .criterion input[type=range] { background: #E2E2E2 !important; }
+    .meta-field input, .criterion .cval input[type=number] {
+      background: #FFFFFF !important; border: 1px solid #CCCCCC !important; color: #1A1A1A !important;
+    }
+    svg path[stroke="rgba(255,255,255,0.08)"] { stroke: #E2E2E2 !important; }
+    .criterion input[type=range] { display: none; }
+    .criterion { grid-template-columns: 1fr 60px !important; }
     .criteria-list { max-height: none !important; }
-    .print-btn { display: none; }
+    .chevron, .print-btn { display: none; }
   }
 
   @media (max-width: 760px) {
@@ -183,7 +209,7 @@ const PILLARS = [
       ['Review response rate', 20, '% of all reviews with owner response'],
       ['Review response speed', 10, 'Avg turnaround, last 10 reviews'],
       ['Review recency', 15, 'Reviews received in last 90 days'],
-      ['Review-generation system in place', 10, 'A real repeatable process, or left to chance'],
+      ['Review-generation system in place', 10, 'Repeatable process for requesting reviews, not left to chance'],
       ['Secondary platform presence', 5, 'Yelp/Facebook, if relevant to business type'],
     ]
   },
@@ -192,11 +218,11 @@ const PILLARS = [
     criteria: [
       ['Search impressions / discovery searches', 20, 'From GBP Insights'],
       ['Maps views', 15, 'From GBP Insights'],
-      ['Ranking spot-check', 20, '3-5 realistic search terms + location'],
+      ['Ranking spot-check', 20, 'Search 3-5 realistic customer terms + location, note position'],
       ['Website clicks from profile', 15, 'From GBP Insights'],
       ['Direction requests', 10, 'From GBP Insights'],
       ['Phone calls from listing', 10, 'From GBP Insights, if tracked'],
-      ['Competitive position', 10, 'Relative to benchmarked competitors'],
+      ['Competitive position', 10, 'Standing relative to the 3-5 benchmarked competitors'],
     ]
   },
   {
@@ -204,7 +230,7 @@ const PILLARS = [
     criteria: [
       ['NAP consistency with GBP', 20, 'Name/Address/Phone must match exactly'],
       ['Mobile usability', 15, 'Loads correctly, readable, tappable'],
-      ['Services clearly listed', 10, 'Visitor understands offering in 10 seconds'],
+      ['Services clearly listed', 10, 'A visitor understands the offering within 10 seconds'],
       ['Contact/CTA prominence', 15, 'Click-to-call, contact form above fold'],
       ['Reviews/testimonials on site', 10, 'Any social proof displayed'],
       ['Photos current & authentic', 10, 'Real business photos, not stock'],
@@ -288,9 +314,13 @@ function buildCards() {
                 <div class="cname">${c[0]}</div>
                 <span class="cnote">${c[2]}</span>
               </div>
-              <input type="range" min="0" max="${c[1]}" value="0" step="1"
+              <input type="range" id="slider-${p.key}-${ci}" min="0" max="${c[1]}" value="0" step="1"
                 oninput="updateCriterion('${p.key}', ${ci}, this.value)">
-              <div class="cval"><span id="val-${p.key}-${ci}">0</span> <span class="max">/ ${c[1]}</span></div>
+              <div class="cval">
+                <input type="number" id="num-${p.key}-${ci}" min="0" max="${c[1]}" value="0"
+                  onchange="updateFromNumber('${p.key}', ${ci}, this.value)">
+                <span class="max">/ ${c[1]}</span>
+              </div>
             </div>
           `).join('')}
         </div>
@@ -312,14 +342,28 @@ function toggleCard(key) {
   }
 }
 
-function updateCriterion(key, idx, val) {
-  state[key][idx] = parseFloat(val);
-  document.getElementById(`val-${key}-${idx}`).textContent = val;
+function setCriterionValue(key, idx, rawVal, maxVal) {
+  let val = Math.round(parseFloat(rawVal));
+  if (isNaN(val)) val = 0;
+  val = Math.max(0, Math.min(maxVal, val));
+  state[key][idx] = val;
+  document.getElementById(`slider-${key}-${idx}`).value = val;
+  document.getElementById(`num-${key}-${idx}`).value = val;
   const p = PILLARS.find(p => p.key === key);
   document.getElementById(`subtotal-${key}`).textContent = `${pillarSubtotal(p)}/${pillarMax(p)}`;
   const list = document.getElementById(`list-${key}`);
   if (list.style.maxHeight) list.style.maxHeight = list.scrollHeight + 'px';
   render();
+}
+
+function updateCriterion(key, idx, val) {
+  const p = PILLARS.find(p => p.key === key);
+  setCriterionValue(key, idx, val, p.criteria[idx][1]);
+}
+
+function updateFromNumber(key, idx, val) {
+  const p = PILLARS.find(p => p.key === key);
+  setCriterionValue(key, idx, val, p.criteria[idx][1]);
 }
 
 buildCards();
