@@ -459,10 +459,10 @@
   <div class="glow"></div>
 
   <nav>
-    <div class="logo-mark">
+    <a href="index.html" class="logo-mark" style="text-decoration:none; cursor:pointer;" onclick="return goHome(event)">
       <span class="line1">MISSION:</span>
       <span class="line2">FOUND</span>
-    </div>
+    </a>
     <div class="menu-btn" id="menuBtn"><div></div></div>
 
     <div class="nav-menu" id="navMenu">
@@ -750,6 +750,15 @@
   window.addEventListener('resize', resize);
   resize();
   requestAnimationFrame(draw);
+
+  function goHome(e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+    return false;
+  }
 
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navMenu');
