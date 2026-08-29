@@ -105,6 +105,23 @@
   .criterion .cval input[type=number]:focus { border-color: var(--blue); background: var(--navy); }
   .criterion .cval .max { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
 
+  .criterion.binary { grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; }
+  .toggle-group {
+    display: flex; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .toggle-btn {
+    background: transparent; border: none; color: var(--muted); cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 12.5px;
+    padding: 9px 0; width: 64px; text-align: center; transition: background 0.15s, color 0.15s;
+  }
+  .toggle-btn.is-fail.active { background: rgba(239,127,127,0.18); color: #EF7F7F; }
+  .toggle-btn.is-pass.active { background: rgba(111,207,151,0.18); color: #6FCF97; }
+  .criterion-points {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
+    width: 52px; text-align: right; flex-shrink: 0;
+  }
+
   .interp-legend { display: flex; gap: 14px 18px; flex-wrap: wrap; justify-content: center; margin-top: 14px; max-width: 260px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); }
   .interp-legend span { display: inline-flex; align-items: center; gap: 6px; }
   .interp-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -191,6 +208,9 @@
     .pillar-row { grid-template-columns: 1fr; text-align: left; gap: 6px; }
     .pillar-row .bar-track { grid-column: 1 / -1; }
     .criterion { grid-template-columns: 1fr; gap: 8px; }
+    .criterion.binary { grid-template-columns: 1fr; }
+    .criterion.binary .toggle-group { align-self: flex-start; }
+    .criterion.binary .criterion-points { display: none; }
     .btn-group { justify-content: center; }
     .print-btn, .action-btn { font-size: 12.5px; padding: 11px 16px; }
     .meta-field input { width: 100%; }
@@ -257,54 +277,54 @@ const PILLARS = [
   {
     key: 'gbp', name: 'Google Business Profile Optimization', weight: 0.35, color: '#5B7FE0',
     criteria: [
-      ['Business info accuracy (name/address/phone)', 20, 'Exact match across GBP and every listing'],
-      ['Primary + secondary categories', 10, 'Most specific accurate primary category'],
-      ['Business description quality', 10, 'Present, keyword-relevant, full length'],
-      ['Hours of operation accuracy', 5, 'Includes holiday hours if applicable'],
-      ['Services/products list completeness', 10, 'Complete, specific, not just defaults'],
-      ['Service area configuration', 5, 'If the business travels to customers'],
-      ['Attributes completed', 5, 'Accessibility, payment types, etc.'],
-      ['Photos — quantity & recency', 15, '10+ photos, 3+ in last 90 days'],
-      ['Google Posts activity', 10, '2+ posts in last 30 days'],
-      ['Q&A monitored', 5, 'No unanswered questions older than 7 days'],
-      ['Messaging/booking enabled', 5, 'If supported for business type'],
+      ['Business info accuracy (name/address/phone)', 20, 'Exact match across GBP and every listing', 'binary'],
+      ['Primary + secondary categories', 10, 'Pass: primary category is most specific option + secondaries filled', 'binary'],
+      ['Business description quality', 10, 'Pass: present, keyword-relevant, uses full character limit', 'binary'],
+      ['Hours of operation accuracy', 5, 'Pass: accurate, includes holiday hours if applicable', 'binary'],
+      ['Services/products list completeness', 10, 'Pass: complete, specific list, not just category defaults', 'binary'],
+      ['Service area configuration', 5, 'If the business travels to customers', 'binary'],
+      ['Attributes completed', 5, 'Pass: relevant attributes filled (accessibility, payment, etc.)', 'binary'],
+      ['Photos — quantity & recency', 15, 'Pass: 10+ photos, 3+ added in last 90 days', 'binary'],
+      ['Google Posts activity', 10, 'Pass: 2+ posts in last 30 days', 'binary'],
+      ['Q&A monitored', 5, 'No unanswered questions older than 7 days', 'binary'],
+      ['Messaging/booking enabled', 5, 'If supported for business type', 'binary'],
     ]
   },
   {
     key: 'reviews', name: 'Reviews & Reputation', weight: 0.25, color: '#E8B85B',
     criteria: [
-      ['Review count vs. competitor average', 20, 'Compare to 3-5 benchmarked competitors'],
-      ['Average star rating', 20, 'Weighted toward recent reviews'],
-      ['Review response rate', 20, '% of all reviews with owner response'],
-      ['Review response speed', 10, 'Avg turnaround, last 10 reviews'],
-      ['Review recency', 15, 'Reviews received in last 90 days'],
-      ['Review-generation system in place', 10, 'Repeatable process for requesting reviews, not left to chance'],
-      ['Secondary platform presence', 5, 'Yelp/Facebook, if relevant to business type'],
+      ['Review count vs. competitor average', 20, 'Pass: at or above the 3-5 benchmarked competitors\' average', 'binary'],
+      ['Average star rating', 20, 'Pass: 4.3 stars or higher', 'binary'],
+      ['Review response rate', 20, 'Pass: 80%+ of all reviews have an owner response', 'binary'],
+      ['Review response speed', 10, 'Pass: average response within 48 hours', 'binary'],
+      ['Review recency', 15, 'Pass: at least 1 new review in the last 90 days', 'binary'],
+      ['Review-generation system in place', 10, 'Repeatable process for requesting reviews, not left to chance', 'binary'],
+      ['Secondary platform presence', 5, 'Yelp/Facebook, if relevant to business type', 'binary'],
     ]
   },
   {
     key: 'local', name: 'Local Search & Competitive Visibility', weight: 0.15, color: '#6FCF97',
     criteria: [
-      ['Search impressions / discovery searches', 20, 'From GBP Insights'],
-      ['Maps views', 15, 'From GBP Insights'],
-      ['Ranking spot-check', 20, 'Search 3-5 realistic customer terms + location, note position'],
-      ['Website clicks from profile', 15, 'From GBP Insights'],
-      ['Direction requests', 10, 'From GBP Insights'],
-      ['Phone calls from listing', 10, 'From GBP Insights, if tracked'],
-      ['Competitive position', 10, 'Standing relative to the 3-5 benchmarked competitors'],
+      ['Search impressions / discovery searches', 20, 'Pass: trending flat or upward vs. prior period (GBP Insights)', 'binary'],
+      ['Maps views', 15, 'Pass: trending flat or upward vs. prior period (GBP Insights)', 'binary'],
+      ['Ranking spot-check', 20, 'Pass: appears in the map pack (top 3) for primary search terms', 'binary'],
+      ['Website clicks from profile', 15, 'Pass: nonzero and tracked (GBP Insights)', 'binary'],
+      ['Direction requests', 10, 'Pass: nonzero and tracked (GBP Insights)', 'binary'],
+      ['Phone calls from listing', 10, 'Pass: call tracking enabled and receiving calls', 'binary'],
+      ['Competitive position', 10, 'Pass: at or above the median of benchmarked competitors', 'binary'],
     ]
   },
   {
     key: 'website', name: 'Website Presence & Consistency', weight: 0.25, color: '#B98BD9',
     criteria: [
-      ['NAP consistency with GBP', 20, 'Name/Address/Phone must match exactly'],
-      ['Mobile usability', 15, 'Loads correctly, readable, tappable'],
-      ['Services clearly listed', 10, 'A visitor understands the offering within 10 seconds'],
-      ['Contact/CTA prominence', 15, 'Click-to-call, contact form above fold'],
-      ['Reviews/testimonials on site', 10, 'Any social proof displayed'],
-      ['Photos current & authentic', 10, 'Real business photos, not stock'],
-      ['Basic SEO hygiene', 10, 'Page title, meta description, local terms'],
-      ['Site functions without errors', 10, 'No broken links or bugs'],
+      ['NAP consistency with GBP', 20, 'Name/Address/Phone must match exactly', 'binary'],
+      ['Mobile usability', 15, 'Pass: loads correctly, readable, fully usable on a phone', 'binary'],
+      ['Services clearly listed', 10, 'Pass: a visitor understands the offering within 10 seconds', 'binary'],
+      ['Contact/CTA prominence', 15, 'Pass: click-to-call or contact form visible above the fold', 'binary'],
+      ['Reviews/testimonials on site', 10, 'Any social proof displayed', 'binary'],
+      ['Photos current & authentic', 10, 'Pass: real, current business photos, not stock imagery', 'binary'],
+      ['Basic SEO hygiene', 10, 'Pass: page title, meta description, and local terms present', 'binary'],
+      ['Site functions without errors', 10, 'No broken links or bugs', 'binary'],
     ]
   }
 ];
@@ -480,7 +500,23 @@ function buildCards() {
       </div>
       <div class="criteria-list" id="list-${p.key}">
         <div class="criteria-list-inner">
-          ${p.criteria.map((c, ci) => `
+          ${p.criteria.map((c, ci) => {
+            const isBinary = c[3] === 'binary';
+            if (isBinary) {
+              return `
+            <div class="criterion binary">
+              <div>
+                <div class="cname">${c[0]}</div>
+                <span class="cnote">${c[2]}</span>
+              </div>
+              <div class="toggle-group" id="toggle-${p.key}-${ci}">
+                <button type="button" class="toggle-btn is-fail" onclick="setBinaryValue('${p.key}', ${ci}, false)">Fail</button>
+                <button type="button" class="toggle-btn is-pass" onclick="setBinaryValue('${p.key}', ${ci}, true)">Pass</button>
+              </div>
+              <div class="criterion-points">${c[1]} pt${c[1] > 1 ? 's' : ''}</div>
+            </div>`;
+            }
+            return `
             <div class="criterion">
               <div>
                 <div class="cname">${c[0]}</div>
@@ -493,8 +529,8 @@ function buildCards() {
                   onchange="updateFromNumber('${p.key}', ${ci}, this.value)">
                 <span class="max">/ ${c[1]}</span>
               </div>
-            </div>
-          `).join('')}
+            </div>`;
+          }).join('')}
         </div>
       </div>
     </div>
@@ -519,13 +555,36 @@ function setCriterionValue(key, idx, rawVal, maxVal) {
   if (isNaN(val)) val = 0;
   val = Math.max(0, Math.min(maxVal, val));
   state[key][idx] = val;
-  document.getElementById(`slider-${key}-${idx}`).value = val;
-  document.getElementById(`num-${key}-${idx}`).value = val;
   const p = PILLARS.find(p => p.key === key);
+  const isBinary = p.criteria[idx][3] === 'binary';
+  if (isBinary) {
+    updateToggleVisual(key, idx);
+  } else {
+    document.getElementById(`slider-${key}-${idx}`).value = val;
+    document.getElementById(`num-${key}-${idx}`).value = val;
+  }
   document.getElementById(`subtotal-${key}`).textContent = `${pillarSubtotal(p)}/${pillarMax(p)}`;
   const list = document.getElementById(`list-${key}`);
   if (list.style.maxHeight) list.style.maxHeight = list.scrollHeight + 'px';
   render();
+}
+
+function setBinaryValue(key, idx, isPass) {
+  const p = PILLARS.find(p => p.key === key);
+  const maxVal = p.criteria[idx][1];
+  setCriterionValue(key, idx, isPass ? maxVal : 0, maxVal);
+}
+
+function updateToggleVisual(key, idx) {
+  const p = PILLARS.find(p => p.key === key);
+  const maxVal = p.criteria[idx][1];
+  const val = state[key][idx];
+  const group = document.getElementById(`toggle-${key}-${idx}`);
+  if (!group) return;
+  const failBtn = group.querySelector('.is-fail');
+  const passBtn = group.querySelector('.is-pass');
+  failBtn.classList.toggle('active', val < maxVal);
+  passBtn.classList.toggle('active', val >= maxVal);
 }
 
 function updateCriterion(key, idx, val) {
