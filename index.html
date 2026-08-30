@@ -271,6 +271,14 @@
     color: var(--cream); margin-bottom: 10px;
   }
   .card p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .card .pillar-lead { color: var(--muted); font-size: 14.5px; line-height: 1.55; margin-bottom: 18px; }
+  .pillar-list { display: flex; flex-direction: column; gap: 10px; }
+  .pillar-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--cream); line-height: 1.5; }
+  .pillar-item .check {
+    width: 16px; height: 16px; border-radius: 50%; background: rgba(91,127,224,0.18);
+    color: var(--blue); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 9.5px; font-weight: 700; margin-top: 2px;
+  }
 
   .steps-row {
     display: flex; gap: 24px; align-items: flex-start;
@@ -489,9 +497,9 @@
       <span class="arrow">›</span>
     </div>
 
-    <h1>Help local customers<br>find <span class="accent">&</span> choose <em>you</em>.</h1>
+    <h1>Get found. Get trusted.<br>Stay <em>active</em>.</h1>
 
-    <p class="hero-sub"><strong>Mission: Found</strong> manages your online presence, photos, and reviews so that local searches turn into real calls, not missed opportunities.</p>
+    <p class="hero-sub">Your business is better than its online presence lets on. <strong>Mission: Found</strong> manages your Google Business Profile, reviews, and online activity — so local searches turn into real calls, not missed opportunities.</p>
 
     <a href="audit.html" class="btn-primary">
       <span class="icon-circle">↓</span>
@@ -552,28 +560,38 @@
 </section>
 
 <section class="block" id="what-we-do">
-  <div class="section-eyebrow">What We Do</div>
-  <h2 class="section-title">Everything your online presence needs, handled every month.</h2>
-  <div class="cards-grid">
+  <div class="section-eyebrow">How We Help</div>
+  <h2 class="section-title">Three things stand between a customer and your front door.</h2>
+  <div class="cards-grid-3">
     <div class="card">
-      <div class="card-num">01</div>
-      <h3>Google Business Profile</h3>
-      <p>Fresh photos, posts, hours, and service updates — keeping your listing active and accurate every week.</p>
+      <div class="card-num">GET FOUND</div>
+      <h3>Show up when it matters</h3>
+      <p class="pillar-lead">Show up when someone searches for a business like yours.</p>
+      <div class="pillar-list">
+        <div class="pillar-item"><span class="check">✓</span>Google Business Profile fully optimized, not just claimed</div>
+        <div class="pillar-item"><span class="check">✓</span>Accurate listings across every platform that matters</div>
+        <div class="pillar-item"><span class="check">✓</span>Active in local search, not buried under competitors</div>
+      </div>
     </div>
     <div class="card">
-      <div class="card-num">02</div>
-      <h3>Review Management</h3>
-      <p>Every review answered within 48 hours, plus proactive outreach to happy customers for new ones.</p>
+      <div class="card-num">GET TRUSTED</div>
+      <h3>Earn the click, then the call</h3>
+      <p class="pillar-lead">Turn hesitant browsers into confident callers.</p>
+      <div class="pillar-list">
+        <div class="pillar-item"><span class="check">✓</span>A steady flow of authentic, customer-generated reviews</div>
+        <div class="pillar-item"><span class="check">✓</span>Every review answered — good or bad</div>
+        <div class="pillar-item"><span class="check">✓</span>Your rating actually reflects the quality of your work</div>
+      </div>
     </div>
     <div class="card">
-      <div class="card-num">03</div>
-      <h3>Website Upkeep</h3>
-      <p>Seasonal updates, testimonials, and before/after photos so your site stays current and convincing.</p>
-    </div>
-    <div class="card">
-      <div class="card-num">04</div>
-      <h3>Monthly Reporting</h3>
-      <p>A simple report showing views, calls, and direction requests — so you see exactly what's working.</p>
+      <div class="card-num">STAY ACTIVE</div>
+      <h3>Look open, busy, and worth choosing</h3>
+      <p class="pillar-lead">Look like a business that's open, busy, and worth choosing today.</p>
+      <div class="pillar-list">
+        <div class="pillar-item"><span class="check">✓</span>Fresh photos and regular updates, not a listing frozen in time</div>
+        <div class="pillar-item"><span class="check">✓</span>Customer questions answered before they become lost leads</div>
+        <div class="pillar-item"><span class="check">✓</span>Ongoing activity that Google — and customers — notice</div>
+      </div>
     </div>
   </div>
 </section>
@@ -585,7 +603,13 @@
     <div class="step">
       <div class="step-num">01</div>
       <h3>Free Audit</h3>
-      <p>We review your current listing and show you exactly where you're losing customers online.</p>
+      <p>We score your business across the four things that actually determine whether customers find, trust, and choose you:</p>
+      <div class="pillar-list" style="margin-top: 14px;">
+        <div class="pillar-item"><span class="check">✓</span>Google Business Profile Optimization</div>
+        <div class="pillar-item"><span class="check">✓</span>Reviews &amp; Reputation</div>
+        <div class="pillar-item"><span class="check">✓</span>Local Search Visibility</div>
+        <div class="pillar-item"><span class="check">✓</span>Website Presence</div>
+      </div>
     </div>
     <div class="step">
       <div class="step-num">02</div>
