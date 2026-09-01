@@ -201,6 +201,24 @@
   }
   .caption .shield-icon { color: var(--blue); flex-shrink: 0; }
 
+  /* ---- Hero visual: GBP mockup card (replaces horizon-glow) ---- */
+  .hero-visual { max-width: 560px; margin: 48px auto 0; position: relative; z-index: 2; }
+  .hero-visual::before {
+    content: ''; position: absolute; inset: -60px; z-index: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 40%, rgba(91,127,224,0.28), transparent 70%);
+    filter: blur(10px); pointer-events: none;
+  }
+  .gbp-card { position: relative; z-index: 1; background: #fff; border-radius: 16px; padding: 30px 32px; box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
+  .gbp-top { display: flex; gap: 18px; align-items: center; }
+  .gbp-thumb { width: 68px; height: 68px; border-radius: 14px; background: #EEF1FA; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .gbp-name-row { display: flex; align-items: center; gap: 8px; }
+  .gbp-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--charcoal); font-size: 21px; }
+  .gbp-verified { width: 19px; height: 19px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .gbp-meta { color: #8a7a3a; font-size: 15px; font-weight: 600; margin-top: 5px; }
+  .gbp-actions { display: flex; gap: 8px; border-top: 1px solid #EEF1F5; margin-top: 24px; padding-top: 20px; }
+  .gbp-action { flex: 1; text-align: center; font-size: 13px; font-weight: 600; color: var(--blue); }
+  .gbp-action div { font-size: 21px; margin-bottom: 6px; }
+
   /* ---- Content sections below the hero ---- */
   section.block {
     position: relative; z-index: 2; max-width: 1120px; margin: 0 auto;
@@ -236,9 +254,31 @@
     color: var(--cream); margin-bottom: 10px;
   }
   .problem-card p { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+  /* ---- Problem section: search-results mockup ---- */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .problem-lede { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 460px; }
+  .search-mock { background: #10192F; border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08); }
+  .search-bar { background: var(--navy-deep); border-radius: 999px; padding: 11px 18px; font-size: 13px; color: var(--muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+  .result-row { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: flex-start; }
+  .result-row:last-child { border-bottom: none; }
+  .result-rank { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); opacity: 0.6; width: 16px; padding-top: 2px; }
+  .result-name { font-size: 14px; font-weight: 600; color: var(--cream); font-family: 'Space Grotesk', sans-serif; }
+  .result-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .result-row.dim { opacity: 0.75; outline: 1.5px dashed #E0663C; outline-offset: 6px; border-radius: 6px; }
+  .result-row.dim .result-name { color: var(--muted); }
+  .callout {
+    display: flex; align-items: center; gap: 10px; margin-top: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #FFDCC9; font-weight: 700;
+    background: rgba(224,102,60,0.16); border: 1px solid rgba(224,102,60,0.4);
+    padding: 11px 15px; border-radius: 8px; letter-spacing: 0.01em; line-height: 1.4;
+  }
+  .callout .callout-mark { font-size: 15px; flex-shrink: 0; }
+
   .card {
     background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
     padding: 32px; transition: border-color 0.2s, transform 0.2s;
+    display: flex; flex-direction: column;
   }
   .card:hover { border-color: rgba(91,127,224,0.4); transform: translateY(-3px); }
   .card-num {
@@ -259,10 +299,39 @@
     font-size: 9.5px; font-weight: 700; margin-top: 2px;
   }
 
+  /* ---- Pillar visuals: before/after, review, post ---- */
+  .pillar-visual { margin-top: auto; }
+  .ba-row { display: flex; gap: 10px; }
+  .ba-col { flex: 1; background: var(--navy-deep); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.08); }
+  .ba-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; font-weight: 600; }
+  .ba-col.before .ba-tag { color: var(--muted); opacity: 0.7; }
+  .ba-col.after .ba-tag { color: #4EC17E; }
+  .ba-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); margin-bottom: 6px; }
+  .ba-col.before .ba-line { background: rgba(255,255,255,0.06); }
+  .ba-col.before .ba-line:nth-child(3) { width: 60%; }
+  .ba-col.after .ba-line { background: rgba(91,127,224,0.35); }
+  .ba-col.after .ba-line:nth-child(3) { width: 80%; }
+  .ba-photos { display: flex; gap: 4px; margin-top: 8px; }
+  .ba-photos div { width: 18px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.05); }
+  .ba-col.after .ba-photos div { background: rgba(91,127,224,0.3); }
+
+  .review-mini { background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; }
+  .review-stars { color: #E0A63C; font-size: 12px; margin-bottom: 6px; }
+  .review-text { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+  .reply-bubble { background: rgba(91,127,224,0.1); border-left: 2px solid var(--blue); padding: 8px 10px; border-radius: 0 8px 8px 0; }
+  .reply-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--blue); font-weight: 600; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .reply-text { font-size: 11.5px; color: var(--muted); }
+
+  .post-mini { background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; display: flex; gap: 10px; align-items: center; }
+  .post-thumb { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, rgba(91,127,224,0.35), rgba(91,127,224,0.1)); flex-shrink: 0; }
+  .post-cap { font-size: 12px; color: var(--cream); margin-bottom: 3px; font-weight: 600; }
+  .post-time { font-size: 10.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .post-new { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--blue); color: #fff; font-weight: 700; padding: 3px 8px; border-radius: 999px; flex-shrink: 0; }
+
   .steps-row {
     display: flex; gap: 24px; align-items: flex-start;
   }
-  .step { flex: 1; position: relative; }
+  .step { flex: 1; position: relative; display: flex; flex-direction: column; }
   .step-num {
     width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,224,0.14);
     border: 1px solid rgba(91,127,224,0.4); color: var(--blue);
@@ -279,6 +348,44 @@
     position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
     height: 1px; background: rgba(255,255,255,0.12);
   }
+
+  /* ---- Step visuals: audit gauge, setup checklist, report thumbnail ---- */
+  .step-visual { margin-top: 18px; }
+  .step .chrome-frame { display: flex; flex-direction: column; flex: 1; }
+  .chrome-frame {
+    background: var(--navy); border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .chrome-bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .chrome-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.14); }
+  .chrome-body { padding: 20px; display: flex; align-items: center; flex: 1; }
+
+  .gauge-wrap { display: flex; align-items: center; gap: 16px; width: 100%; }
+  .gauge-score { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: var(--cream); }
+  .gauge-score span { font-size: 12px; color: var(--muted); font-weight: 500; opacity: 0.75; }
+  .gauge-bars { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .gauge-bar-row { display: flex; align-items: center; gap: 8px; }
+  .gauge-bar-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); opacity: 0.75; width: 58px; flex-shrink: 0; }
+  .gauge-bar-track { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
+  .gauge-bar-fill { height: 100%; background: var(--blue); border-radius: 3px; }
+
+  .setup-body { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  .invite-row { display: flex; align-items: center; gap: 10px; }
+  .invite-avatar { width: 30px; height: 30px; border-radius: 50%; background: rgba(91,127,224,0.14); border: 1px solid var(--blue); flex-shrink: 0; }
+  .invite-name { font-size: 12.5px; color: var(--cream); font-weight: 600; }
+  .invite-status { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #E0A63C; margin-top: 1px; }
+  .invite-divider { height: 1px; background: rgba(255,255,255,0.08); }
+  .perm-row { display: flex; align-items: center; gap: 9px; }
+  .perm-check { width: 15px; height: 15px; border-radius: 4px; background: rgba(78,193,126,0.18); color: #4EC17E; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .perm-label { font-size: 11.5px; color: var(--muted); }
+  .setup-note { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--muted); opacity: 0.7; }
+
+  .report-page { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 14px; width: 100%; }
+  .report-head { height: 8px; width: 55%; background: rgba(255,255,255,0.15); border-radius: 3px; margin-bottom: 14px; }
+  .report-chart { display: flex; align-items: flex-end; gap: 5px; height: 36px; margin-bottom: 14px; }
+  .report-chart div { flex: 1; background: var(--blue); opacity: 0.55; border-radius: 2px 2px 0 0; }
+  .report-check { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); }
+  .report-check span { color: #4EC17E; }
 
   /* ---- Pricing ---- */
   .pricing-eyebrow-wrap { text-align: center; }
@@ -387,12 +494,18 @@
   @media (max-width: 640px) {
     .horizon-glow-img { width: 240%; max-width: 900px; }
     .hero-horizon { height: 130px; }
+    .hero-visual { margin-top: 32px; }
+    .gbp-card { padding: 22px 20px; }
+    .gbp-thumb { width: 52px; height: 52px; }
+    .gbp-name { font-size: 17px; }
+    .gbp-meta { font-size: 13px; }
     section.block { padding: 40px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
     .cards-grid-3 { grid-template-columns: 1fr; gap: 14px; }
     .problem-card { padding: 24px; }
     .card { padding: 24px; }
+    .problem-grid { grid-template-columns: 1fr; gap: 28px; }
     .steps-row { flex-direction: column; gap: 32px; }
     .step-line { display: none; }
     .price-card { padding: 36px 26px; }
@@ -493,29 +606,48 @@
     </div>
   </div>
 
-  <div class="hero-horizon">
-    <img src="horizon-glow.png" class="horizon-glow-img" alt="" aria-hidden="true">
+  <div class="hero-visual">
+    <div class="gbp-card">
+      <div class="gbp-top">
+        <div class="gbp-thumb">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#5B7FE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h16v5M4 9l1 11h14l1-11M4 9h16M9 20v-6h6v6"/></svg>
+        </div>
+        <div>
+          <div class="gbp-name-row"><span class="gbp-name">Your Business</span><span class="gbp-verified">✓</span></div>
+          <div class="gbp-meta">4.9 ★★★★★ (128) · Local Service Business</div>
+        </div>
+      </div>
+      <div class="gbp-actions">
+        <div class="gbp-action"><div>📞</div>Call</div>
+        <div class="gbp-action"><div>📍</div>Directions</div>
+        <div class="gbp-action"><div>🌐</div>Website</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <section class="block" id="problem">
-  <div class="section-eyebrow">The Problem</div>
-  <h2 class="section-title">Your business might be better than your online presence makes it look.</h2>
-  <div class="cards-grid-3">
-    <div class="problem-card">
-      <div class="problem-icon">?</div>
-      <h3>Can't Find You</h3>
-      <p>Your Google listing is incomplete, outdated, or buried under competitors who show up first.</p>
+  <div class="problem-grid">
+    <div>
+      <div class="section-eyebrow">The Problem</div>
+      <h2 class="section-title" style="margin-bottom: 18px;">Your business might be better than your online presence makes it look.</h2>
+      <p class="problem-lede">When someone searches for what you do, an outdated profile buries you below competitors who show up first — even if your work is better.</p>
     </div>
-    <div class="problem-card">
-      <div class="problem-icon">!</div>
-      <h3>Don't Trust You</h3>
-      <p>No recent reviews, no responses to the ones you have, no photos — and customers notice.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">✕</div>
-      <h3>Don't Choose You</h3>
-      <p>Even when they find you, inconsistent info and a stale profile make a competitor feel like the safer choice.</p>
+    <div class="search-mock">
+      <div class="search-bar">🔍 &nbsp;local service near me</div>
+      <div class="result-row">
+        <div class="result-rank">1</div>
+        <div><div class="result-name">Competitor Business Co.</div><div class="result-meta">4.6 ★★★★★ (89) · Open now</div></div>
+      </div>
+      <div class="result-row">
+        <div class="result-rank">2</div>
+        <div><div class="result-name">Riverside Services</div><div class="result-meta">4.4 ★★★★☆ (52) · Open now</div></div>
+      </div>
+      <div class="result-row dim">
+        <div class="result-rank">7</div>
+        <div><div class="result-name">Your Business</div><div class="result-meta">No hours listed · 3 photos</div></div>
+      </div>
+      <div class="callout"><span class="callout-mark">⚠</span> Buried below competitors — most customers never scroll this far</div>
     </div>
   </div>
 </section>
@@ -527,31 +659,50 @@
     <div class="card">
       <div class="card-num">GET FOUND</div>
       <h3>Show up when it matters</h3>
-      <p class="pillar-lead">Show up when someone searches for a business like yours.</p>
-      <div class="pillar-list">
-        <div class="pillar-item"><span class="check">✓</span>Google Business Profile fully optimized, not just claimed</div>
-        <div class="pillar-item"><span class="check">✓</span>Accurate listings across every platform that matters</div>
-        <div class="pillar-item"><span class="check">✓</span>Active in local search, not buried under competitors</div>
+      <p class="pillar-lead">Your profile fully optimized and active in local search, not buried under competitors.</p>
+      <div class="pillar-visual">
+        <div class="ba-row">
+          <div class="ba-col before">
+            <div class="ba-tag">Before</div>
+            <div class="ba-line"></div><div class="ba-line"></div><div class="ba-line"></div>
+            <div class="ba-photos"><div></div></div>
+          </div>
+          <div class="ba-col after">
+            <div class="ba-tag">After</div>
+            <div class="ba-line"></div><div class="ba-line"></div><div class="ba-line"></div>
+            <div class="ba-photos"><div></div><div></div><div></div><div></div></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card">
       <div class="card-num">GET TRUSTED</div>
       <h3>Earn the click, then the call</h3>
-      <p class="pillar-lead">Turn hesitant browsers into confident callers.</p>
-      <div class="pillar-list">
-        <div class="pillar-item"><span class="check">✓</span>A steady flow of authentic, customer-generated reviews</div>
-        <div class="pillar-item"><span class="check">✓</span>Every review answered — good or bad</div>
-        <div class="pillar-item"><span class="check">✓</span>Your rating actually reflects the quality of your work</div>
+      <p class="pillar-lead">A steady flow of authentic reviews — every one of them answered, good or bad.</p>
+      <div class="pillar-visual">
+        <div class="review-mini">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Showed up on time and the work was clean. Would call again."</div>
+          <div class="reply-bubble">
+            <div class="reply-label">Owner responded</div>
+            <div class="reply-text">Thanks so much — glad we could help!</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card">
       <div class="card-num">STAY ACTIVE</div>
       <h3>Look open, busy, and worth choosing</h3>
-      <p class="pillar-lead">Look like a business that's open, busy, and worth choosing today.</p>
-      <div class="pillar-list">
-        <div class="pillar-item"><span class="check">✓</span>Fresh photos and regular updates, not a listing frozen in time</div>
-        <div class="pillar-item"><span class="check">✓</span>Customer questions answered before they become lost leads</div>
-        <div class="pillar-item"><span class="check">✓</span>Ongoing activity that Google — and customers — notice</div>
+      <p class="pillar-lead">Fresh photos and regular updates, not a listing that's frozen in time.</p>
+      <div class="pillar-visual">
+        <div class="post-mini">
+          <div class="post-thumb"></div>
+          <div>
+            <div class="post-cap">New job completed this week</div>
+            <div class="post-time">Posted 2 days ago</div>
+          </div>
+          <div class="post-new">NEW</div>
+        </div>
       </div>
     </div>
   </div>
@@ -564,23 +715,69 @@
     <div class="step">
       <div class="step-num">01</div>
       <h3>Free Audit</h3>
-      <p>We score your business across the four things that actually determine whether customers find, trust, and choose you:</p>
-      <div class="pillar-list" style="margin-top: 14px;">
-        <div class="pillar-item"><span class="check">✓</span>Google Business Profile Optimization</div>
-        <div class="pillar-item"><span class="check">✓</span>Reviews &amp; Reputation</div>
-        <div class="pillar-item"><span class="check">✓</span>Local Search Visibility</div>
-        <div class="pillar-item"><span class="check">✓</span>Website Presence</div>
+      <p>We score your business across the four things that determine whether customers find, trust, and choose you.</p>
+      <div class="step-visual">
+        <div class="chrome-frame">
+          <div class="chrome-bar"><span></span><span></span><span></span></div>
+          <div class="chrome-body">
+            <div class="gauge-wrap">
+              <div class="gauge-score">47<span>/100</span></div>
+              <div class="gauge-bars">
+                <div class="gauge-bar-row"><div class="gauge-bar-label">GBP</div><div class="gauge-bar-track"><div class="gauge-bar-fill" style="width:55%"></div></div></div>
+                <div class="gauge-bar-row"><div class="gauge-bar-label">REVIEWS</div><div class="gauge-bar-track"><div class="gauge-bar-fill" style="width:30%"></div></div></div>
+                <div class="gauge-bar-row"><div class="gauge-bar-label">LOCAL</div><div class="gauge-bar-track"><div class="gauge-bar-fill" style="width:40%"></div></div></div>
+                <div class="gauge-bar-row"><div class="gauge-bar-label">SITE</div><div class="gauge-bar-track"><div class="gauge-bar-fill" style="width:60%"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">02</div>
       <h3>Quick Setup</h3>
-      <p>You add us as a Manager on your Google Business Profile — takes about five minutes, no passwords shared. We'll also set up a simple shared photo folder so fresh work photos are easy to send us.</p>
+      <p>You add us as a Manager on your Google Business Profile — five minutes, no passwords shared.</p>
+      <div class="step-visual">
+        <div class="chrome-frame">
+          <div class="chrome-bar"><span></span><span></span><span></span></div>
+          <div class="chrome-body">
+            <div class="setup-body">
+              <div class="invite-row">
+                <div class="invite-avatar"></div>
+                <div>
+                  <div class="invite-name">Mission: Found — Manager</div>
+                  <div class="invite-status">PENDING INVITE</div>
+                </div>
+              </div>
+              <div class="invite-divider"></div>
+              <div class="perm-row"><div class="perm-check">✓</div><div class="perm-label">Manage listing details</div></div>
+              <div class="perm-row"><div class="perm-check">✓</div><div class="perm-label">Respond to reviews</div></div>
+              <div class="perm-row"><div class="perm-check">✓</div><div class="perm-label">View performance insights</div></div>
+              <div class="setup-note">No password shared · revoke access anytime</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="step">
       <div class="step-num">03</div>
       <h3>Ongoing Management</h3>
-      <p>We handle photos, posts, and reviews monthly, and send you a simple report showing the results.</p>
+      <p>We handle photos, posts, and reviews monthly, and send a simple report showing the results.</p>
+      <div class="step-visual">
+        <div class="chrome-frame">
+          <div class="chrome-bar"><span></span><span></span><span></span></div>
+          <div class="chrome-body">
+            <div class="report-page">
+              <div class="report-head"></div>
+              <div class="report-chart">
+                <div style="height:40%"></div><div style="height:65%"></div><div style="height:50%"></div>
+                <div style="height:80%"></div><div style="height:70%"></div><div style="height:95%"></div>
+              </div>
+              <div class="report-check"><span>✓</span> 6 new reviews answered</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
