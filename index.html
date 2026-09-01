@@ -36,10 +36,20 @@
 
   canvas#stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 
-  .glow {
-    position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
-    width: 900px; height: 600px; z-index: 0; pointer-events: none;
-    background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(91,127,224,0.10) 0%, transparent 70%);
+  .hero-horizon {
+    position: relative; height: 260px; margin-top: 8px; z-index: 2; pointer-events: none;
+    overflow: hidden;
+  }
+  .horizon-glow {
+    position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+    width: 170%; max-width: 1700px; height: 700px; border-radius: 50%;
+    pointer-events: none; z-index: 0;
+    background: transparent;
+    border-top: 2px solid rgba(200,215,255,0.95);
+    box-shadow:
+      0 -6px 40px 4px rgba(120,150,255,0.55),
+      0 -20px 100px 30px rgba(91,127,224,0.3),
+      0 -50px 200px 80px rgba(91,127,224,0.12);
   }
 
   nav {
@@ -64,8 +74,27 @@
   .menu-btn {
     width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.08);
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    display: none; align-items: center; justify-content: center; cursor: pointer;
     position: relative; z-index: 60;
+  }
+  .nav-links-desktop {
+    display: flex; align-items: center; justify-content: center; gap: 30px; flex: 1;
+  }
+  .nav-links-desktop a {
+    color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500;
+    transition: color 0.15s; white-space: nowrap;
+  }
+  .nav-links-desktop a:hover { color: var(--cream); }
+  .nav-cta-header {
+    background: linear-gradient(135deg, #5B7FE0 0%, #4A6BC7 100%); color: #fff; font-weight: 600; font-size: 14px;
+    padding: 11px 22px; border-radius: 999px; text-decoration: none; white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .nav-cta-header:hover { opacity: 0.88; }
+
+  @media (max-width: 1024px) {
+    .nav-links-desktop, .nav-cta-header { display: none; }
+    .menu-btn { display: flex; }
   }
   .menu-btn div { width: 18px; height: 2px; background: var(--cream); position: relative; transition: transform 0.25s, opacity 0.25s, background 0.25s; }
   .menu-btn div::before, .menu-btn div::after {
@@ -120,7 +149,6 @@
     backdrop-filter: blur(8px);
   }
   .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
-  .badge .arrow { color: var(--blue); }
 
   h1 {
     font-family: 'Space Grotesk', sans-serif;
@@ -163,12 +191,12 @@
 
   .btn-primary {
     display: inline-flex; align-items: center; gap: 10px;
-    background: var(--cream); color: var(--navy-deep); font-weight: 600; font-size: 16px;
+    background: linear-gradient(135deg, #5B7FE0 0%, #4A6BC7 100%); color: #fff; font-weight: 600; font-size: 16px;
     padding: 17px 32px; border-radius: 999px; text-decoration: none;
-    box-shadow: 0 8px 30px rgba(244,239,230,0.15);
+    box-shadow: 0 8px 30px rgba(91,127,224,0.35);
   }
   .btn-primary .icon-circle {
-    width: 20px; height: 20px; border-radius: 50%; background: rgba(10,18,36,0.12);
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.18);
     display: flex; align-items: center; justify-content: center; font-size: 11px;
   }
 
@@ -178,48 +206,7 @@
     font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--muted); font-weight: 500;
   }
-
-  .preview-wrap {
-    position: relative; z-index: 2; max-width: 900px; width: 100%;
-    margin: 24px auto 0; flex: 1; display: flex; min-height: 0;
-  }
-  .preview-frame {
-    background: rgba(13,20,36,0.6); border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.08);
-    border-bottom: none; padding: 16px 24px 0; overflow: hidden; position: relative;
-    backdrop-filter: blur(6px); width: 100%; height: 100%; min-height: 220px; max-height: 340px;
-  }
-  .preview-frame::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
-    background: linear-gradient(180deg, transparent, var(--navy-deep));
-  }
-  .dots { display: flex; gap: 6px; margin-bottom: 16px; }
-  .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
-  .gbp-mini {
-    background: white; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 14px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  }
-  .gbp-top { display: flex; gap: 14px; align-items: center; }
-  .gbp-mini .thumb {
-    width: 48px; height: 48px; border-radius: 8px; background: #EEF1FA;
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  }
-  .name-row { display: flex; align-items: center; gap: 6px; }
-  .gbp-mini .name { font-weight: 700; color: var(--charcoal); font-size: 15px; font-family: 'Space Grotesk', sans-serif; }
-  .verified {
-    width: 15px; height: 15px; border-radius: 50%; background: var(--blue); color: white;
-    font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .gbp-mini .stars { color: #f59e0b; font-size: 12px; font-weight: 600; }
-  .gbp-actions {
-    display: flex; gap: 10px; border-top: 1px solid #EEF1F5; padding-top: 12px;
-  }
-  .gbp-action {
-    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
-    font-size: 11px; font-weight: 600; color: var(--blue);
-    font-family: 'Space Grotesk', sans-serif;
-  }
-  .gbp-action span { font-size: 15px; }
+  .caption .shield-icon { color: var(--blue); flex-shrink: 0; }
 
   /* ---- Content sections below the hero ---- */
   section.block {
@@ -320,7 +307,7 @@
   .price-amount .period { font-size: 16px; color: var(--muted); font-weight: 500; }
   .price-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
   .price-cta {
-    display: block; text-align: center; background: var(--cream); color: var(--navy-deep);
+    display: block; text-align: center; background: linear-gradient(135deg, #5B7FE0 0%, #4A6BC7 100%); color: #fff;
     font-weight: 600; font-size: 16px; padding: 16px; border-radius: 999px;
     text-decoration: none; margin-bottom: 16px;
   }
@@ -405,7 +392,8 @@
   }
 
   @media (max-width: 640px) {
-    .glow { width: 100vw; max-width: 500px; }
+    .horizon-glow { width: 220%; max-width: 700px; height: 380px; top: 20px; }
+    .hero-horizon { height: 160px; }
     section.block { padding: 40px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -442,15 +430,6 @@
     .btn-primary { padding: 15px 26px; font-size: 15px; }
     .caption { font-size: 10px; margin-top: 16px; }
     .hero { padding-bottom: 8px; }
-    .preview-wrap { margin-top: 20px; }
-    .preview-frame { border-radius: 16px 16px 0 0; padding: 12px 16px 0; min-height: 160px; }
-    .gbp-mini { padding: 12px; gap: 10px; }
-    .gbp-top { gap: 10px; }
-    .gbp-mini .thumb { width: 40px; height: 40px; }
-    .gbp-mini .name { font-size: 14px; }
-    .gbp-mini .stars { font-size: 11px; }
-    .gbp-action { font-size: 10px; }
-    .gbp-action span { font-size: 13px; }
   }
 
   @media (max-height: 700px) and (max-width: 640px) {
@@ -464,7 +443,6 @@
 
 <div class="page">
   <canvas id="stars"></canvas>
-  <div class="glow"></div>
 
   <nav>
     <a href="index.html" class="logo-lockup" style="text-decoration:none; cursor:pointer; display:flex; align-items:center; gap:12px;" onclick="return goHome(event)">
@@ -476,8 +454,17 @@
     </a>
     <div class="menu-btn" id="menuBtn"><div></div></div>
 
+    <div class="nav-links-desktop">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#what-we-do">How We Help</a>
+      <a href="#pricing">Pricing</a>
+      <a href="results.html">Results</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="audit.html" class="nav-cta-header">Get Your Free Audit</a>
+
     <div class="nav-menu" id="navMenu">
-      <a href="#what-we-do">What We Do</a>
+      <a href="#what-we-do">How We Help</a>
       <a href="#how-it-works">How it Works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -493,7 +480,6 @@
     <div class="badge">
       <span class="dot"></span>
       HELPING LOCAL BUSINESSES GET FOUND
-      <span class="arrow">›</span>
     </div>
 
     <h1>Get found. Get trusted.<br>Stay <em>active</em>.</h1>
@@ -506,33 +492,16 @@
     </a>
 
     <div class="caption">
-      ⓘ No obligation, no credit card needed
+      <svg class="shield-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L4 5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      No obligation, no credit card needed
     </div>
   </div>
 
-  <div class="preview-wrap">
-    <div class="preview-frame">
-      <div class="dots"><span></span><span></span><span></span></div>
-      <div class="gbp-mini">
-        <div class="gbp-top">
-          <div class="thumb">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#5B7FE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h16v5M4 9l1 11h14l1-11M4 9h16M9 20v-6h6v6"/></svg>
-          </div>
-          <div>
-            <div class="name-row">
-              <span class="name">Your Business</span>
-              <span class="verified" title="Actively managed">✓</span>
-            </div>
-            <div class="stars">4.9 ★★★★★ (128) · Local Service Business</div>
-          </div>
-        </div>
-        <div class="gbp-actions">
-          <div class="gbp-action"><span>📞</span>Call</div>
-          <div class="gbp-action"><span>📍</span>Directions</div>
-          <div class="gbp-action"><span>🌐</span>Website</div>
-        </div>
-      </div>
-    </div>
+  <div class="hero-horizon">
+    <div class="horizon-glow"></div>
   </div>
 </div>
 
