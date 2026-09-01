@@ -292,15 +292,42 @@
   /* ---- Problem section: search-results mockup ---- */
   .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
   .problem-lede { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 460px; }
-  .search-mock { background: #10192F; border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08); }
-  .search-bar { background: var(--navy-deep); border-radius: 999px; padding: 11px 18px; font-size: 13px; color: var(--muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
-  .result-row { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: flex-start; }
+  .search-mock {
+    background: #1C1C1E; border-radius: 20px; padding: 14px 20px 20px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .search-handle { width: 36px; height: 4px; border-radius: 999px; background: #636366; margin: 0 auto 16px; }
+  .search-topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .search-bar {
+    flex: 1; display: flex; align-items: center; gap: 10px;
+    background: #3A3A3C; border-radius: 12px; padding: 10px 12px;
+    font-size: 15px; color: #fff;
+  }
+  .search-bar svg { flex-shrink: 0; }
+  .search-clear {
+    margin-left: auto; width: 18px; height: 18px; border-radius: 50%; background: #636366;
+    color: #1C1C1E; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .search-close {
+    width: 30px; height: 30px; border-radius: 50%; background: #3A3A3C; color: #fff;
+    font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .result-row { display: flex; gap: 12px; padding: 13px 4px; border-bottom: 1px solid rgba(255,255,255,0.08); align-items: center; }
   .result-row:last-child { border-bottom: none; }
-  .result-rank { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); opacity: 0.6; width: 16px; padding-top: 2px; }
-  .result-name { font-size: 14px; font-weight: 600; color: var(--cream); font-family: 'Space Grotesk', sans-serif; }
-  .result-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .result-row.dim { opacity: 0.75; outline: 1.5px dashed #E0663C; outline-offset: 6px; border-radius: 6px; }
-  .result-row.dim .result-name { color: var(--muted); }
+  .result-rank { font-size: 11px; color: #636366; width: 12px; flex-shrink: 0; }
+  .result-icon {
+    width: 30px; height: 30px; border-radius: 50%; background: #FF3B30;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .result-icon svg { width: 14px; height: 14px; }
+  .result-name { font-size: 16px; font-weight: 600; color: #fff; }
+  .result-meta { font-size: 13.5px; color: #8E8E93; margin-top: 2px; }
+  .result-meta .stars { color: #FFD60A; letter-spacing: 1px; }
+  .result-meta .rcount { color: #8E8E93; }
+  .result-row.dim { opacity: 0.85; }
+  .result-row.dim .result-name { color: #C7C7CC; }
+  .result-row.dim .result-icon { background: #48484A; }
   .callout {
     display: flex; align-items: center; gap: 10px; margin-top: 20px;
     font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #FFDCC9; font-weight: 700;
@@ -363,7 +390,7 @@
   .post-new { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--blue); color: #fff; font-weight: 700; padding: 3px 8px; border-radius: 999px; flex-shrink: 0; }
 
   .steps-row {
-    display: flex; gap: 24px; align-items: flex-start;
+    display: flex; gap: 24px; align-items: stretch;
   }
   .step { flex: 1; position: relative; display: flex; flex-direction: column; }
   .step-num {
@@ -377,7 +404,7 @@
     font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600;
     color: var(--cream); margin-bottom: 8px;
   }
-  .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; }
+  .step p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 260px; min-height: 90px; }
   .step-line {
     position: absolute; top: 20px; left: calc(100% + 4px); width: calc(100% - 24px);
     height: 1px; background: rgba(255,255,255,0.12);
@@ -389,6 +416,7 @@
   .chrome-frame {
     background: var(--navy); border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);
     overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    min-height: 280px;
   }
   .chrome-bar { display: flex; gap: 6px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .chrome-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.14); }
@@ -686,17 +714,28 @@
       <p class="problem-lede">When someone searches for what you do, an outdated profile buries you below competitors who show up first — even if your work is better.</p>
     </div>
     <div class="search-mock">
-      <div class="search-bar">🔍 &nbsp;local service near me</div>
+      <div class="search-handle"></div>
+      <div class="search-topbar">
+        <div class="search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          local service near me
+          <span class="search-clear">✕</span>
+        </div>
+        <div class="search-close">✕</div>
+      </div>
       <div class="result-row">
         <div class="result-rank">1</div>
-        <div><div class="result-name">Competitor Business Co.</div><div class="result-meta">4.6 ★★★★★ (89) · Open now</div></div>
+        <div class="result-icon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+        <div><div class="result-name">Competitor Business Co.</div><div class="result-meta"><span class="stars">★★★★★</span> 4.6 <span class="rcount">(89)</span> · Open now</div></div>
       </div>
       <div class="result-row">
         <div class="result-rank">2</div>
-        <div><div class="result-name">Riverside Services</div><div class="result-meta">4.4 ★★★★☆ (52) · Open now</div></div>
+        <div class="result-icon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+        <div><div class="result-name">Riverside Services</div><div class="result-meta"><span class="stars">★★★★☆</span> 4.4 <span class="rcount">(52)</span> · Open now</div></div>
       </div>
       <div class="result-row dim">
         <div class="result-rank">7</div>
+        <div class="result-icon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
         <div><div class="result-name">Your Business</div><div class="result-meta">No hours listed · 3 photos</div></div>
       </div>
       <div class="callout"><span class="callout-mark">⚠</span> Buried below competitors — most customers never scroll this far</div>
