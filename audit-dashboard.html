@@ -386,13 +386,12 @@ const PILLARS = [
   {
     key: 'local', name: 'Local Search & Competitive Visibility', weight: 0.15, color: '#6FCF97',
     criteria: [
-      ['Search impressions / discovery searches', 20, 'Pass: trending flat or upward vs. prior period (GBP Insights)', 'binary'],
-      ['Maps views', 15, 'Pass: trending flat or upward vs. prior period (GBP Insights)', 'binary'],
-      ['Ranking spot-check', 20, 'Pass: appears in the map pack (top 3) for primary search terms', 'binary'],
-      ['Website clicks from profile', 15, 'Pass: nonzero and tracked (GBP Insights)', 'binary'],
-      ['Direction requests', 10, 'Pass: nonzero and tracked (GBP Insights)', 'binary'],
-      ['Phone calls from listing', 10, 'Pass: call tracking enabled and receiving calls', 'binary'],
-      ['Competitive position', 10, 'Pass: at or above the median of benchmarked competitors', 'binary'],
+      ['Map pack ranking — primary term', 25, 'Pass: appears in the top 3 Google Maps results for "[service] near [city]"', 'binary'],
+      ['Map pack ranking — variant terms', 15, 'Pass: top 3–5 for at least 2 of 3 related search phrases', 'binary'],
+      ['Organic web visibility', 15, 'Pass: business site appears on page 1 for branded + service+city searches', 'binary'],
+      ['Citation consistency', 20, 'Pass: NAP matches across 3+ major directories (Yelp, Facebook, BBB, Angi)', 'binary'],
+      ['Review volume vs. competitors', 15, 'Pass: review count at or above the median of 3-5 benchmarked competitors', 'binary'],
+      ['Rating vs. competitors', 10, 'Pass: star rating at or above the median of benchmarked competitors', 'binary'],
     ]
   },
   {
