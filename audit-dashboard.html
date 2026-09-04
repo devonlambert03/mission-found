@@ -166,8 +166,13 @@
   .pillar-card.open .chevron { transform: rotate(180deg); }
 
   .criteria-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .criteria-list-inner { padding: 6px 26px 24px; display: flex; flex-direction: column; gap: 20px; }
-  .criterion { display: grid; grid-template-columns: 1fr 120px 70px; align-items: center; gap: 16px; }
+  .criteria-list-inner { padding: 6px 26px 24px; display: flex; flex-direction: column; }
+  .criterion {
+    display: grid; grid-template-columns: 1fr 120px 70px; align-items: center; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .criterion:first-child { padding-top: 0; }
+  .criterion:last-child { padding-bottom: 0; border-bottom: none; }
   .criterion .cname { font-size: 15px; font-weight: 500; color: var(--cream); line-height: 1.4; }
   .criterion .cnote { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
   .criterion input[type=range] {
