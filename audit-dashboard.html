@@ -109,6 +109,7 @@
   }
   .pd-badge-pass { color: #1F7A45; background: #E6F5EC; }
   .pd-badge-fail { color: #B23B3B; background: #FBE7E7; }
+  .pd-badge-na { color: #6B7280; background: #EDEEF0; }
 
   .tool-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 
@@ -194,16 +195,18 @@
 
   .criterion.binary { grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; }
   .toggle-group {
-    display: flex; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15);
-    overflow: hidden; flex-shrink: 0;
+    display: flex; gap: 6px; flex-shrink: 0;
   }
   .toggle-btn {
-    background: transparent; border: none; color: var(--muted); cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 12.5px;
-    padding: 9px 0; width: 64px; text-align: center; transition: background 0.15s, color 0.15s;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); border-radius: 999px;
+    color: var(--muted); cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 12px;
+    padding: 8px 0; width: 54px; text-align: center; transition: background 0.15s, color 0.15s, border-color 0.15s;
   }
-  .toggle-btn.is-fail.active { background: rgba(239,127,127,0.18); color: #EF7F7F; }
-  .toggle-btn.is-pass.active { background: rgba(111,207,151,0.18); color: #6FCF97; }
+  .toggle-btn:hover:not(.active) { border-color: rgba(255,255,255,0.35); color: var(--cream); }
+  .toggle-btn.is-fail.active { background: rgba(239,127,127,0.18); border-color: rgba(239,127,127,0.55); color: #EF7F7F; }
+  .toggle-btn.is-pass.active { background: rgba(111,207,151,0.18); border-color: rgba(111,207,151,0.55); color: #6FCF97; }
+  .toggle-btn.is-na.active { background: rgba(179,192,222,0.16); border-color: rgba(179,192,222,0.5); color: var(--muted); }
   .criterion-points {
     font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
     width: 52px; text-align: right; flex-shrink: 0;
@@ -413,13 +416,17 @@ const state = {};
 PILLARS.forEach(p => state[p.key] = p.criteria.map(() => 0));
 
 function pillarSubtotal(p) {
-  return state[p.key].reduce((a,b) => a+b, 0);
+  return state[p.key].reduce((a,b) => a + (b === null ? 0 : b), 0);
 }
 function pillarMax(p) {
-  return p.criteria.reduce((a,c) => a+c[1], 0);
+  return p.criteria.reduce((a,c,idx) => a + (state[p.key][idx] === null ? 0 : c[1]), 0);
 }
 function composite() {
-  return PILLARS.reduce((sum, p) => sum + (pillarSubtotal(p) / pillarMax(p) * 100) * p.weight, 0);
+  return PILLARS.reduce((sum, p) => {
+    const max = pillarMax(p);
+    const pct = max === 0 ? 0 : (pillarSubtotal(p) / max * 100);
+    return sum + pct * p.weight;
+  }, 0);
 }
 function interpretation(score) {
   if (score < 41) return { label: 'Critical', color: '#EF7F7F' };
@@ -469,6 +476,7 @@ function renderPriorities() {
   PILLARS.forEach(p => {
     p.criteria.forEach((c, ci) => {
       const scored = state[p.key][ci];
+      if (scored === null) return;
       const max = c[1];
       const gap = max - scored;
       if (gap > 0) {
@@ -550,8 +558,14 @@ function loadAudit(event) {
       PILLARS.forEach(p => {
         if (data.state && data.state[p.key]) {
           p.criteria.forEach((c, ci) => {
-            const val = data.state[p.key][ci] ?? 0;
-            setCriterionValue(p.key, ci, val, c[1]);
+            const raw = data.state[p.key][ci];
+            const isBinary = c[3] === 'binary';
+            if (isBinary) {
+              const mode = raw === null ? 'na' : (raw >= c[1] ? 'pass' : 'fail');
+              setBinaryValue(p.key, ci, mode);
+            } else {
+              setCriterionValue(p.key, ci, raw ?? 0, c[1]);
+            }
           });
         }
       });
@@ -590,8 +604,9 @@ function buildCards() {
                 <span class="cnote">${c[2]}</span>
               </div>
               <div class="toggle-group" id="toggle-${p.key}-${ci}">
-                <button type="button" class="toggle-btn is-fail" onclick="setBinaryValue('${p.key}', ${ci}, false)">Fail</button>
-                <button type="button" class="toggle-btn is-pass" onclick="setBinaryValue('${p.key}', ${ci}, true)">Pass</button>
+                <button type="button" class="toggle-btn is-fail" onclick="setBinaryValue('${p.key}', ${ci}, 'fail')">Fail</button>
+                <button type="button" class="toggle-btn is-pass" onclick="setBinaryValue('${p.key}', ${ci}, 'pass')">Pass</button>
+                <button type="button" class="toggle-btn is-na" onclick="setBinaryValue('${p.key}', ${ci}, 'na')">N/A</button>
               </div>
               <div class="criterion-points">${c[1]} pt${c[1] > 1 ? 's' : ''}</div>
             </div>`;
@@ -649,10 +664,15 @@ function setCriterionValue(key, idx, rawVal, maxVal) {
   render();
 }
 
-function setBinaryValue(key, idx, isPass) {
+function setBinaryValue(key, idx, mode) {
   const p = PILLARS.find(p => p.key === key);
   const maxVal = p.criteria[idx][1];
-  setCriterionValue(key, idx, isPass ? maxVal : 0, maxVal);
+  state[key][idx] = mode === 'pass' ? maxVal : mode === 'fail' ? 0 : null;
+  updateToggleVisual(key, idx);
+  document.getElementById(`subtotal-${key}`).textContent = `${pillarSubtotal(p)}/${pillarMax(p)}`;
+  const list = document.getElementById(`list-${key}`);
+  if (list.style.maxHeight) list.style.maxHeight = list.scrollHeight + 'px';
+  render();
 }
 
 function updateToggleVisual(key, idx) {
@@ -663,8 +683,10 @@ function updateToggleVisual(key, idx) {
   if (!group) return;
   const failBtn = group.querySelector('.is-fail');
   const passBtn = group.querySelector('.is-pass');
-  failBtn.classList.toggle('active', val < maxVal);
-  passBtn.classList.toggle('active', val >= maxVal);
+  const naBtn = group.querySelector('.is-na');
+  failBtn.classList.toggle('active', val === 0);
+  passBtn.classList.toggle('active', val === maxVal);
+  naBtn.classList.toggle('active', val === null);
 }
 
 function updateCriterion(key, idx, val) {
@@ -729,6 +751,7 @@ function buildPrintDocument() {
   PILLARS.forEach(p => {
     p.criteria.forEach((c, ci) => {
       const scored = state[p.key][ci];
+      if (scored === null) return;
       const gap = c[1] - scored;
       if (gap > 0) gaps.push({ pillar: p.name, name: c[0], gap, max: c[1] });
     });
@@ -773,9 +796,10 @@ function buildPrintDocument() {
   const pillarPages = PILLARS.map(p => {
     const rows = p.criteria.map((c, ci) => {
       const scored = state[p.key][ci];
-      const passed = scored >= c[1];
-      const badgeClass = passed ? 'pd-badge-pass' : 'pd-badge-fail';
-      const badgeText = passed ? 'Pass' : 'Fail';
+      const isNA = scored === null;
+      const passed = !isNA && scored >= c[1];
+      const badgeClass = isNA ? 'pd-badge-na' : (passed ? 'pd-badge-pass' : 'pd-badge-fail');
+      const badgeText = isNA ? 'N/A' : (passed ? 'Pass' : 'Fail');
       return `
         <tr>
           <td class="pd-td-crit">
