@@ -104,6 +104,7 @@
   .pd-td-crit { max-width: 5in; }
   .pd-crit-name { font-weight: 600; font-size: 13.5px; }
   .pd-crit-note { font-size: 11.5px; color: #888; margin-top: 3px; }
+  .pd-crit-usernote { font-size: 11.5px; color: #3355B0; margin-top: 5px; font-style: italic; }
   .pd-badge {
     display: inline-block; padding: 5px 16px; border-radius: 999px; font-weight: 700; font-size: 12px;
   }
@@ -198,7 +199,10 @@
   .criterion .cval input[type=number]:focus { border-color: var(--blue); background: var(--navy); }
   .criterion .cval .max { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
 
-  .criterion.binary { grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; }
+  .criterion.binary { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+  .criterion-main { display: grid; grid-template-columns: 1fr auto auto; align-items: start; gap: 16px; }
+  .criterion-main .toggle-group, .criterion-main .criterion-points { margin-top: 1px; }
+  .crit-info { padding-right: 4px; }
   .toggle-group {
     display: flex; gap: 6px; flex-shrink: 0;
   }
@@ -212,6 +216,17 @@
   .toggle-btn.is-fail.active { background: rgba(239,127,127,0.18); border-color: rgba(239,127,127,0.55); color: #EF7F7F; }
   .toggle-btn.is-pass.active { background: rgba(111,207,151,0.18); border-color: rgba(111,207,151,0.55); color: #6FCF97; }
   .toggle-btn.is-na.active { background: rgba(179,192,222,0.16); border-color: rgba(179,192,222,0.5); color: var(--muted); }
+  .toggle-btn.note-btn { width: 38px; font-size: 13px; }
+  .toggle-btn.note-btn.has-note { border-color: rgba(91,127,224,0.5); color: var(--blue); background: rgba(91,127,224,0.12); }
+  .toggle-btn.note-btn.open { border-color: var(--blue); color: var(--blue); }
+  .note-input {
+    display: none; width: 100%; box-sizing: border-box; resize: vertical; min-height: 54px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px;
+    color: var(--cream); font-family: 'Space Grotesk', sans-serif; font-size: 13px; line-height: 1.5;
+    padding: 10px 12px; outline: none; transition: border-color 0.15s, background 0.15s;
+  }
+  .note-input::placeholder { color: var(--muted); opacity: 0.55; }
+  .note-input:focus { border-color: var(--blue); background: var(--navy); }
   .criterion-points {
     font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted);
     width: 52px; text-align: right; flex-shrink: 0;
@@ -291,7 +306,7 @@
     .pillar-row { grid-template-columns: 1fr; text-align: left; gap: 6px; }
     .pillar-row .bar-track { grid-column: 1 / -1; }
     .criterion { grid-template-columns: 1fr; gap: 8px; }
-    .criterion.binary { grid-template-columns: 1fr; }
+    .criterion-main { grid-template-columns: 1fr; row-gap: 10px; }
     .criterion.binary .toggle-group { align-self: flex-start; }
     .criterion.binary .criterion-points { display: none; }
     .btn-group { justify-content: center; }
@@ -420,6 +435,9 @@ const PILLARS = [
 const state = {};
 PILLARS.forEach(p => state[p.key] = p.criteria.map(() => 0));
 
+const notesState = {};
+PILLARS.forEach(p => notesState[p.key] = p.criteria.map(() => ''));
+
 function pillarSubtotal(p) {
   return state[p.key].reduce((a,b) => a + (b === null ? 0 : b), 0);
 }
@@ -536,6 +554,7 @@ function saveAudit() {
     auditDate: document.getElementById('auditDate').value || '',
     score: composite(),
     state: state,
+    notes: notesState,
     savedAt: new Date().toISOString()
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -571,6 +590,18 @@ function loadAudit(event) {
             } else {
               setCriterionValue(p.key, ci, raw ?? 0, c[1]);
             }
+            const noteVal = (data.notes && data.notes[p.key] && data.notes[p.key][ci]) || '';
+            notesState[p.key][ci] = noteVal;
+            const ta = document.getElementById(`note-${p.key}-${ci}`);
+            const btn = document.getElementById(`note-toggle-${p.key}-${ci}`);
+            if (ta) {
+              ta.value = noteVal;
+              ta.style.display = 'none';
+              if (btn) {
+                btn.classList.remove('open');
+                btn.classList.toggle('has-note', noteVal.trim().length > 0);
+              }
+            }
           });
         }
       });
@@ -604,16 +635,20 @@ function buildCards() {
             if (isBinary) {
               return `
             <div class="criterion binary">
-              <div>
-                <div class="cname">${c[0]}</div>
-                <span class="cnote">${c[2]}</span>
+              <div class="criterion-main">
+                <div class="crit-info">
+                  <div class="cname">${c[0]}</div>
+                  <span class="cnote">${c[2]}</span>
+                </div>
+                <div class="toggle-group" id="toggle-${p.key}-${ci}">
+                  <button type="button" class="toggle-btn is-pass" onclick="setBinaryValue('${p.key}', ${ci}, 'pass')">Pass</button>
+                  <button type="button" class="toggle-btn is-fail" onclick="setBinaryValue('${p.key}', ${ci}, 'fail')">Fail</button>
+                  <button type="button" class="toggle-btn is-na" onclick="setBinaryValue('${p.key}', ${ci}, 'na')">N/A</button>
+                  <button type="button" class="toggle-btn note-btn" id="note-toggle-${p.key}-${ci}" onclick="toggleNote('${p.key}', ${ci})" title="Add a note">✎</button>
+                </div>
+                <div class="criterion-points">${c[1]} pt${c[1] > 1 ? 's' : ''}</div>
               </div>
-              <div class="toggle-group" id="toggle-${p.key}-${ci}">
-                <button type="button" class="toggle-btn is-fail" onclick="setBinaryValue('${p.key}', ${ci}, 'fail')">Fail</button>
-                <button type="button" class="toggle-btn is-pass" onclick="setBinaryValue('${p.key}', ${ci}, 'pass')">Pass</button>
-                <button type="button" class="toggle-btn is-na" onclick="setBinaryValue('${p.key}', ${ci}, 'na')">N/A</button>
-              </div>
-              <div class="criterion-points">${c[1]} pt${c[1] > 1 ? 's' : ''}</div>
+              <textarea class="note-input" id="note-${p.key}-${ci}" placeholder="Add context for this call…" oninput="updateNote('${p.key}', ${ci}, this.value)"></textarea>
             </div>`;
             }
             return `
@@ -692,6 +727,23 @@ function updateToggleVisual(key, idx) {
   failBtn.classList.toggle('active', val === 0);
   passBtn.classList.toggle('active', val === maxVal);
   naBtn.classList.toggle('active', val === null);
+}
+
+function toggleNote(key, idx) {
+  const ta = document.getElementById(`note-${key}-${idx}`);
+  const btn = document.getElementById(`note-toggle-${key}-${idx}`);
+  const willShow = ta.style.display !== 'block';
+  ta.style.display = willShow ? 'block' : 'none';
+  btn.classList.toggle('open', willShow);
+  if (willShow) ta.focus();
+  const list = document.getElementById(`list-${key}`);
+  if (list.style.maxHeight) list.style.maxHeight = list.scrollHeight + 'px';
+}
+
+function updateNote(key, idx, val) {
+  notesState[key][idx] = val;
+  const btn = document.getElementById(`note-toggle-${key}-${idx}`);
+  if (btn) btn.classList.toggle('has-note', val.trim().length > 0);
 }
 
 function updateCriterion(key, idx, val) {
@@ -805,11 +857,13 @@ function buildPrintDocument() {
       const passed = !isNA && scored >= c[1];
       const badgeClass = isNA ? 'pd-badge-na' : (passed ? 'pd-badge-pass' : 'pd-badge-fail');
       const badgeText = isNA ? 'N/A' : (passed ? 'Pass' : 'Fail');
+      const note = (notesState[p.key] && notesState[p.key][ci] || '').trim();
       return `
         <tr>
           <td class="pd-td-crit">
             <div class="pd-crit-name">${esc(c[0])}</div>
             <div class="pd-crit-note">${esc(c[2])}</div>
+            ${note ? `<div class="pd-crit-usernote">Note: ${esc(note)}</div>` : ''}
           </td>
           <td class="pd-td-center"><span class="pd-badge ${badgeClass}">${badgeText}</span></td>
         </tr>`;
