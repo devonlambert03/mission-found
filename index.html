@@ -28,7 +28,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  #problem, #what-we-do, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
+  #problem, #how-it-works, #pricing, #faq { scroll-margin-top: 32px; }
   html { overflow-x: hidden; width: 100%; }
   body { font-family: 'Space Grotesk', sans-serif; background: var(--navy-deep); overflow-x: hidden; width: 100%; }
 
@@ -285,9 +285,6 @@
   .cards-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
   }
-  .cards-grid-3 {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-  }
   .problem-card {
     background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
     padding: 32px; transition: border-color 0.2s, transform 0.2s;
@@ -419,58 +416,35 @@
     font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #FFDCC9; font-weight: 600; line-height: 1.45;
   }
 
-  .card {
-    background: #10192F; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px;
-    padding: 32px; transition: border-color 0.2s, transform 0.2s;
-    display: flex; flex-direction: column;
-  }
-  .card:hover { border-color: rgba(91,127,224,0.4); transform: translateY(-3px); }
-  .card-num {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue);
-    font-weight: 600; margin-bottom: 18px; letter-spacing: 0.05em;
-  }
-  .card h3 {
-    font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600;
-    color: var(--cream); margin-bottom: 10px;
-  }
-  .card p { color: var(--muted); font-size: 15px; line-height: 1.55; }
-  .card .pillar-lead { color: var(--muted); font-size: 14.5px; line-height: 1.55; margin-bottom: 18px; }
-  .pillar-list { display: flex; flex-direction: column; gap: 10px; }
-  .pillar-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--cream); line-height: 1.5; }
-  .pillar-item .check {
-    width: 16px; height: 16px; border-radius: 50%; background: rgba(91,127,224,0.18);
-    color: var(--blue); flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 9.5px; font-weight: 700; margin-top: 2px;
-  }
-
-  /* ---- Pillar visuals: before/after, review, post ---- */
-  .pillar-visual { margin-top: auto; }
-  .ba-row { display: flex; gap: 10px; }
-  .ba-col { flex: 1; background: var(--navy-deep); border-radius: 10px; padding: 12px; border: 1px solid rgba(255,255,255,0.08); }
-  .ba-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; font-weight: 600; }
-  .ba-col.before .ba-tag { color: var(--muted); opacity: 0.7; }
-  .ba-col.after .ba-tag { color: #4EC17E; }
-  .ba-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); margin-bottom: 6px; }
-  .ba-col.before .ba-line { background: rgba(255,255,255,0.06); }
-  .ba-col.before .ba-line:nth-child(3) { width: 60%; }
-  .ba-col.after .ba-line { background: rgba(91,127,224,0.35); }
-  .ba-col.after .ba-line:nth-child(3) { width: 80%; }
-  .ba-photos { display: flex; gap: 4px; margin-top: 8px; }
-  .ba-photos div { width: 18px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.05); }
-  .ba-col.after .ba-photos div { background: rgba(91,127,224,0.3); }
-
+  /* ---- Step 03 visual: review + reply, and a fresh post ---- */
+  .step3-visual { display: flex; flex-direction: column; gap: 10px; width: 100%; }
   .review-mini { background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; }
   .review-stars { color: #E0A63C; font-size: 12px; margin-bottom: 6px; }
   .review-text { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
-  .reply-bubble { background: rgba(91,127,224,0.1); border-left: 2px solid var(--blue); padding: 8px 10px; border-radius: 0 8px 8px 0; }
+  .reply-bubble {
+    background: rgba(91,127,224,0.1); border-left: 2px solid var(--blue); padding: 8px 10px; border-radius: 0 8px 8px 0;
+    opacity: 0; transform: translateY(6px) scale(0.96);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2,0.85,0.2,1);
+  }
+  .reply-bubble.in { opacity: 1; transform: translateY(0) scale(1); }
   .reply-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--blue); font-weight: 600; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.03em; }
   .reply-text { font-size: 11.5px; color: var(--muted); }
 
-  .post-mini { background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; display: flex; gap: 10px; align-items: center; }
+  .post-mini {
+    background: var(--navy-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px; display: flex; gap: 10px; align-items: center;
+    opacity: 0; transform: translateY(8px) scale(0.94);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2,0.85,0.2,1);
+  }
+  .post-mini.in { opacity: 1; transform: translateY(0) scale(1); }
   .post-thumb { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, rgba(91,127,224,0.35), rgba(91,127,224,0.1)); flex-shrink: 0; }
   .post-cap { font-size: 12px; color: var(--cream); margin-bottom: 3px; font-weight: 600; }
   .post-time { font-size: 10.5px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-  .post-new { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--blue); color: #fff; font-weight: 700; padding: 3px 8px; border-radius: 999px; flex-shrink: 0; }
+  .post-new {
+    margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--blue); color: #fff; font-weight: 700; padding: 3px 8px; border-radius: 999px; flex-shrink: 0;
+    transform: scale(0); opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  }
+  .post-new.in { transform: scale(1); opacity: 1; }
 
   .steps-row {
     display: flex; gap: 24px; align-items: stretch;
@@ -524,13 +498,6 @@
   .perm-check { width: 15px; height: 15px; border-radius: 4px; background: rgba(78,193,126,0.18); color: #4EC17E; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .perm-label { font-size: 11.5px; color: var(--muted); }
   .setup-note { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--muted); opacity: 0.7; }
-
-  .report-page { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 14px; width: 100%; }
-  .report-head { height: 8px; width: 55%; background: rgba(255,255,255,0.15); border-radius: 3px; margin-bottom: 14px; }
-  .report-chart { display: flex; align-items: flex-end; gap: 5px; height: 36px; margin-bottom: 14px; }
-  .report-chart div { flex: 1; background: var(--blue); opacity: 0.55; border-radius: 2px 2px 0 0; }
-  .report-check { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); }
-  .report-check span { color: #4EC17E; }
 
   /* ---- Pricing ---- */
   .pricing-eyebrow-wrap { text-align: center; }
@@ -640,7 +607,6 @@
     section.block { padding: 40px 20px; }
     .section-title { font-size: 26px; margin-bottom: 36px; }
     .cards-grid { grid-template-columns: 1fr; gap: 14px; }
-    .cards-grid-3 { grid-template-columns: 1fr; gap: 14px; }
     .problem-card { padding: 24px; }
     .card { padding: 24px; }
     .problem-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -715,8 +681,8 @@
     <div class="menu-btn" id="menuBtn"><div></div></div>
 
     <div class="nav-links-desktop">
+      <a href="#problem">The Problem</a>
       <a href="#how-it-works">How it Works</a>
-      <a href="#what-we-do">How We Help</a>
       <a href="#pricing">Pricing</a>
       <a href="results.html">Results</a>
       <a href="#faq">FAQ</a>
@@ -724,7 +690,7 @@
     <a href="audit.html" class="nav-cta-header">Get Your Free Audit</a>
 
     <div class="nav-menu" id="navMenu">
-      <a href="#what-we-do">How We Help</a>
+      <a href="#problem">The Problem</a>
       <a href="#how-it-works">How it Works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -847,62 +813,6 @@
   </div>
 </section>
 
-<section class="block" id="what-we-do">
-  <div class="section-eyebrow">How We Help</div>
-  <h2 class="section-title">Three things stand between a customer and your front door.</h2>
-  <div class="cards-grid-3">
-    <div class="card">
-      <div class="card-num">GET FOUND</div>
-      <h3>Show up when it matters</h3>
-      <p class="pillar-lead">Your profile fully optimized and active in local search, not buried under competitors.</p>
-      <div class="pillar-visual">
-        <div class="ba-row">
-          <div class="ba-col before">
-            <div class="ba-tag">Before</div>
-            <div class="ba-line"></div><div class="ba-line"></div><div class="ba-line"></div>
-            <div class="ba-photos"><div></div></div>
-          </div>
-          <div class="ba-col after">
-            <div class="ba-tag">After</div>
-            <div class="ba-line"></div><div class="ba-line"></div><div class="ba-line"></div>
-            <div class="ba-photos"><div></div><div></div><div></div><div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-num">GET TRUSTED</div>
-      <h3>Earn the click, then the call</h3>
-      <p class="pillar-lead">A steady flow of authentic reviews — every one of them answered, good or bad.</p>
-      <div class="pillar-visual">
-        <div class="review-mini">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">"Showed up on time and the work was clean. Would call again."</div>
-          <div class="reply-bubble">
-            <div class="reply-label">Owner responded</div>
-            <div class="reply-text">Thanks so much — glad we could help!</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-num">STAY ACTIVE</div>
-      <h3>Look open, busy, and worth choosing</h3>
-      <p class="pillar-lead">Fresh photos and regular updates, not a listing that's frozen in time.</p>
-      <div class="pillar-visual">
-        <div class="post-mini">
-          <div class="post-thumb"></div>
-          <div>
-            <div class="post-cap">New job completed this week</div>
-            <div class="post-time">Posted 2 days ago</div>
-          </div>
-          <div class="post-new">NEW</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="block" id="how-it-works">
   <div class="section-eyebrow">How it Works</div>
   <h2 class="section-title">Three steps to an online presence that actually works for you.</h2>
@@ -962,13 +872,23 @@
         <div class="chrome-frame">
           <div class="chrome-bar"><span></span><span></span><span></span></div>
           <div class="chrome-body">
-            <div class="report-page">
-              <div class="report-head"></div>
-              <div class="report-chart">
-                <div style="height:40%"></div><div style="height:65%"></div><div style="height:50%"></div>
-                <div style="height:80%"></div><div style="height:70%"></div><div style="height:95%"></div>
+            <div class="step3-visual">
+              <div class="review-mini">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-text">"Showed up on time and the work was clean. Would call again."</div>
+                <div class="reply-bubble" id="replyBubble">
+                  <div class="reply-label">Owner responded</div>
+                  <div class="reply-text">Thanks so much — glad we could help!</div>
+                </div>
               </div>
-              <div class="report-check"><span>✓</span> 6 new reviews answered</div>
+              <div class="post-mini" id="postMini">
+                <div class="post-thumb"></div>
+                <div>
+                  <div class="post-cap">New job completed this week</div>
+                  <div class="post-time">Posted 2 days ago</div>
+                </div>
+                <div class="post-new" id="postNew">NEW</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1093,7 +1013,7 @@
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Navigate</div>
-      <a href="#what-we-do">How We Help</a>
+      <a href="#problem">The Problem</a>
       <a href="#how-it-works">How it Works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -1268,6 +1188,29 @@
       });
     }, { threshold: 0.4 });
     observer.observe(stage);
+  })();
+
+  // ---- How It Works, Step 03: the review reply and the new-post badge animate in once
+  (function () {
+    const section = document.getElementById('how-it-works');
+    if (!section) return;
+    const postMini = document.getElementById('postMini');
+    const postNew = document.getElementById('postNew');
+    const replyBubble = document.getElementById('replyBubble');
+
+    let played = false;
+    const observer2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !played) {
+          played = true;
+          if (postMini) setTimeout(() => postMini.classList.add('in'), 300);
+          if (replyBubble) setTimeout(() => replyBubble.classList.add('in'), 500);
+          if (postNew) setTimeout(() => postNew.classList.add('in'), 650);
+          observer2.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer2.observe(section);
   })();
 </script>
 
