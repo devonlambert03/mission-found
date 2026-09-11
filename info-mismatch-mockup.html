@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Info Mismatch Mockup — Google-only Phased</title>
+<style>
+  :root {
+    --cream: #F4EFE6;
+    --navy: #0E1730;
+    --navy-deep: #060A16;
+    --blue: #5B7FE0;
+    --muted: #9AA6C4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--navy-deep);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 24px;
+    padding: 40px 20px; overflow-x: hidden;
+  }
+  .notice {
+    font-family: 'Courier New', monospace; font-size: 12px; color: var(--muted);
+    text-align: center; max-width: 480px; line-height: 1.6;
+  }
+  .replay-btn {
+    background: rgba(91,127,224,0.15); border: 1px solid rgba(91,127,224,0.4); color: var(--blue);
+    font-family: -apple-system, sans-serif; font-weight: 600; font-size: 13px;
+    padding: 10px 22px; border-radius: 999px; cursor: pointer;
+  }
+
+  .stage { position: relative; margin-bottom: 20px; }
+  .stage::before {
+    content: ''; position: absolute; inset: -60px; z-index: 0; border-radius: 40px;
+    background: radial-gradient(ellipse 60% 55% at 50% 65%, rgba(91,127,224,0.14), transparent 70%);
+    opacity: 0.4; filter: blur(10px);
+    transition: opacity 1s ease;
+  }
+  .stage.bloom::before { opacity: 1; }
+
+  .shell {
+    position: relative; z-index: 1;
+    background: #14141a; border-radius: 22px; padding: 18px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    width: 400px; max-width: 92vw;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ---- phase 1: search bar ---- */
+  .search-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 11px 14px; margin-bottom: 16px;
+    font-size: 15px; color: #fff;
+  }
+  .search-bar svg { flex-shrink: 0; }
+  #queryText { white-space: nowrap; overflow: hidden; font-weight: 600; }
+  .type-cursor {
+    display: inline-block; width: 1.5px; height: 15px; background: var(--blue);
+    margin-left: 1px; vertical-align: -2px;
+    animation: blink 0.9s step-end infinite;
+  }
+  .type-cursor.hidden { display: none; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ---- phase 2: the google result card ---- */
+  .panel-google {
+    background: #fff; border-radius: 14px; padding: 16px 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    opacity: 0; transform: translateY(10px) scale(0.97);
+    transition: opacity 0.5s cubic-bezier(0.2,0.85,0.2,1), transform 0.5s cubic-bezier(0.2,0.85,0.2,1);
+    margin-bottom: 14px;
+  }
+  .panel-google.in { opacity: 1; transform: translateY(0) scale(1); }
+
+  .panel-label {
+    display: inline-block; font-family: 'Courier New', monospace; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.06em; padding: 3px 8px; border-radius: 5px; margin-bottom: 10px;
+    background: #F1F3F4; color: #5F6368;
+  }
+  .g-top { display: flex; align-items: center; gap: 11px; }
+  .g-icon {
+    width: 36px; height: 36px; border-radius: 8px; background: #EEF1FA;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .g-name { font-size: 16px; font-weight: 700; color: #202124; }
+  .g-check { display: inline-block; width: 13px; height: 13px; border-radius: 50%; background: #4285F4; color: #fff; font-size: 8px; text-align: center; line-height: 13px; margin-left: 4px; }
+  .g-stars { font-size: 12.5px; color: #70757A; margin-top: 3px; }
+  .g-stars .stars { color: #FBBC04; letter-spacing: 1px; }
+
+  /* ---- phase 3: the profile expands to show it's thin ---- */
+  .field-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    max-height: 0; opacity: 0; overflow: hidden; padding: 0 6px;
+    border-top: 1px solid transparent; margin: 0 -6px;
+    transition: max-height 0.45s cubic-bezier(0.2,0.85,0.2,1), opacity 0.4s ease, padding 0.4s ease, background 0.4s ease;
+  }
+  .field-row.in {
+    max-height: 44px; opacity: 1; padding: 9px 6px;
+    border-top-color: #EEEEEE;
+    background: rgba(224,102,60,0.08);
+  }
+  .field-label {
+    font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.04em; flex-shrink: 0;
+    color: #9AA0A6;
+  }
+  .field-value { font-size: 13px; font-weight: 600; text-align: right; color: #202124; }
+
+  .flag-dot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: #E0663C; margin-left: 7px; vertical-align: middle;
+    opacity: 0; transform: scale(0.3);
+    transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+  }
+  .field-row.in .flag-dot { opacity: 1; transform: scale(1); }
+
+  /* ---- phase 4: the CTA — bigger, bolder, two-tier ---- */
+  .callout {
+    opacity: 0; transform: translateY(14px) scale(0.85);
+  }
+  .callout.revealed {
+    animation: calloutpop 0.65s cubic-bezier(0.2, 0.85, 0.2, 1) forwards;
+  }
+  @keyframes calloutpop {
+    0%   { opacity: 0; transform: translateY(14px) scale(0.82); }
+    60%  { opacity: 1; transform: translateY(-4px) scale(1.04); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .callout-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: rgba(42, 21, 16, 0.7);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1.5px solid rgba(224,102,60,0.6);
+    padding: 18px 20px; border-radius: 16px;
+    box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(224,102,60,0.12), 0 0 44px rgba(224,102,60,0.32);
+  }
+  .callout-mark { font-size: 19px; flex-shrink: 0; margin-top: 1px; }
+  .callout-mark.pulse { animation: markpulse 0.6s ease 3; }
+  @keyframes markpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+  .callout-lead {
+    font-family: -apple-system, sans-serif; font-size: 16px; font-weight: 700; color: #fff;
+    line-height: 1.3; margin-bottom: 4px;
+  }
+  .callout-sub {
+    font-family: 'Courier New', monospace; font-size: 12px; color: #FFDCC9; font-weight: 600; line-height: 1.45;
+  }
+</style>
+</head>
+<body>
+
+<div class="notice">MOCKUP — 4 clear phases: search types → Google result fades in → profile expands to show it's thin → CTA lands big. Google-only, no ranking or scroll position implied.</div>
+
+<div class="stage" id="stage">
+  <div class="shell">
+    <div class="search-bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span id="queryText"></span><span class="type-cursor" id="typeCursor"></span>
+    </div>
+
+    <div class="panel-google" id="panelGoogle">
+      <span class="panel-label">GOOGLE</span>
+      <div class="g-top">
+        <div class="g-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#5B7FE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h16v5M4 9l1 11h14l1-11M4 9h16M9 20v-6h6v6"/></svg>
+        </div>
+        <div>
+          <div class="g-name">Your Business<span class="g-check">✓</span></div>
+          <div class="g-stars"><span class="stars">★★★★★</span> 4.9 (128)</div>
+        </div>
+      </div>
+      <div class="field-row" id="hoursRow">
+        <span class="field-label">HOURS</span>
+        <span class="field-value">Not listed<span class="flag-dot"></span></span>
+      </div>
+      <div class="field-row" id="photosRow">
+        <span class="field-label">PHOTOS</span>
+        <span class="field-value">3 photos<span class="flag-dot"></span></span>
+      </div>
+      <div class="field-row" id="postsRow">
+        <span class="field-label">LAST POST</span>
+        <span class="field-value">8 months ago<span class="flag-dot"></span></span>
+      </div>
+    </div>
+
+    <div class="callout" id="callout">
+      <div class="callout-card">
+        <span class="callout-mark" id="calloutMark">⚠</span>
+        <div>
+          <div class="callout-lead">This profile is costing you customers.</div>
+          <div class="callout-sub">No hours, barely any photos — a thin profile reads as an unreliable business.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="replay-btn" id="replayBtn">↻ Replay animation</button>
+
+<script>
+  const stage = document.getElementById('stage');
+  const queryText = document.getElementById('queryText');
+  const typeCursor = document.getElementById('typeCursor');
+  const panelGoogle = document.getElementById('panelGoogle');
+  const hoursRow = document.getElementById('hoursRow');
+  const photosRow = document.getElementById('photosRow');
+  const postsRow = document.getElementById('postsRow');
+  const callout = document.getElementById('callout');
+  const calloutMark = document.getElementById('calloutMark');
+  const replayBtn = document.getElementById('replayBtn');
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  async function typeQuery(text, speed = 22) {
+    queryText.textContent = '';
+    for (const ch of text) {
+      queryText.textContent += ch;
+      await sleep(speed);
+    }
+  }
+
+  function reset() {
+    stage.classList.remove('bloom');
+    queryText.textContent = '';
+    typeCursor.classList.remove('hidden');
+    panelGoogle.classList.remove('in');
+    [hoursRow, photosRow, postsRow].forEach(r => r.classList.remove('in'));
+    callout.classList.remove('revealed');
+    calloutMark.classList.remove('pulse');
+  }
+
+  async function play() {
+    reset();
+
+    // phase 1 — search types in
+    await sleep(200);
+    await typeQuery('Your Business');
+    await sleep(150);
+    typeCursor.classList.add('hidden');
+
+    // phase 2 — the google result card fades in
+    await sleep(250);
+    panelGoogle.classList.add('in');
+    stage.classList.add('bloom');
+
+    // phase 3 — the profile expands to reveal it's thin, one field at a time
+    await sleep(500);
+    hoursRow.classList.add('in');
+    await sleep(220);
+    photosRow.classList.add('in');
+    await sleep(220);
+    postsRow.classList.add('in');
+
+    // phase 4 — the CTA lands, big and clear
+    await sleep(650);
+    callout.classList.add('revealed');
+    calloutMark.classList.add('pulse');
+  }
+
+  replayBtn.addEventListener('click', play);
+  window.addEventListener('load', () => setTimeout(play, 200));
+</script>
+
+</body>
+</html>
