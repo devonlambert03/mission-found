@@ -280,6 +280,48 @@
     .hero h1 { font-size: 38px; }
     .card { padding: 24px; }
   }
+
+  /* ---- Hero Demo Loop (below-hero animated widget) ---- */
+  .hd-demo { padding: 0 24px 100px; }
+  .hd-stage { display: flex; justify-content: center; }
+  .hd-card {
+    width: 720px; max-width: 100%; min-height: 460px;
+    background: #fff; border: 1px solid var(--border); border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(14,23,48,0.12); padding: 36px 40px;
+    position: relative; overflow: hidden; text-align: left;
+  }
+  .hd-panel { display: none; }
+  .hd-panel.active { display: block; animation: panelFadeIn 0.35s ease forwards; }
+  .hd-panel.leaving { animation: panelFadeOut 0.25s ease forwards; }
+
+  .hd-cta-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 388px; text-align: center; gap: 16px; position: relative; }
+  .hd-portal { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle, var(--blue) 0%, var(--blue-deep) 70%, transparent 100%); opacity: 0.9; z-index: 0; }
+  .hd-btn-stack { position: relative; z-index: 1; }
+  .hd-cta-btn { display: inline-block; padding: 16px 34px; border-radius: 999px; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 600; box-shadow: 0 8px 24px rgba(91,127,224,0.35); transition: transform 0.15s ease; }
+  .hd-cta-btn.pressed { transform: scale(0.94); }
+  .hd-cta-note { font-size: 13px; color: var(--muted); position: relative; z-index: 1; }
+
+  .hd-panel.spin-out .hd-portal { animation: hdPortalOut 0.9s cubic-bezier(.5,0,.5,1) forwards; }
+  .hd-panel.spin-out .hd-cta-wrap > *:not(.hd-portal) { animation: hdFadeBlurOut 0.6s ease forwards; }
+  @keyframes hdPortalOut { to { width: 1400px; height: 1400px; transform: rotate(420deg); opacity: 0; filter: blur(60px); } }
+  @keyframes hdFadeBlurOut { to { opacity: 0; filter: blur(14px); transform: scale(1.15); } }
+
+  .hd-panel.spin-in .hd-content { animation: hdFadeBlurIn 0.6s ease forwards; }
+  @keyframes hdFadeBlurIn { from { opacity: 0; filter: blur(14px); transform: scale(0.92) rotate(-8deg); } to { opacity: 1; filter: blur(0); transform: scale(1) rotate(0); } }
+
+  .hd-photo-grid { display: flex; gap: 10px; margin-top: 10px; }
+  .hd-photo-tile { flex: 1; height: 76px; border-radius: 10px; background: #E4E6EC; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 18px; color: var(--blue-deep); }
+  .hd-photo-tile.new { border: 2px solid var(--blue); background: #EAF0FD; }
+
+  .hd-checklist { display: flex; gap: 18px; margin-top: 16px; flex-wrap: wrap; }
+  .hd-check-item { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); font-weight: 600; border: 2px solid transparent; border-radius: 8px; padding: 5px 10px; transition: border-color 0.3s, background 0.3s, color 0.3s; }
+  .hd-check-item .mark { opacity: 0; transition: opacity 0.2s ease; color: var(--green); }
+  .hd-check-item.done .mark { opacity: 1; }
+  .hd-check-item.active { border-color: var(--blue); background: #F5F7FE; color: var(--navy-deep); }
+
+  .hd-compare-row { display: flex; align-items: center; gap: 10px; font-size: 13.5px; padding: 7px 0; }
+  .hd-compare-row .before { color: var(--muted); }
+  .hd-compare-row .after { color: var(--green); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -315,6 +357,110 @@
     <div class="cta-row">
       <a href="audit.html" class="cta-button">Get a free audit</a>
       <span class="cta-note">No cost. No commitment.</span>
+    </div>
+  </div>
+</section>
+
+<!-- HERO DEMO LOOP -->
+<section class="hd-demo" id="hd-demo">
+  <div class="hd-stage">
+    <div class="hd-card" id="hd-card">
+
+      <div class="hd-panel" data-hd-panel="0">
+        <div class="hd-cta-wrap">
+          <div class="hd-portal" id="hd-portal"></div>
+          <div class="hd-btn-stack"><span class="hd-cta-btn" id="hd-cta-btn">Get a free audit</span></div>
+          <div class="hd-cta-note">No cost. No commitment.</div>
+        </div>
+      </div>
+
+      <div class="hd-panel" data-hd-panel="1">
+        <div class="hd-content">
+          <div class="header-row"><h2 style="font-size:20px">Your Google Business Profile</h2></div>
+          <div class="problem-card reveal" style="animation-delay:0.1s">
+            <div class="p-top">
+              <div class="p-icon">📍</div>
+              <div>
+                <div class="p-name">Your Business</div>
+                <div class="p-stars">★★★★★ 4.9 (128)</div>
+              </div>
+            </div>
+            <div class="p-row reveal" style="animation-delay:0.3s"><span class="p-label">HOURS</span><span class="p-val">Not listed<span class="p-flag"></span></span></div>
+            <div class="p-row reveal" style="animation-delay:0.45s"><span class="p-label">PHOTOS</span><span class="p-val">3 photos<span class="p-flag"></span></span></div>
+            <div class="p-row reveal" style="animation-delay:0.6s"><span class="p-label">LAST POST</span><span class="p-val">8 months ago<span class="p-flag"></span></span></div>
+          </div>
+          <div class="problem-callout reveal" style="animation-delay:0.9s">
+            <span class="mark">⚠</span>
+            <div>
+              <div class="lead">This profile is costing you customers.</div>
+              <div class="sub">No hours, barely any photos, nothing posted in months.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hd-panel" data-hd-panel="2">
+        <div class="hd-content">
+          <div class="header-row"><h2 style="font-size:20px">Getting your profile ready</h2><span class="human-badge">🧑‍💼 Real person, not AI</span></div>
+          <div class="stat-card reveal" style="animation-delay:0.1s; border-top-color:var(--blue)">
+            <div class="stat-label">📝 New post</div>
+            <div style="font-size:14px; margin-top:4px; color:var(--ink)">"Now booking spring cleanups — ask about our early-bird discount."</div>
+            <div style="margin-top:10px"><span style="background:#E7F7EE; color:var(--green); font-weight:700; font-size:12px; padding:4px 10px; border-radius:8px;">✓ Published</span></div>
+          </div>
+          <div class="action-list-label" style="margin-top:18px">Photos</div>
+          <div class="hd-photo-grid">
+            <div class="hd-photo-tile pin-pop" style="animation-delay:0.1s"></div>
+            <div class="hd-photo-tile pin-pop" style="animation-delay:0.2s"></div>
+            <div class="hd-photo-tile pin-pop" style="animation-delay:0.3s"></div>
+            <div class="hd-photo-tile new pin-pop" style="animation-delay:0.5s">+</div>
+            <div class="hd-photo-tile new pin-pop" style="animation-delay:0.7s">+</div>
+            <div class="hd-photo-tile new pin-pop" style="animation-delay:0.9s">+</div>
+          </div>
+          <div class="hd-checklist">
+            <div class="hd-check-item" data-step="1"><span class="mark">✓</span> Hours added</div>
+            <div class="hd-check-item" data-step="2"><span class="mark">✓</span> Photos added</div>
+            <div class="hd-check-item" data-step="3"><span class="mark">✓</span> Post published</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hd-panel" data-hd-panel="3">
+        <div class="hd-content">
+          <div class="header-row"><h2 style="font-size:20px">Review management</h2></div>
+          <div class="review reveal" style="animation-delay:0.1s">
+            <div class="review-icon" style="background:#fff;border:1px solid var(--border)">📍</div>
+            <div><span class="review-name">Karen L.</span><span class="stars star-group"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span></span>
+              <div class="review-body">Showed up early after the storm and had us cleared before we opened. Can't recommend them enough.</div>
+              <div class="reply-box reveal" style="animation-delay:0.5s"><span id="hd-typed-reply"></span><span class="reply-cursor" id="hd-reply-cursor"></span></div>
+              <div class="reply-footer"><span class="reply-tag">Written by our team — no AI-generated replies</span><button class="send-btn" id="hd-send-btn">Send reply</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hd-panel" data-hd-panel="4">
+        <div class="hd-content">
+          <div class="header-row"><h2 style="font-size:20px">Three months in</h2></div>
+          <div class="hd-compare">
+            <div class="hd-compare-row reveal" style="animation-delay:0.1s"><span class="p-label" style="width:76px; display:inline-block">HOURS</span><span class="before">Not listed</span> → <span class="after">Listed</span></div>
+            <div class="hd-compare-row reveal" style="animation-delay:0.25s"><span class="p-label" style="width:76px; display:inline-block">PHOTOS</span><span class="before">3 photos</span> → <span class="after">24 photos</span></div>
+            <div class="hd-compare-row reveal" style="animation-delay:0.4s"><span class="p-label" style="width:76px; display:inline-block">LAST POST</span><span class="before">8 months ago</span> → <span class="after">2 days ago</span></div>
+          </div>
+          <div class="stat-row" style="margin-top:16px">
+            <div class="stat-card reveal" style="animation-delay:0.5s"><div class="stat-label">Views</div><div class="stat-value"><span class="cu" data-target="15100" data-format="k1">0</span><span class="stat-delta up">+142%</span></div></div>
+            <div class="stat-card reveal" style="animation-delay:0.6s"><div class="stat-label">Calls</div><div class="stat-value"><span class="cu" data-target="47" data-format="int">0</span><span class="stat-delta up">+18</span></div></div>
+            <div class="stat-card reveal" style="animation-delay:0.7s"><div class="stat-label">Rating</div><div class="stat-value"><span class="cu" data-target="4.9" data-format="dec1">0.0</span><span class="stat-delta up">↑0.3</span></div></div>
+          </div>
+          <div class="chart-card reveal" style="animation-delay:0.8s; margin-top:14px">
+            <div class="chart-title-row"><span class="chart-title">Profile views, month over month</span></div>
+            <svg viewBox="0 0 260 70" width="100%" height="70">
+              <polyline class="chart-line" points="0,58 40,52 80,44 120,34 160,24 200,14 260,4" fill="none" stroke="#5B7FE0" stroke-width="2.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="dots" id="hd-dots"></div>
     </div>
   </div>
 </section>
@@ -773,6 +919,132 @@
       });
     }, { threshold: 0.3 });
     demoObserver.observe(demoSection);
+  })();
+
+  // ---- Hero Demo Loop (below-hero animated widget) ----
+  (function () {
+    const section = document.getElementById('hd-demo');
+    if (!section) return;
+    const panels = document.querySelectorAll('.hd-panel');
+    const dotsWrap = document.getElementById('hd-dots');
+    panels.forEach((_, i) => { const d = document.createElement('div'); d.className = 'pdot' + (i === 0 ? ' active' : ''); dotsWrap.appendChild(d); });
+    const dots = dotsWrap.querySelectorAll('.pdot');
+    let current = 0;
+    let started = false;
+    let timer = null;
+
+    function formatValue(val, format) {
+      if (format === 'k1') return (val / 1000).toFixed(1) + 'K';
+      if (format === 'dec1') return val.toFixed(1);
+      return Math.round(val).toString();
+    }
+    function animateCountUp(el) {
+      const target = parseFloat(el.dataset.target);
+      const format = el.dataset.format || 'int';
+      let start;
+      if (format === 'dec1') start = Math.max(0, target - (1.0 + Math.random()));
+      else start = target * (0.7 + Math.random() * 0.15);
+      const duration = 900 + Math.random() * 300;
+      const t0 = performance.now();
+      function tick(now) {
+        const p = Math.min(1, (now - t0) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = formatValue(start + (target - start) * eased, format);
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = formatValue(target, format);
+      }
+      requestAnimationFrame(tick);
+    }
+    function fillStars(group) {
+      if (!group) return;
+      const stars = group.querySelectorAll('.star-i');
+      stars.forEach(s => s.classList.remove('lit'));
+      stars.forEach((s, i) => setTimeout(() => s.classList.add('lit'), i * 90));
+    }
+    function restartAnim(root) {
+      root.querySelectorAll('.reveal, .chart-line, .pin-pop, .star-i').forEach(el => {
+        el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+      });
+    }
+    const hdReplyText = "Thank you so much, Karen — glad we could get you cleared before you opened!";
+    let hdTypeTimer = null;
+    function typeReply() {
+      const el = document.getElementById('hd-typed-reply');
+      const cursor = document.getElementById('hd-reply-cursor');
+      const btn = document.getElementById('hd-send-btn');
+      if (!el) return;
+      el.textContent = ''; btn.classList.remove('show'); cursor.style.display = 'inline-block';
+      let i = 0; clearInterval(hdTypeTimer);
+      hdTypeTimer = setInterval(() => {
+        el.textContent = hdReplyText.slice(0, i); i++;
+        if (i > hdReplyText.length) { clearInterval(hdTypeTimer); cursor.style.display = 'none'; btn.classList.add('show'); }
+      }, 28);
+    }
+    function stepChecklist(root) {
+      const items = root.querySelectorAll('.hd-check-item');
+      items.forEach(it => it.classList.remove('active', 'done'));
+      let i = 0;
+      function step() {
+        if (i > 0) items[i - 1].classList.remove('active');
+        if (i >= items.length) return;
+        items[i].classList.add('active');
+        setTimeout(() => { items[i].classList.add('done'); i++; setTimeout(step, 260); }, 280);
+      }
+      setTimeout(step, 1600);
+    }
+
+    // hold time (ms) each panel stays active before advancing, and its transition-out duration
+    const HOLD = [2000, 3600, 4200, 4500, 4500];
+    const TRANSITION = [900, 400, 400, 400, 500];
+
+    function activatePanel(idx) {
+      const root = panels[idx];
+      root.querySelectorAll('.cu').forEach(el => { el.textContent = (el.dataset.format === 'dec1') ? '0.0' : '0'; });
+      root.querySelectorAll('.star-i').forEach(s => s.classList.remove('lit'));
+      restartAnim(root);
+      panels.forEach(p => p.classList.remove('active', 'leaving', 'spin-in'));
+      dots.forEach(d => d.classList.remove('active'));
+      root.classList.add('active');
+      dots[idx].classList.add('active');
+      if (idx === 1) root.classList.add('spin-in');
+      setTimeout(() => root.querySelectorAll('.cu').forEach(el => animateCountUp(el)), 300);
+      root.querySelectorAll('.star-group').forEach(g => setTimeout(() => fillStars(g), 450));
+      if (idx === 2) stepChecklist(root);
+      if (idx === 3) setTimeout(typeReply, 900);
+      const btn = document.getElementById('hd-cta-btn');
+      if (idx === 0 && btn) {
+        btn.classList.remove('pressed');
+        setTimeout(() => btn.classList.add('pressed'), 1400);
+        setTimeout(() => btn.classList.remove('pressed'), 1600);
+      }
+    }
+
+    function cycle() {
+      timer = setTimeout(() => {
+        const oldIdx = current;
+        const oldPanel = panels[oldIdx];
+        const isSpin = oldIdx === 0;
+        oldPanel.classList.add(isSpin ? 'spin-out' : 'leaving');
+        setTimeout(() => {
+          oldPanel.classList.remove('active', 'leaving', 'spin-out');
+          setTimeout(() => {
+            current = (current + 1) % panels.length;
+            activatePanel(current);
+            cycle();
+          }, 60);
+        }, TRANSITION[oldIdx]);
+      }, HOLD[current]);
+    }
+
+    const hdObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !started) {
+          started = true;
+          activatePanel(0);
+          cycle();
+        }
+      });
+    }, { threshold: 0.3 });
+    hdObserver.observe(section);
   })();
 
   // ---- Mobile nav ----
