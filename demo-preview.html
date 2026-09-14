@@ -2,1156 +2,219 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mission: Found — Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission: Found — Your digital presence, handled.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy-deep: #060A16;
-    --navy: #0E1730;
-    --blue: #5B7FE0;
-    --blue-deep: #4A6BC7;
-    --cream: #F4EFE6;
-    --muted: #9AA6C4;
-    --ink: #1A2340;
-    --sub-ink: #4A5578;
-    --border: #E7EAF3;
-    --green: #2FAE60;
-    --red: #E5484D;
-    --amber: #F5A623;
-    --card-bg: #FFFFFF;
-    --page-bg: #F0F2F8;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--ink);
-    background: var(--page-bg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 16px;
-    gap: 18px;
-  }
-
-  h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
-
-  .page-header {
-    text-align: center;
-    max-width: 560px;
-  }
-  .page-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: 6px;
-  }
-  .page-header p {
-    font-size: 13.5px;
-    color: var(--sub-ink);
-    line-height: 1.45;
-  }
-
-  /* Stage */
-  .stage {
-    width: 720px;
-    max-width: 100%;
-  }
-
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    box-shadow: 0 24px 50px rgba(14,23,48,0.10);
-    height: 440px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scene {
-    position: absolute;
-    inset: 0;
-    padding: 30px 36px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.45s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  .scene.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .scene-title {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .human-badge {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--blue-deep);
-    background: #EEF1FB;
-    padding: 5px 11px;
-    border-radius: 999px;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-  }
-
-  /* ========== SCENE 1: Insights ========== */
-  .stat-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .stat-card {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--blue);
-    border-radius: 11px;
-    padding: 14px 16px;
-  }
-  .stat-label {
-    font-size: 12.5px;
-    color: #7B84A3;
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-  .stat-value {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--navy-deep);
-    letter-spacing: -0.03em;
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-  }
-  .stat-delta {
-    font-size: 12.5px;
-    font-weight: 650;
-    color: var(--green);
-    opacity: 0;
-    transform: translateY(3px);
-    transition: opacity 0.4s, transform 0.4s;
-  }
-  .stat-delta.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .stat-delta.down { color: var(--red); }
-
-  .chart-row {
-    display: flex;
-    gap: 12px;
-    flex: 1;
-    min-height: 0;
-  }
-  .chart-card {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-  }
-  .chart-title {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--navy-deep);
-    margin-bottom: 6px;
-  }
-  .chart-svg {
-    flex: 1;
-    width: 100%;
-    min-height: 70px;
-  }
-  .chart-svg .line {
-    fill: none;
-    stroke-width: 2.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 320;
-    stroke-dashoffset: 320;
-    transition: stroke-dashoffset 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .scene.active .chart-svg .line { stroke-dashoffset: 0; }
-  .chart-svg .area {
-    stroke: none;
-    fill-opacity: 0.12;
-  }
-
-  .breakdown {
-    margin-top: 12px;
-  }
-  .breakdown-label {
-    font-size: 12px;
-    color: #7B84A3;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-  .breakdown-track {
-    display: flex;
-    height: 9px;
-    border-radius: 999px;
-    overflow: hidden;
-    background: var(--border);
-  }
-  .breakdown-seg {
-    height: 100%;
-    width: 0%;
-    transition: width 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
-  }
-  .scene.active .breakdown-seg { width: var(--w); }
-
-  /* ========== SCENE 2: Account Manager ========== */
-  .am-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 14px;
-    flex: 1;
-    min-height: 0;
-  }
-  .am-metrics {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .am-metric {
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 12px 14px;
-  }
-  .am-metric .val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--navy-deep);
-    letter-spacing: -0.03em;
-  }
-  .star { color: var(--amber); }
-
-  .views-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .views-box .big {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin: 2px 0 3px;
-  }
-  .views-box .sub {
-    font-size: 11.5px;
-    color: #7B84A3;
-  }
-  .mini-chart {
-    margin-top: 8px;
-    height: 42px;
-    width: 100%;
-  }
-  .mini-chart path {
-    fill: none;
-    stroke: var(--blue);
-    stroke-width: 2.1;
-    stroke-linecap: round;
-    stroke-dasharray: 240;
-    stroke-dashoffset: 240;
-    transition: stroke-dashoffset 0.9s cubic-bezier(0.22,1,0.36,1);
-  }
-  .scene.active .mini-chart path { stroke-dashoffset: 0; }
-  .mini-chart .fill {
-    fill: var(--blue);
-    fill-opacity: 0.1;
-    stroke: none;
-  }
-
-  .actions {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .actions h3 {
-    font-size: 12.5px;
-    font-weight: 600;
-    padding: 6px 10px 8px;
-    color: var(--navy-deep);
-  }
-  .action {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 10px 12px;
-    border-radius: 9px;
-    border: 2px solid transparent;
-    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
-  }
-  .action.pulse {
-    border-color: var(--blue);
-    background: #F5F7FE;
-    box-shadow: 0 4px 14px rgba(91,127,224,0.16);
-  }
-  .action-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: #EEF1FB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-  .action-text { font-size: 13.5px; font-weight: 600; color: var(--navy-deep); }
-  .action-time { font-size: 11.5px; color: #7B84A3; margin-top: 1px; }
-  .action-check {
-    margin-left: auto;
-    color: var(--green);
-    font-size: 15px;
-    font-weight: 700;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .action.checked .action-check { opacity: 1; }
-
-  /* ========== SCENE 3: Review Management ========== */
-  .review {
-    display: flex;
-    gap: 11px;
-    margin-bottom: 14px;
-  }
-  .review-icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-  }
-  .review-name {
-    font-weight: 700;
-    font-size: 13.5px;
-    color: var(--navy-deep);
-  }
-  .stars {
-    color: var(--amber);
-    font-size: 12px;
-    margin-left: 5px;
-    letter-spacing: 0.5px;
-  }
-  .review-body {
-    font-size: 13px;
-    color: var(--sub-ink);
-    margin-top: 3px;
-    line-height: 1.45;
-  }
-
-  .reply-box {
-    border: 2px solid var(--border);
-    border-radius: 11px;
-    padding: 11px 13px;
-    font-size: 13.5px;
-    color: var(--navy-deep);
-    background: #FAFBFE;
-    min-height: 44px;
-    margin-top: 8px;
-    transition: border-color 0.25s, background 0.25s;
-    line-height: 1.4;
-  }
-  .reply-box.typing {
-    border-color: var(--blue);
-    background: #F5F7FE;
-  }
-  .reply-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 13px;
-    background: var(--navy-deep);
-    vertical-align: middle;
-    margin-left: 1px;
-    animation: blink 0.85s step-start infinite;
-  }
-  .reply-cursor.hidden { display: none; }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .reply-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 7px;
-    font-size: 11.5px;
-    color: #7B84A3;
-  }
-  .reply-sent {
-    display: none;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    font-weight: 650;
-    color: var(--green);
-  }
-  .reply-sent.show { display: flex; }
-
-  /* ========== SCENE 4: Ranking ========== */
-  .rank-layout {
-    display: flex;
-    gap: 16px;
-    flex: 1;
-    min-height: 0;
-    position: relative;
-  }
-  .rank-list {
-    width: 52%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .rank-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 13px;
-    border-radius: 11px;
-    border: 1.5px solid var(--border);
-    background: #fff;
-    transition: border-color 0.35s, box-shadow 0.35s;
-    position: relative;
-  }
-  .rank-item.you {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 1px var(--blue), 0 4px 12px rgba(91,127,224,0.12);
-  }
-  .rank-num {
-    font-size: 14px;
-    font-weight: 700;
-    color: #7B84A3;
-    width: 18px;
-  }
-  .rank-body { flex: 1; min-width: 0; }
-  .rank-name {
-    font-weight: 650;
-    font-size: 13.5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .rank-addr {
-    font-size: 11.5px;
-    color: #7B84A3;
-    margin-top: 1px;
-  }
-  .rank-meta {
-    font-size: 11.5px;
-    color: #7B84A3;
-    margin-top: 2px;
-  }
-  .you-pill {
-    position: absolute;
-    right: 11px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--blue-deep);
-    color: white;
-    font-size: 10.5px;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 999px;
-  }
-
-  .heatmap {
-    position: absolute;
-    right: 0;
-    top: 4px;
-    width: 44%;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    opacity: 0;
-    transform: scale(0.96);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-  .heatmap.show {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .cell {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .cell.r { background: #E5484D; }
-  .cell.g { background: #2FAE60; }
-  .cell.y { background: #F5A623; color: #1A2340; }
-
-  /* ========== SCENE 5: Reviews Overview ========== */
-  .month-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .month-card {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-  }
-  .month-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-weight: 700;
-    font-size: 13.5px;
-    color: var(--navy-deep);
-    margin-bottom: 8px;
-  }
-  .month-replied {
-    font-size: 11.5px;
-    color: #7B84A3;
-    margin-bottom: 5px;
-  }
-  .month-track {
-    height: 5px;
-    background: var(--border);
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  .month-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--blue);
-    transition: width 1.1s cubic-bezier(0.22,1,0.36,1) 0.2s;
-  }
-  .scene.active .month-fill { width: var(--w); }
-
-  .reviews-bottom {
-    display: flex;
-    gap: 12px;
-    flex: 1;
-    min-height: 0;
-  }
-  .bar-card {
-    flex: 1.5;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-  }
-  .bar-row {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 7px;
-    flex: 1;
-    min-height: 80px;
-    margin-top: 8px;
-  }
-  .bar-col {
-    flex: 1;
-    border-radius: 4px 4px 0 0;
-    height: 0%;
-    transition: height 0.95s cubic-bezier(0.22,1,0.36,1);
-  }
-  .scene.active .bar-col { height: var(--h); }
-  .bar-legend {
-    display: flex;
-    gap: 10px;
-    margin-top: 8px;
-    font-size: 10.5px;
-    color: #7B84A3;
-    justify-content: center;
-  }
-  .bar-legend span {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-  .bar-legend i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .gauge-card {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .gauge-card .chart-title { align-self: flex-start; }
-  .gauge-svg {
-    margin-top: 4px;
-  }
-  .gauge-value {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--navy-deep);
-    margin-top: -32px;
-  }
-  .total-block {
-    margin-top: 10px;
-    text-align: center;
-  }
-  .total-label {
-    font-size: 11.5px;
-    color: #7B84A3;
-  }
-  .total-value {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--navy-deep);
-  }
-
-  /* Controls */
-  .playbar {
-    width: 720px;
-    max-width: 100%;
-    height: 3px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .playbar-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--blue);
-    transition: width 0.08s linear;
-  }
-  .controls {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
-  }
-  .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--border);
-    cursor: pointer;
-    border: none;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .dot.active { background: var(--blue); }
-  .dot:hover { transform: scale(1.2); }
-
-  .replay-btn {
-    background: var(--navy);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .replay-btn:hover {
-    background: var(--navy-deep);
-    transform: translateY(-1px);
-  }
-
-  .credit {
-    font-size: 12.5px;
-    color: #7B84A3;
-    text-align: center;
-  }
-  .credit a {
-    color: var(--blue-deep);
-    text-decoration: none;
-    font-weight: 600;
-  }
+:root{
+  --ink:#111a33;--muted:#6d7894;--line:#e6eaf2;--panel:#fff;--page:#f5f7fb;
+  --navy:#0b1226;--blue:#5e7de8;--blue-soft:#eef2ff;--green:#27a86b;
+  --amber:#d99a2b;--shadow:0 28px 70px rgba(15,27,61,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at 50% -20%,#fff 0,#f5f7fb 52%);color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+h1,h2,h3,.metric-value{font-family:"Plus Jakarta Sans",Inter,sans-serif}
+.wrap{width:min(940px,100%);display:grid;gap:22px}
+.hero{display:grid;gap:10px;text-align:center;max-width:650px;margin:auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--blue)}
+.hero h1{font-size:clamp(25px,4vw,40px);letter-spacing:-.055em;line-height:1.08}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6}
+.disclaimer{display:inline-flex;align-items:center;gap:8px;justify-content:center;font-size:11px;color:#78829a;margin-top:3px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.workspace{background:var(--panel);border:1px solid var(--line);border-radius:25px;box-shadow:var(--shadow);overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.86)}
+.brand{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:-.02em}
+.mark{width:29px;height:29px;border-radius:9px;background:var(--navy);display:grid;place-items:center;color:#fff;font-size:14px}
+.business{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,#e9edff,#b9c8fa);display:grid;place-items:center;color:#24386e;font-weight:800}
+.stage{position:relative;min-height:450px}
+.scene{display:none;padding:28px 30px 30px;animation:enter .45s ease}
+.scene.active{display:block}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scene-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:23px}
+.kicker{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:7px}
+.scene h2{font-size:23px;letter-spacing:-.045em;line-height:1.15}
+.scene-intro{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px;max-width:470px}
+.pill{white-space:nowrap;border:1px solid #dce4ff;background:var(--blue-soft);color:#4664c6;border-radius:999px;padding:7px 10px;font-size:10px;font-weight:800}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.panel{border:1px solid var(--line);border-radius:15px;padding:17px;background:#fff}
+.panel.soft{background:#fafbfe}
+.panel-title{font-size:11px;font-weight:800;margin-bottom:14px;display:flex;justify-content:space-between;gap:10px}
+.muted{color:var(--muted);font-weight:500}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.metric{padding:14px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.metric-label{font-size:10px;color:var(--muted);margin-bottom:8px}
+.metric-value{font-size:24px;letter-spacing:-.05em}
+.metric-note{font-size:10px;color:var(--green);margin-top:5px;font-weight:700}
+.chart{width:100%;height:130px;display:block}
+.chart path{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:500;stroke-dashoffset:500;animation:draw 1.4s .15s ease forwards}
+.chart .area{fill:#dfe7ff;stroke:none;opacity:.65}
+@keyframes draw{to{stroke-dashoffset:0}}
+.bars{display:grid;gap:12px}
+.bar-row{display:grid;gap:6px}
+.bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+.track{height:7px;background:#edf0f6;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--blue);border-radius:99px;animation:fill 1s .25s ease forwards}
+.fill.green{background:var(--green)}
+@keyframes fill{to{width:var(--width)}}
+.actions{display:grid;gap:11px}
+.action{display:flex;align-items:center;gap:11px;font-size:11px}
+.action-icon{width:29px;height:29px;border-radius:10px;background:#f0f3fa;display:grid;place-items:center;color:#52628a;font-weight:800}
+.action small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.manager{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:13px;margin-bottom:13px}
+.manager .avatar{width:42px;height:42px}
+.manager strong{font-size:12px}
+.manager span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.review{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}
+.stars{color:#e7a52f;letter-spacing:2px;font-size:13px}
+.review-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.review-name{font-size:11px;font-weight:800}
+.review-date{font-size:10px;color:var(--muted)}
+.review p{font-size:12px;line-height:1.65;color:#4d5874}
+.reply{margin-top:13px;border-left:2px solid var(--blue);padding-left:13px}
+.reply label{display:block;font-size:10px;font-weight:800;color:var(--blue);margin-bottom:5px}
+.reply p{font-size:11px}
+.rank-list{display:grid;gap:9px}
+.rank{display:grid;grid-template-columns:27px 1fr auto;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:11px}
+.rank:first-child{border-color:#cdd8ff;background:#f7f9ff}
+.rank-number{font-family:"Plus Jakarta Sans";font-size:17px;color:#a1a9bc}
+.rank:first-child .rank-number{color:var(--blue)}
+.rank small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.rank-status{font-size:10px;font-weight:800;color:var(--green)}
+.report{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.report-card{border:1px solid var(--line);border-radius:14px;padding:16px}
+.report-card strong{display:block;font-family:"Plus Jakarta Sans";font-size:26px;letter-spacing:-.05em;margin:5px 0}
+.report-card span{font-size:10px;color:var(--muted)}
+.bottom{border-top:1px solid var(--line);padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.steps{display:flex;gap:6px;align-items:center}
+.step{height:5px;width:24px;border-radius:99px;background:#e5e9f2;transition:.25s}
+.step.active{width:42px;background:var(--blue)}
+.controls{display:flex;gap:8px}
+button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:9px 13px;font:700 11px Inter;cursor:pointer}
+button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+button:focus-visible{outline:3px solid #a9bbff;outline-offset:3px}
+.footer-note{text-align:center;color:#8a93a8;font-size:11px;line-height:1.5}
+@media(max-width:650px){
+ body{padding:18px 10px}
+ .topbar{padding:14px 15px}.business{display:none}
+ .scene{padding:22px 17px}.scene-head{display:block}.pill{display:inline-block;margin-top:12px}
+ .scene h2{font-size:21px}.grid{grid-template-columns:1fr}.metrics{gap:7px}.metric{padding:11px}.metric-value{font-size:20px}
+ .report{gap:7px}.report-card{padding:11px}.report-card strong{font-size:22px}
+ .bottom{padding:13px 15px}.controls button{padding:8px 10px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<main class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Mission: Found / Digital presence management</div>
+    <h1>Your online presence, handled.</h1>
+    <p>Not another dashboard you have to babysit. A real person keeps your Google Business Profile accurate, active, and ready for the next customer.</p>
+    <div class="disclaimer"><span class="dot"></span>Illustrative example — see what managed presence can look like.</div>
+  </header>
 
-<div class="page-header">
-  <h1>What “handled for you” looks like</h1>
-  <p>A real look at your Google Business Profile — managed by a real person on our team.</p>
-</div>
-
-<div class="stage">
-  <div class="card" id="card">
-
-    <!-- SCENE 0: Insights -->
-    <div class="scene active" data-scene="0">
-      <div class="scene-title">Google Business Profile insights</div>
-      <div class="stat-row">
-        <div class="stat-card">
-          <div class="stat-label">Views</div>
-          <div class="stat-value">
-            <span class="cu" data-target="15100" data-format="k1">0</span>
-            <span class="stat-delta" id="d1">+28</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Interactions</div>
-          <div class="stat-value">
-            <span class="cu" data-target="258" data-format="int">0</span>
-            <span class="stat-delta" id="d2">+6</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Average rating</div>
-          <div class="stat-value">
-            <span class="cu" data-target="4.9" data-format="dec1">0.0</span>
-            <span class="stat-delta" id="d3">↑0.3</span>
-          </div>
-        </div>
-      </div>
-      <div class="chart-row">
-        <div class="chart-card">
-          <div class="chart-title">Search views</div>
-          <svg class="chart-svg" viewBox="0 0 260 70" preserveAspectRatio="none">
-            <path class="area" d="M0,52 C20,48 40,46 60,42 C80,38 100,40 120,34 C140,28 160,30 180,22 C200,16 220,18 240,12 L260,8 L260,70 L0,70 Z" fill="#5B7FE0"/>
-            <path class="line" d="M0,52 C20,48 40,46 60,42 C80,38 100,40 120,34 C140,28 160,30 180,22 C200,16 220,18 240,12 L260,8" stroke="#5B7FE0"/>
-          </svg>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Maps views</div>
-          <svg class="chart-svg" viewBox="0 0 260 70" preserveAspectRatio="none">
-            <path class="area" d="M0,48 C22,45 44,44 66,42 C88,40 110,38 132,36 C154,34 176,30 198,28 C220,26 240,24 260,20 L260,70 L0,70 Z" fill="#5B7FE0"/>
-            <path class="line" d="M0,48 C22,45 44,44 66,42 C88,40 110,38 132,36 C154,34 176,30 198,28 C220,26 240,24 260,20" stroke="#5B7FE0"/>
-          </svg>
-        </div>
-      </div>
-      <div class="breakdown">
-        <div class="breakdown-label">Views by source</div>
-        <div class="breakdown-track">
-          <div class="breakdown-seg" style="--w:42%; background:var(--blue-deep)"></div>
-          <div class="breakdown-seg" style="--w:33%; background:var(--blue)"></div>
-          <div class="breakdown-seg" style="--w:25%; background:#D7E0F7"></div>
-        </div>
-      </div>
+  <section class="workspace" aria-label="Interactive Mission Found service demonstration">
+    <div class="topbar">
+      <div class="brand"><div class="mark">M</div>MISSION: FOUND</div>
+      <div class="business"><div class="avatar">B</div><span>Brightline Home Services</span><span>•</span><span>Managed workspace</span></div>
     </div>
 
-    <!-- SCENE 1: Account Manager -->
-    <div class="scene" data-scene="1">
-      <div class="scene-title">
-        Your account manager
-        <span class="human-badge">🧑‍💼 Real person, not AI</span>
-      </div>
-      <div class="am-grid">
-        <div>
-          <div class="am-metrics">
-            <div class="am-metric">
-              <div class="stat-label">Interactions</div>
-              <div class="val">258</div>
-            </div>
-            <div class="am-metric">
-              <div class="stat-label">Avg. rating</div>
-              <div class="val"><span class="star">★</span> 4.9</div>
-            </div>
-          </div>
-          <div class="views-box">
-            <div class="stat-label">Views</div>
-            <div class="big">15.1K</div>
-            <div class="sub">Combined from Google Search + Maps</div>
-            <svg class="mini-chart" viewBox="0 0 180 42" preserveAspectRatio="none">
-              <path class="fill" d="M0,32 L16,28 L32,30 L48,22 L64,24 L80,16 L96,18 L112,12 L128,14 L144,8 L160,10 L180,6 L180,42 L0,42 Z"/>
-              <path d="M0,32 L16,28 L32,30 L48,22 L64,24 L80,16 L96,18 L112,12 L128,14 L144,8 L160,10 L180,6"/>
+    <div class="stage">
+      <section class="scene active" data-scene="0">
+        <div class="scene-head">
+          <div><div class="kicker">01 / Monitor</div><h2>We keep watch while you run the business.</h2><p class="scene-intro">Your Google Business Profile is monitored for visibility, customer actions, accuracy, and opportunities that should not be missed.</p></div>
+          <span class="pill">Presence health · Good</span>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">Profile views</div><div class="metric-value">15.1K</div><div class="metric-note">↗ 12.4% this period</div></div>
+          <div class="metric"><div class="metric-label">Customer actions</div><div class="metric-value">258</div><div class="metric-note">Calls, visits, requests</div></div>
+          <div class="metric"><div class="metric-label">Average rating</div><div class="metric-value">4.9</div><div class="metric-note">Healthy customer trust</div></div>
+        </div>
+        <div class="grid">
+          <div class="panel"><div class="panel-title">Visibility trend <span class="muted">Illustrative</span></div>
+            <svg class="chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
+              <path class="area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
+              <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
             </svg>
+            <div class="bars"><div class="bar-row"><div class="bar-label"><span>Search discovery</span><b>72%</b></div><div class="track"><div class="fill" style="--width:72%"></div></div></div><div class="bar-row"><div class="bar-label"><span>Maps discovery</span><b>48%</b></div><div class="track"><div class="fill" style="--width:48%"></div></div></div></div>
           </div>
+          <div class="panel soft"><div class="panel-title">What we look for</div><div class="actions">
+            <div class="action"><div class="action-icon">✓</div><div><b>Profile accuracy</b><small>Hours, services, contact details</small></div></div>
+            <div class="action"><div class="action-icon">↗</div><div><b>Customer activity</b><small>Calls, messages, website visits</small></div></div>
+            <div class="action"><div class="action-icon">★</div><div><b>Reputation signals</b><small>New reviews and response needs</small></div></div>
+          </div></div>
         </div>
-        <div class="actions" id="action-list">
-          <h3>Recent actions</h3>
-          <div class="action">
-            <div class="action-icon">📅</div>
-            <div>
-              <div class="action-text">Published a post</div>
-              <div class="action-time">30 min ago</div>
-            </div>
-            <div class="action-check">✓</div>
-          </div>
-          <div class="action">
-            <div class="action-icon">💬</div>
-            <div>
-              <div class="action-text">Replied to a review</div>
-              <div class="action-time">23 hours ago</div>
-            </div>
-            <div class="action-check">✓</div>
-          </div>
-          <div class="action">
-            <div class="action-icon">📷</div>
-            <div>
-              <div class="action-text">Added new photos</div>
-              <div class="action-time">2 days ago</div>
-            </div>
-            <div class="action-check">✓</div>
-          </div>
-          <div class="action">
-            <div class="action-icon">🕓</div>
-            <div>
-              <div class="action-text">Business hours corrected</div>
-              <div class="action-time">1 week ago</div>
-            </div>
-            <div class="action-check">✓</div>
-          </div>
+      </section>
+
+      <section class="scene" data-scene="1">
+        <div class="scene-head"><div><div class="kicker">02 / Handle</div><h2>A real person turns signals into action.</h2><p class="scene-intro">You do not need to log in, remember what to post, or wonder whether a review was answered. We handle the upkeep.</p></div><span class="pill">Human-managed</span></div>
+        <div class="manager"><div class="avatar">JL</div><div><strong>Jordan · Your Mission: Found manager</strong><span>Reviews activity, updates, posts, photos, and profile details.</span></div><span class="pill" style="margin-left:auto">Assigned</span></div>
+        <div class="grid">
+          <div class="panel"><div class="panel-title">Recent work <span class="muted">This week</span></div><div class="actions">
+            <div class="action"><div class="action-icon">↗</div><div><b>Published a helpful update</b><small>Service availability and seasonal reminder</small></div></div>
+            <div class="action"><div class="action-icon">↩</div><div><b>Responded to a customer review</b><small>Personal, relevant, and on-brand</small></div></div>
+            <div class="action"><div class="action-icon">＋</div><div><b>Added fresh business photos</b><small>Improved profile completeness</small></div></div>
+            <div class="action"><div class="action-icon">✓</div><div><b>Checked business information</b><small>Hours and service details reviewed</small></div></div>
+          </div></div>
+          <div class="panel soft"><div class="panel-title">The point</div><p style="font-size:14px;line-height:1.65;letter-spacing:-.02em">Your digital presence stays active and accurate without becoming another job on your list.</p><div style="margin-top:20px;padding-top:15px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)">No automated filler. No generic copy-paste replies. No dashboard babysitting.</div></div>
         </div>
-      </div>
+      </section>
+
+      <section class="scene" data-scene="2">
+        <div class="scene-head"><div><div class="kicker">03 / Respond</div><h2>Customers get a thoughtful response.</h2><p class="scene-intro">Reviews are handled with context and a human voice — especially when a customer takes the time to leave feedback.</p></div><span class="pill">Review management</span></div>
+        <div class="review">
+          <div class="review-head"><div><div class="review-name">Alex Morgan</div><div class="stars">★★★★★</div></div><div class="review-date">Illustrative review · 2 days ago</div></div>
+          <p>“The team was on time, communicated clearly, and did exactly what they promised. Would absolutely use them again.”</p>
+          <div class="reply"><label>MISSION: FOUND RESPONSE</label><p>“Thank you, Alex — we really appreciate you taking the time to share this. We’re glad the communication and service met expectations, and we look forward to helping again whenever you need us.”</p></div>
+        </div>
+        <div class="grid" style="margin-top:14px"><div class="panel soft"><div class="panel-title">Response standard</div><div class="actions"><div class="action"><div class="action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="action"><div class="action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div></div><div class="panel"><div class="panel-title">Human touch <span class="muted">Always</span></div><p style="font-size:12px;line-height:1.6;color:var(--muted)">We do not use AI-generated replies as a substitute for judgment or a relationship with your customers.</p></div></div>
+      </section>
+
+      <section class="scene" data-scene="3">
+        <div class="scene-head"><div><div class="kicker">04 / Stay competitive</div><h2>We watch local visibility — not promise rankings.</h2><p class="scene-intro">Search position changes with competition, relevance, distance, and customer behavior. We monitor useful signals and act on what we can control.</p></div><span class="pill">Visibility monitoring</span></div>
+        <div class="grid">
+          <div class="panel"><div class="panel-title">Illustrative local snapshot <span class="muted">Not a guarantee</span></div><div class="rank-list">
+            <div class="rank"><div class="rank-number">1</div><div><b>Northstar Home Care</b><small>12 Main Street · Example market</small></div><div class="rank-status">Stable</div></div>
+            <div class="rank"><div class="rank-number">2</div><div><b>Brightline Home Services</b><small>48 Oak Avenue · Example market</small></div><div class="rank-status">Improving</div></div>
+            <div class="rank"><div class="rank-number">3</div><div><b>Evergreen Property Co.</b><small>9 Park Road · Example market</small></div><div class="rank-status">Stable</div></div>
+            <div class="rank"><div class="rank-number">4</div><div><b>Summit Local Pros</b><small>71 River Street · Example market</small></div><div class="rank-status">Watching</div></div>
+          </div></div>
+          <div class="panel soft"><div class="panel-title">What we can influence</div><div class="bars"><div class="bar-row"><div class="bar-label"><span>Accurate services</span><b>High</b></div><div class="track"><div class="fill green" style="--width:90%"></div></div></div><div class="bar-row"><div class="bar-label"><span>Fresh activity</span><b>High</b></div><div class="track"><div class="fill green" style="--width:78%"></div></div></div><div class="bar-row"><div class="bar-label"><span>Review responsiveness</span><b>High</b></div><div class="track"><div class="fill green" style="--width:86%"></div></div></div><div class="bar-row"><div class="bar-label"><span>Competitor movement</span><b>Variable</b></div><div class="track"><div class="fill" style="--width:45%"></div></div></div></div><p style="font-size:10px;color:var(--muted);line-height:1.5;margin-top:15px">We report what changed, what we handled, and what deserves attention next.</p></div>
+        </div>
+      </section>
+
+      <section class="scene" data-scene="4">
+        <div class="scene-head"><div><div class="kicker">05 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="scene-intro">A concise summary of work completed, customer activity, profile health, and the next priorities — without another complicated platform to manage.</p></div><span class="pill">Monthly recap</span></div>
+        <div class="report"><div class="report-card"><span>Work completed</span><strong>18</strong><span>Updates, replies, checks, and improvements</span></div><div class="report-card"><span>Customer actions</span><strong>258</strong><span>Illustrative calls, visits, and requests</span></div><div class="report-card"><span>Profile rating</span><strong>4.9</strong><span>Illustrative average customer rating</span></div></div>
+        <div class="grid"><div class="panel"><div class="panel-title">Your monthly summary</div><div class="actions"><div class="action"><div class="action-icon">✓</div><div><b>Completed</b><small>Profile upkeep and customer responses</small></div></div><div class="action"><div class="action-icon">→</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="action"><div class="action-icon">↗</div><div><b>Watch item</b><small>Review local visibility and competitor activity</small></div></div></div></div><div class="panel soft"><div class="panel-title">The outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans'">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:var(--muted);margin-top:12px">Mission: Found handles the digital upkeep. You stay focused on customers, crews, and growth.</p></div></div>
+      </section>
     </div>
 
-    <!-- SCENE 2: Review Management -->
-    <div class="scene" data-scene="2">
-      <div class="scene-title">Review management</div>
-      <div class="review">
-        <div class="review-icon">📍</div>
-        <div style="flex:1">
-          <span class="review-name">Karen L.</span><span class="stars">★★★★★</span>
-          <div class="review-body">Showed up early after the storm and had us cleared before we opened. Can’t recommend them enough.</div>
-          <div class="reply-box" id="reply-box">
-            <span id="typed-reply"></span><span class="reply-cursor" id="reply-cursor"></span>
-          </div>
-          <div class="reply-footer">
-            <span>Written by our team — no AI-generated replies</span>
-            <span class="reply-sent" id="reply-sent">✓ Sent</span>
-          </div>
-        </div>
-      </div>
-      <div class="review">
-        <div class="review-icon">👤</div>
-        <div>
-          <span class="review-name">Danny R.</span><span class="stars">★★★★★</span>
-          <div class="review-body">Fast, fair pricing, and they actually answer the phone. Rare these days.</div>
-        </div>
-      </div>
+    <div class="bottom">
+      <div class="steps" aria-label="Demo progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+      <div class="controls"><button id="back" aria-label="Previous scene">← Back</button><button id="next" class="primary">Next: Handle →</button></div>
     </div>
-
-    <!-- SCENE 3: Ranking -->
-    <div class="scene" data-scene="3">
-      <div class="scene-title">Where you rank nearby</div>
-      <div class="rank-layout">
-        <div class="rank-list" id="rank-list">
-          <div class="rank-item" data-pos="1">
-            <div class="rank-num">1</div>
-            <div class="rank-body">
-              <div class="rank-name">Summit Plumbing & Drain</div>
-              <div class="rank-addr">142 Elm Street</div>
-              <div class="rank-meta">5.0 ★★★★★ · 12 reviews</div>
-            </div>
-          </div>
-          <div class="rank-item you" id="rank-you" data-pos="4">
-            <div class="rank-num" id="you-num">4</div>
-            <div class="rank-body">
-              <div class="rank-name">Founders Snow & Landscape</div>
-              <div class="rank-addr">88 Maple Avenue</div>
-              <div class="rank-meta">5.0 ★★★★★ · 3 reviews</div>
-            </div>
-            <span class="you-pill">you</span>
-          </div>
-          <div class="rank-item" data-pos="2">
-            <div class="rank-num">2</div>
-            <div class="rank-body">
-              <div class="rank-name">Northside Landscaping</div>
-              <div class="rank-addr">315 York Road</div>
-              <div class="rank-meta">4.2 ★★★★☆ · 203 reviews</div>
-            </div>
-          </div>
-          <div class="rank-item" data-pos="3">
-            <div class="rank-num">3</div>
-            <div class="rank-body">
-              <div class="rank-name">Budget Home Services</div>
-              <div class="rank-addr">40 Pinewood Crescent</div>
-              <div class="rank-meta">4.6 ★★★★☆ · 8 reviews</div>
-            </div>
-          </div>
-        </div>
-        <div class="heatmap" id="heatmap">
-          <div class="cell r">19</div><div class="cell g">3</div><div class="cell g">1</div><div class="cell g">3</div><div class="cell g">6</div>
-          <div class="cell y">10</div><div class="cell r">16</div><div class="cell g">3</div><div class="cell y">7</div><div class="cell y">5</div>
-          <div class="cell y">12</div><div class="cell r">2</div><div class="cell g">3</div><div class="cell g">7</div><div class="cell r">1</div>
-          <div class="cell g">3</div><div class="cell r">19</div><div class="cell g">2</div><div class="cell g">1</div><div class="cell r">19</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCENE 4: Reviews Overview -->
-    <div class="scene" data-scene="4">
-      <div class="scene-title">Reviews</div>
-      <div class="month-row">
-        <div class="month-card">
-          <div class="month-title">Sept <span><span class="cu" data-target="4.8" data-format="dec1">0.0</span> ★</span></div>
-          <div class="month-replied">40/128 replied · 32%</div>
-          <div class="month-track"><div class="month-fill" style="--w:32%"></div></div>
-        </div>
-        <div class="month-card">
-          <div class="month-title">Oct <span><span class="cu" data-target="4.9" data-format="dec1">0.0</span> ★</span></div>
-          <div class="month-replied">65/130 replied · 50%</div>
-          <div class="month-track"><div class="month-fill" style="--w:50%"></div></div>
-        </div>
-        <div class="month-card">
-          <div class="total-label">Total reviews</div>
-          <div class="total-value"><span class="cu" data-target="258" data-format="int">0</span></div>
-        </div>
-      </div>
-      <div class="reviews-bottom">
-        <div class="bar-card">
-          <div class="chart-title">Reviews by rating</div>
-          <div class="bar-row">
-            <div class="bar-col" style="--h:8%; background:var(--red)"></div>
-            <div class="bar-col" style="--h:12%; background:#F0925A"></div>
-            <div class="bar-col" style="--h:18%; background:var(--amber)"></div>
-            <div class="bar-col" style="--h:48%; background:#7BC98B"></div>
-            <div class="bar-col" style="--h:100%; background:var(--green)"></div>
-          </div>
-          <div class="bar-legend">
-            <span><i style="background:var(--red)"></i>1★</span>
-            <span><i style="background:#F0925A"></i>2★</span>
-            <span><i style="background:var(--amber)"></i>3★</span>
-            <span><i style="background:#7BC98B"></i>4★</span>
-            <span><i style="background:var(--green)"></i>5★</span>
-          </div>
-        </div>
-        <div class="gauge-card">
-          <div class="chart-title">Average rating</div>
-          <svg class="gauge-svg" viewBox="0 0 100 58" width="110" height="64">
-            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="var(--border)" stroke-width="8" stroke-linecap="round"/>
-            <path id="gauge-arc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="var(--red)" stroke-width="8" stroke-linecap="round" stroke-dasharray="126" stroke-dashoffset="126"/>
-          </svg>
-          <div class="gauge-value" id="gauge-value">0.0</div>
-          <div class="total-block">
-            <div class="total-label">from 258 reviews</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="playbar"><div class="playbar-fill" id="playbarFill"></div></div>
-<div class="controls" id="controls"></div>
-<div class="credit">Built for <a href="https://mission-found.com" target="_blank">Mission: Found</a> · Real people. Real results.</div>
-
+  </section>
+  <p class="footer-note">A visual explanation of the service — not a live Google Business Profile or a promise of specific ranking results.</p>
+</main>
 <script>
-  const SCENE_DURATIONS = [3800, 4800, 7200, 5200, 5800];
-  const scenes = document.querySelectorAll('.scene');
-  const controls = document.getElementById('controls');
-  const playbarFill = document.getElementById('playbarFill');
-  let current = 0;
-  let sceneTimer = null;
-  let raf = null;
-
-  // Dots
-  scenes.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', 'Scene ' + (i+1));
-    dot.addEventListener('click', () => goTo(i));
-    controls.appendChild(dot);
-  });
-  const dots = controls.querySelectorAll('.dot');
-
-  // Replay button
-  const replayBtn = document.createElement('button');
-  replayBtn.className = 'replay-btn';
-  replayBtn.textContent = 'Replay';
-  replayBtn.addEventListener('click', () => goTo(0));
-  controls.appendChild(replayBtn);
-
-  function animateCounters(scene, duration = 900) {
-    scene.querySelectorAll('.cu').forEach(el => {
-      const target = parseFloat(el.dataset.target);
-      const format = el.dataset.format;
-      const start = performance.now();
-      function frame(now) {
-        const p = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = target * eased;
-        if (format === 'k1') el.textContent = (val / 1000).toFixed(1) + 'K';
-        else if (format === 'dec1') el.textContent = val.toFixed(1);
-        else el.textContent = Math.round(val).toLocaleString();
-        if (p < 1) requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    });
-  }
-
-  function runScene0(scene) {
-    animateCounters(scene, 1000);
-    setTimeout(() => {
-      ['d1','d2','d3'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('show');
-      });
-    }, 700);
-  }
-
-  function runScene1(scene) {
-    const items = scene.querySelectorAll('.action');
-    items.forEach(i => i.classList.remove('pulse', 'checked'));
-    items.forEach((item, i) => {
-      setTimeout(() => {
-        item.classList.add('pulse');
-        setTimeout(() => item.classList.add('checked'), 280);
-        setTimeout(() => item.classList.remove('pulse'), 750);
-      }, 280 + i * 680);
-    });
-  }
-
-  function runScene2(scene) {
-    const full = "Thanks so much, Karen! We’re glad we could get you cleared quickly. We’re here whenever you need us.";
-    const typedEl = scene.querySelector('#typed-reply');
-    const cursorEl = scene.querySelector('#reply-cursor');
-    const boxEl = scene.querySelector('#reply-box');
-    const sentEl = scene.querySelector('#reply-sent');
-    typedEl.textContent = '';
-    sentEl.classList.remove('show');
-    cursorEl.classList.remove('hidden');
-    boxEl.classList.remove('typing');
-    let i = 0;
-    setTimeout(() => {
-      boxEl.classList.add('typing');
-      const typeInterval = setInterval(() => {
-        i++;
-        typedEl.textContent = full.slice(0, i);
-        if (i >= full.length) {
-          clearInterval(typeInterval);
-          setTimeout(() => {
-            cursorEl.classList.add('hidden');
-            boxEl.classList.remove('typing');
-            sentEl.classList.add('show');
-          }, 450);
-        }
-      }, 26);
-    }, 450);
-  }
-
-  function runScene3(scene) {
-    const heatmap = document.getElementById('heatmap');
-    heatmap.classList.remove('show');
-    // Reset rank order
-    const list = document.getElementById('rank-list');
-    const items = Array.from(list.children);
-    items.sort((a, b) => +a.dataset.pos - +b.dataset.pos);
-    items.forEach(el => list.appendChild(el));
-    document.getElementById('you-num').textContent = '4';
-
-    setTimeout(() => heatmap.classList.add('show'), 400);
-
-    setTimeout(() => {
-      const you = document.getElementById('rank-you');
-      const first = list.children[0];
-      list.insertBefore(you, first.nextSibling);
-      Array.from(list.children).forEach((el, idx) => {
-        const num = el.querySelector('.rank-num');
-        if (num) num.textContent = idx + 1;
-      });
-    }, 2200);
-  }
-
-  function gaugeColorFor(rating) {
-    const stops = [
-      { at: 0, c: [229, 72, 77] },
-      { at: 3, c: [245, 166, 35] },
-      { at: 4.5, c: [47, 174, 96] },
-    ];
-    let lo = stops[0], hi = stops[stops.length - 1];
-    for (let i = 0; i < stops.length - 1; i++) {
-      if (rating >= stops[i].at && rating <= stops[i + 1].at) {
-        lo = stops[i]; hi = stops[i + 1]; break;
-      }
-    }
-    const span = hi.at - lo.at || 1;
-    const t = Math.max(0, Math.min(1, (rating - lo.at) / span));
-    const rgb = lo.c.map((v, i) => Math.round(v + (hi.c[i] - v) * t));
-    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
-  }
-
-  function runScene4(scene) {
-    animateCounters(scene, 1600);
-    const arc = scene.querySelector('#gauge-arc');
-    const valueEl = scene.querySelector('#gauge-value');
-    const target = 4.9;
-    const duration = 1700;
-    setTimeout(() => {
-      const start = performance.now();
-      function frame(now) {
-        const p = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = target * eased;
-        arc.style.strokeDashoffset = String(126 - (126 - 8) * eased);
-        arc.style.stroke = gaugeColorFor(val);
-        valueEl.textContent = val.toFixed(1);
-        if (p < 1) requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    }, 180);
-  }
-
-  const sceneRunners = [runScene0, runScene1, runScene2, runScene3, runScene4];
-
-  function showScene(i) {
-    scenes.forEach(s => s.classList.remove('active'));
-    const scene = scenes[i];
-    scene.classList.add('active');
-    dots.forEach((d, di) => d.classList.toggle('active', di === i));
-    // Reset deltas
-    ['d1','d2','d3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('show');
-    });
-    if (sceneRunners[i]) sceneRunners[i](scene);
-  }
-
-  function startPlaybar(duration) {
-    cancelAnimationFrame(raf);
-    const start = performance.now();
-    function frame(now) {
-      const p = Math.min(1, (now - start) / duration);
-      playbarFill.style.width = (p * 100) + '%';
-      if (p < 1) raf = requestAnimationFrame(frame);
-    }
-    raf = requestAnimationFrame(frame);
-  }
-
-  function goTo(i) {
-    current = i;
-    clearTimeout(sceneTimer);
-    showScene(current);
-    startPlaybar(SCENE_DURATIONS[current]);
-    sceneTimer = setTimeout(() => goTo((current + 1) % scenes.length), SCENE_DURATIONS[current]);
-  }
-
-  goTo(0);
+(() => {
+ const scenes=[...document.querySelectorAll('.scene')], steps=[...document.querySelectorAll('.step')], next=document.querySelector('#next'), back=document.querySelector('#back');
+ let index=0;
+ const names=['Monitor','Handle','Respond','Stay competitive','Report'];
+ function render(){
+   scenes.forEach((s,i)=>s.classList.toggle('active',i===index));
+   steps.forEach((s,i)=>s.classList.toggle('active',i===index));
+   back.disabled=index===0;
+   back.style.opacity=index===0?'.45':'1';
+   next.textContent=index===scenes.length-1?'Replay demo ↻':`Next: ${names[index+1]} →`;
+ }
+ next.addEventListener('click',()=>{index=index===scenes.length-1?0:index+1;render()});
+ back.addEventListener('click',()=>{if(index>0){index--;render()}});
+ render();
+})();
 </script>
 </body>
 </html>
