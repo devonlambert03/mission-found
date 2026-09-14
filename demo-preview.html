@@ -87,13 +87,14 @@ h1,h2,h3,.metric-value{font-family:"Plus Jakarta Sans",Inter,sans-serif}
 .report-card strong{display:block;font-family:"Plus Jakarta Sans";font-size:26px;letter-spacing:-.05em;margin:5px 0}
 .report-card span{font-size:10px;color:var(--muted)}
 .bottom{border-top:1px solid var(--line);padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.steps{display:flex;gap:6px;align-items:center}
-.step{height:5px;width:24px;border-radius:99px;background:#e5e9f2;transition:.25s}
-.step.active{width:42px;background:var(--blue)}
-.controls{display:flex;gap:8px}
+.steps{display:flex;gap:6px;align-items:center;flex:1}
+.step{position:relative;height:5px;width:100%;max-width:52px;border-radius:99px;background:#e5e9f2;overflow:hidden;cursor:pointer;border:none;padding:0}
+.step-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--blue);border-radius:99px}
+.controls{display:flex;gap:8px;flex-shrink:0}
 button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:9px 13px;font:700 11px Inter;cursor:pointer}
 button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
 button:focus-visible{outline:3px solid #a9bbff;outline-offset:3px}
+.play-toggle{width:34px;height:34px;padding:0;display:grid;place-items:center;font-size:12px}
 .footer-note{text-align:center;color:#8a93a8;font-size:11px;line-height:1.5}
 @media(max-width:650px){
  body{padding:18px 10px}
@@ -193,27 +194,100 @@ button:focus-visible{outline:3px solid #a9bbff;outline-offset:3px}
     </div>
 
     <div class="bottom">
-      <div class="steps" aria-label="Demo progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
-      <div class="controls"><button id="back" aria-label="Previous scene">← Back</button><button id="next" class="primary">Next: Handle →</button></div>
+      <div class="steps" id="steps" aria-label="Demo progress"></div>
+      <div class="controls">
+        <button id="playToggle" class="primary play-toggle" aria-label="Pause">❚❚</button>
+      </div>
     </div>
   </section>
   <p class="footer-note">A visual explanation of the service — not a live Google Business Profile or a promise of specific ranking results.</p>
 </main>
 <script>
 (() => {
- const scenes=[...document.querySelectorAll('.scene')], steps=[...document.querySelectorAll('.step')], next=document.querySelector('#next'), back=document.querySelector('#back');
- let index=0;
- const names=['Monitor','Handle','Respond','Stay competitive','Report'];
+ const scenes=[...document.querySelectorAll('.scene')];
+ const stepsWrap=document.querySelector('#steps');
+ const playToggle=document.querySelector('#playToggle');
+ const DURATIONS=[5500,6000,6500,6000,5500]; // ms per scene, reading-paced
+ let index=0, playing=true, timer=null, fillStart=0, fillRemaining=DURATIONS[0];
+
+ const steps=scenes.map((_,i)=>{
+   const btn=document.createElement('button');
+   btn.className='step';
+   btn.setAttribute('aria-label','Go to scene '+(i+1));
+   const fill=document.createElement('span');
+   fill.className='step-fill';
+   btn.appendChild(fill);
+   btn.addEventListener('click',()=>goTo(i));
+   stepsWrap.appendChild(btn);
+   return { btn, fill };
+ });
+
  function render(){
    scenes.forEach((s,i)=>s.classList.toggle('active',i===index));
-   steps.forEach((s,i)=>s.classList.toggle('active',i===index));
-   back.disabled=index===0;
-   back.style.opacity=index===0?'.45':'1';
-   next.textContent=index===scenes.length-1?'Replay demo ↻':`Next: ${names[index+1]} →`;
  }
- next.addEventListener('click',()=>{index=index===scenes.length-1?0:index+1;render()});
- back.addEventListener('click',()=>{if(index>0){index--;render()}});
+
+ function setFill(i, widthPct, withTransition, durationMs){
+   const fill=steps[i].fill;
+   fill.style.transition = withTransition ? `width ${durationMs}ms linear` : 'none';
+   // force reflow so the transition change takes effect before width changes
+   void fill.offsetWidth;
+   fill.style.width = widthPct + '%';
+ }
+
+ function clearDoneSteps(upToIndex){
+   steps.forEach((s,i)=>{
+     if(i<upToIndex) setFill(i,100,false);
+     else if(i>upToIndex) setFill(i,0,false);
+   });
+ }
+
+ function scheduleAdvance(ms){
+   clearTimeout(timer);
+   fillStart=performance.now();
+   fillRemaining=ms;
+   timer=setTimeout(()=>goTo((index+1)%scenes.length), ms);
+ }
+
+ function goTo(i){
+   index=i;
+   render();
+   clearDoneSteps(index);
+   const dur=DURATIONS[index];
+   setFill(index,0,false);
+   if(playing){
+     requestAnimationFrame(()=>setFill(index,100,true,dur));
+     scheduleAdvance(dur);
+   }
+ }
+
+ function pause(){
+   if(!playing) return;
+   playing=false;
+   clearTimeout(timer);
+   const elapsed=performance.now()-fillStart;
+   fillRemaining=Math.max(0, fillRemaining-elapsed);
+   const computed=getComputedStyle(steps[index].fill).width;
+   const parentWidth=steps[index].btn.getBoundingClientRect().width;
+   const pct=parentWidth ? (parseFloat(computed)/parentWidth*100) : 0;
+   setFill(index,pct,false);
+   playToggle.textContent='▶';
+   playToggle.setAttribute('aria-label','Play');
+ }
+
+ function resume(){
+   if(playing) return;
+   playing=true;
+   playToggle.textContent='❚❚';
+   playToggle.setAttribute('aria-label','Pause');
+   const remaining=fillRemaining || DURATIONS[index];
+   requestAnimationFrame(()=>setFill(index,100,true,remaining));
+   scheduleAdvance(remaining);
+ }
+
+ playToggle.addEventListener('click',()=>{ playing ? pause() : resume(); });
+
  render();
+ goTo(0);
 })();
 </script>
 </body>
