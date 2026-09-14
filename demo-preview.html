@@ -79,39 +79,24 @@
   .reply-sent-tag { display: none; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--green); }
   .reply-sent-tag.show { display: flex; }
 
-  /* ---- Scene D: rankings ---- */
-  .rank-wrap { display: flex; gap: 18px; height: 300px; }
-  .rank-list { flex: 1.3; position: relative; }
-  .rank-item {
-    position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 10px;
-    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: #fff;
-    transition: top 0.7s cubic-bezier(.3,.7,.3,1);
-  }
-  .rank-item.you { transition: top 0.7s cubic-bezier(.3,.7,.3,1), border-color .3s, box-shadow .3s; }
-  .rank-item.you.lit { border-color: var(--blue); border-width: 2px; box-shadow: 0 4px 14px rgba(91,127,224,0.18); }
-  .rank-num { width: 18px; font-weight: 700; color: #7B84A3; font-size: 13px; }
-  .rank-item.you .rank-num { color: var(--blue-deep); font-size: 16px; }
-  .rank-name { font-weight: 700; font-size: 13px; color: var(--navy-deep); }
-  .rank-meta { font-size: 11px; color: #9096AD; }
-  .you-badge { margin-left: auto; background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px; }
-  .move-badge { font-size: 10px; font-weight: 700; color: var(--green); background: #E7F7EE; padding: 2px 7px; border-radius: 999px; margin-left: 6px; opacity: 0; transition: opacity 0.4s; }
-  .move-badge.show { opacity: 1; }
-  .map-mock { flex: 1; background: #EEF0F5; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 16px; align-content: center; }
-  .pin { width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0); transition: opacity 0.3s, transform 0.3s; }
-  .pin.show { opacity: 1; transform: scale(1); }
-
-  /* ---- Scene E: reviews overview ---- */
+  /* ---- Scene D: reviews overview ---- */
   .month-row { display: flex; gap: 14px; margin-bottom: 16px; }
   .month-card { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-  .month-title { display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; color: var(--navy-deep); }
+  .month-title { display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; font-size: 14px; color: var(--navy-deep); margin-bottom: 10px; }
+  .month-replied { font-size: 11px; color: #7B84A3; margin-bottom: 6px; }
+  .month-track { height: 5px; background: var(--border); border-radius: 999px; overflow: hidden; }
+  .month-fill { height: 100%; width: 0%; background: var(--blue); transition: width 1.1s cubic-bezier(.2,.8,.3,1) 0.3s; }
+  .scene.active .month-fill { width: var(--w); }
   .reviews-bottom-row { display: flex; gap: 14px; }
   .bar-chart-card { flex: 1.5; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-  .bar-chart-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; height: 90px; margin-top: 10px; }
-  .bar-col { width: 22px; border-radius: 4px 4px 0 0; background: var(--blue); height: 0%; transition: height 0.9s cubic-bezier(.2,.8,.3,1); }
+  .bar-chart-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; height: 82px; margin-top: 10px; }
+  .bar-col { width: 22px; border-radius: 4px 4px 0 0; height: 0%; transition: height 1s cubic-bezier(.2,.8,.3,1); }
   .scene.active .bar-col { height: var(--h); }
+  .bar-legend { display: flex; gap: 10px; margin-top: 10px; font-size: 10px; color: #7B84A3; }
+  .bar-legend span { display: flex; align-items: center; gap: 4px; }
+  .bar-legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
   .gauge-card { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; align-items: center; }
   .gauge-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: var(--navy-deep); margin-top: -34px; }
-  .gauge-seg { stroke-dashoffset: 126; transition: stroke-dashoffset 1.2s cubic-bezier(.3,.7,.3,1); }
   .total-label { font-size: 12px; color: #7B84A3; margin-bottom: 4px; }
   .total-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; color: var(--navy-deep); }
 </style>
@@ -187,19 +172,18 @@
 
     <!-- SCENE D -->
     <div class="scene" data-scene="3">
-      <div class="scene-title">Local rankings</div>
-      <div class="rank-wrap">
-        <div class="rank-list" id="rank-list"></div>
-        <div class="map-mock" id="map-mock"></div>
-      </div>
-    </div>
-
-    <!-- SCENE E -->
-    <div class="scene" data-scene="4">
       <div class="scene-title">Reviews</div>
       <div class="month-row">
-        <div class="month-card"><div class="month-title">Sept <span>★ 4.8</span></div></div>
-        <div class="month-card"><div class="month-title">Oct <span>★ 4.9</span></div></div>
+        <div class="month-card">
+          <div class="month-title">Sept <span><span class="cu" data-target="4.8" data-format="dec1">0.0</span> ★</span></div>
+          <div class="month-replied">40/128 replied · 32%</div>
+          <div class="month-track"><div class="month-fill" style="--w:32%"></div></div>
+        </div>
+        <div class="month-card">
+          <div class="month-title">Oct <span><span class="cu" data-target="4.9" data-format="dec1">0.0</span> ★</span></div>
+          <div class="month-replied">65/130 replied · 50%</div>
+          <div class="month-track"><div class="month-fill" style="--w:50%"></div></div>
+        </div>
         <div class="month-card">
           <div class="total-label">Total reviews</div>
           <div class="total-value"><span class="cu" data-target="258" data-format="int">0</span></div>
@@ -209,20 +193,27 @@
         <div class="bar-chart-card">
           <div class="chart-title">Reviews by rating</div>
           <div class="bar-chart-row">
-            <div class="bar-col" style="--h:14%"></div>
-            <div class="bar-col" style="--h:22%"></div>
-            <div class="bar-col" style="--h:34%"></div>
-            <div class="bar-col" style="--h:58%"></div>
-            <div class="bar-col" style="--h:100%"></div>
+            <div class="bar-col" style="--h:6%; background:var(--red)"></div>
+            <div class="bar-col" style="--h:10%; background:#F0925A"></div>
+            <div class="bar-col" style="--h:16%; background:var(--amber)"></div>
+            <div class="bar-col" style="--h:42%; background:#7BC98B"></div>
+            <div class="bar-col" style="--h:100%; background:var(--green)"></div>
+          </div>
+          <div class="bar-legend">
+            <span><i style="background:var(--red)"></i>1★</span>
+            <span><i style="background:#F0925A"></i>2★</span>
+            <span><i style="background:var(--amber)"></i>3★</span>
+            <span><i style="background:#7BC98B"></i>4★</span>
+            <span><i style="background:var(--green)"></i>5★</span>
           </div>
         </div>
         <div class="gauge-card">
           <div class="chart-title">Average rating</div>
           <svg viewBox="0 0 100 60" width="120" height="70">
             <path d="M10,55 A40,40 0 0,1 90,55" fill="none" stroke="var(--border)" stroke-width="8" stroke-linecap="round"/>
-            <path class="gauge-seg" d="M10,55 A40,40 0 0,1 90,55" fill="none" stroke="var(--green)" stroke-width="8" stroke-linecap="round" stroke-dasharray="126" id="gauge-arc"/>
+            <path class="gauge-seg" d="M10,55 A40,40 0 0,1 90,55" fill="none" stroke="var(--red)" stroke-width="8" stroke-linecap="round" stroke-dasharray="126" stroke-dashoffset="126" id="gauge-arc"/>
           </svg>
-          <div class="gauge-value">4.9</div>
+          <div class="gauge-value" id="gauge-value">0.0</div>
         </div>
       </div>
     </div>
@@ -234,7 +225,7 @@
 <div class="controls" id="controls"></div>
 
 <script>
-  const SCENE_DURATIONS = [3500, 4500, 7500, 4500, 4000]; // ms, matches reference pacing
+  const SCENE_DURATIONS = [3500, 4500, 7500, 6500]; // ms, matches reference pacing
   const scenes = document.querySelectorAll('.scene');
   const controls = document.getElementById('controls');
   const playbarFill = document.getElementById('playbarFill');
@@ -250,11 +241,11 @@
   });
   const dots = controls.querySelectorAll('.dot');
 
-  function animateCounters(scene) {
+  function animateCounters(scene, duration) {
+    duration = duration || 900;
     scene.querySelectorAll('.cu').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const format = el.dataset.format;
-      const duration = 900;
       const start = performance.now();
       function frame(now) {
         const p = Math.min(1, (now - start) / duration);
@@ -309,74 +300,44 @@
     }, 500);
   }
 
-  const RANK_COLORS = ['#E5484D', '#2FAE60', '#F5A623'];
-  function buildRankPins(container, seed) {
-    container.innerHTML = '';
-    const counts = [19, 3, 1, 3, 6, 10, 16, 3, 7, 5, 12, 2, 3, 7, 1, 3, 19, 2, 1, 19];
-    counts.forEach((n, i) => {
-      const pin = document.createElement('div');
-      pin.className = 'pin';
-      pin.style.background = RANK_COLORS[i % 3];
-      pin.textContent = n;
-      pin.style.transitionDelay = (i * 25) + 'ms';
-      container.appendChild(pin);
-      requestAnimationFrame(() => requestAnimationFrame(() => pin.classList.add('show')));
-    });
+  // red -> amber -> green, interpolated by rating value (0-5 scale)
+  function gaugeColorFor(rating) {
+    const stops = [
+      { at: 0, c: [229, 72, 77] },   // red
+      { at: 3, c: [245, 166, 35] },  // amber
+      { at: 4.5, c: [47, 174, 96] }, // green
+    ];
+    let lo = stops[0], hi = stops[stops.length - 1];
+    for (let i = 0; i < stops.length - 1; i++) {
+      if (rating >= stops[i].at && rating <= stops[i + 1].at) { lo = stops[i]; hi = stops[i + 1]; break; }
+    }
+    const span = hi.at - lo.at || 1;
+    const t = Math.max(0, Math.min(1, (rating - lo.at) / span));
+    const rgb = lo.c.map((v, i) => Math.round(v + (hi.c[i] - v) * t));
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
   }
 
   function runSceneD(scene) {
-    const listEl = scene.querySelector('#rank-list');
-    const mapEl = scene.querySelector('#map-mock');
-    const rowH = 66;
-    const businesses = [
-      { name: 'Pizza Papa Cipolla', meta: '7208 South Tucson Way · 4 reviews', you: false },
-      { name: 'Affinity Toastmasters', meta: '315 York Road · 144 reviews', you: false },
-      { name: "Big Mario's Pizza", meta: '40 Pinewood Crescent · 6 reviews', you: false },
-      { name: 'Goodfellas Pizza', meta: '3558 E Broadway · 1 review', you: true },
-    ];
-    listEl.innerHTML = '';
-    const rowEls = businesses.map((b, i) => {
-      const row = document.createElement('div');
-      row.className = 'rank-item' + (b.you ? ' you' : '');
-      row.style.top = (i * rowH) + 'px';
-      row.innerHTML = `<div class="rank-num">${i + 1}</div>
-        <div><div class="rank-name">${b.name}</div><div class="rank-meta">${b.meta}</div></div>
-        ${b.you ? '<span class="you-badge">YOU</span>' : ''}`;
-      listEl.appendChild(row);
-      return row;
-    });
-    buildRankPins(mapEl);
-
-    setTimeout(() => rowEls[3].classList.add('lit'), 200);
-
-    // climb: you (index 3) moves to index 2, then index 1
-    setTimeout(() => {
-      rowEls[3].style.top = (2 * rowH) + 'px';
-      rowEls[2].style.top = (3 * rowH) + 'px';
-      rowEls[3].querySelector('.rank-num').textContent = '3';
-      rowEls[2].querySelector('.rank-num').textContent = '4';
-    }, 1600);
-
-    setTimeout(() => {
-      rowEls[3].style.top = (1 * rowH) + 'px';
-      rowEls[1].style.top = (2 * rowH) + 'px';
-      rowEls[3].querySelector('.rank-num').textContent = '2';
-      rowEls[1].querySelector('.rank-num').textContent = '3';
-      const badge = document.createElement('span');
-      badge.className = 'move-badge';
-      badge.textContent = '↑ 2';
-      rowEls[3].appendChild(badge);
-      requestAnimationFrame(() => requestAnimationFrame(() => badge.classList.add('show')));
-    }, 3000);
-  }
-
-  function runSceneE(scene) {
     const arc = scene.querySelector('#gauge-arc');
-    arc.style.strokeDashoffset = '126';
-    setTimeout(() => { arc.style.strokeDashoffset = '10'; }, 200);
+    const valueEl = scene.querySelector('#gauge-value');
+    const target = 4.9;
+    const duration = 1800;
+    setTimeout(() => {
+      const start = performance.now();
+      function frame(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = target * eased;
+        arc.style.strokeDashoffset = String(126 - (126 - 10) * eased);
+        arc.style.stroke = gaugeColorFor(val);
+        valueEl.textContent = val.toFixed(1);
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }, 200);
   }
 
-  const sceneRunners = [animateCounters, runSceneB, runSceneC, runSceneD, animateCounters === null ? null : (s) => { animateCounters(s); runSceneE(s); }];
+  const sceneRunners = [animateCounters, runSceneB, runSceneC, (s) => { animateCounters(s, 2000); runSceneD(s); }];
 
   function showScene(i) {
     scenes.forEach(s => s.classList.remove('active'));
