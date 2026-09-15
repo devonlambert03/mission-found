@@ -15,7 +15,7 @@
 <meta name="description" content="We manage your Google Business Profile, reviews, and local online presence — handled by a real person, not AI. $149/month, no contract.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy-deep: #060A16;
@@ -105,6 +105,83 @@
     box-shadow: 0 8px 24px rgba(91,127,224,0.35);
   }
   .cta-note { font-size: 14px; color: #6B7594; }
+  .cta-button .arrow { margin-left: 4px; }
+  .hero h1 .accent-underline { color: var(--blue); border-bottom: 5px solid var(--blue); border-radius: 2px; padding-bottom: 2px; }
+
+  /* ---- Hero note + mockup card ---- */
+  .hero-note {
+    display: flex; align-items: flex-end; gap: 8px; max-width: 900px; margin: 64px auto 0 4%;
+    font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700; color: var(--navy-deep);
+    line-height: 1.2;
+  }
+  .hero-note svg { flex-shrink: 0; margin-bottom: 2px; color: var(--navy-deep); }
+  .hmc-wrap { max-width: 1080px; margin: 18px auto 0; padding: 0 24px; }
+  .hmc {
+    display: block; background: var(--navy-deep); border-radius: 26px; padding: 28px;
+    box-shadow: 0 40px 90px rgba(6,10,22,0.35); position: relative; overflow: hidden;
+    text-decoration: none; cursor: pointer;
+  }
+  .hmc-row { display: flex; align-items: center; gap: 0; position: relative; }
+  .hmc-panel {
+    background: #fff; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  }
+  .hmc-gbp { flex: 1.5; display: flex; overflow: hidden; min-width: 0; }
+  .hmc-gbp-nav { width: 150px; flex-shrink: 0; background: #101B38; padding: 18px 14px; color: #C7CEE3; }
+  .hmc-gbp-brand { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+  .hmc-gbp-brand .g { width: 18px; height: 18px; border-radius: 5px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .hmc-gbp-nav div { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 8px 8px; border-radius: 8px; color: #A9B4D0; margin-bottom: 2px; }
+  .hmc-gbp-nav div.on { background: rgba(91,127,224,0.25); color: #fff; }
+  .hmc-gbp-nav div .ic { width: 14px; text-align: center; opacity: .8; }
+  .hmc-gbp-card { flex: 1; padding: 18px 18px 20px; min-width: 0; }
+  .hmc-gbp-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .hmc-gbp-avatar { width: 38px; height: 38px; border-radius: 9px; background: linear-gradient(145deg,#DCE5FB,#B9C8FA); flex-shrink: 0; }
+  .hmc-gbp-name { font-size: 14.5px; font-weight: 700; color: var(--navy-deep); }
+  .hmc-gbp-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6b7280; margin-top: 2px; }
+  .hmc-gbp-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; }
+  .hmc-gbp-stats { display: flex; gap: 10px; margin-bottom: 16px; }
+  .hmc-gbp-stat { flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 9px 10px; }
+  .hmc-gbp-stat .lbl { font-size: 10px; color: #8790A8; margin-bottom: 4px; }
+  .hmc-gbp-stat .val { font-size: 16px; font-weight: 700; color: var(--navy-deep); font-family: 'Plus Jakarta Sans', sans-serif; }
+  .hmc-gbp-stat .delta { font-size: 9.5px; color: var(--green); font-weight: 700; margin-top: 2px; }
+  .hmc-gbp-activity-label { font-size: 11px; font-weight: 700; color: var(--navy-deep); margin-bottom: 8px; }
+  .hmc-gbp-activity-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 11.5px; color: var(--navy-deep); }
+  .hmc-gbp-activity-row .ic { width: 22px; height: 22px; border-radius: 6px; background: #EEF1FB; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+  .hmc-gbp-activity-row .t { margin-left: auto; color: #9096AD; font-size: 10px; }
+  .hmc-play {
+    flex-shrink: 0; align-self: center; margin: 0 -36px;
+    width: 72px; height: 72px; border-radius: 50%; background: rgba(6,10,22,0.82);
+    display: flex; align-items: center; justify-content: center; z-index: 3;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35); transition: transform 0.2s;
+  }
+  .hmc:hover .hmc-play { transform: scale(1.08); }
+  .hmc-play svg { margin-left: 4px; }
+  .hmc-search { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .hmc-search-bar { display: flex; align-items: center; gap: 6px; background: #F0F2F8; border-radius: 999px; padding: 7px 12px; font-size: 11px; color: #8790A8; }
+  .hmc-search-photo { height: 78px; border-radius: 10px; background: linear-gradient(135deg, #D9E2FA, #B9C8E8 60%, #94A8D8); }
+  .hmc-search-name { font-size: 13px; font-weight: 700; color: var(--navy-deep); }
+  .hmc-search-rating { font-size: 11px; color: var(--amber); }
+  .hmc-search-rating span { color: #8790A8; }
+  .hmc-search-tabs { display: flex; gap: 12px; font-size: 10.5px; color: #8790A8; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .hmc-search-tabs .on { color: var(--blue); font-weight: 700; }
+  .hmc-search-actions { display: flex; justify-content: space-between; }
+  .hmc-search-actions div { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: #6b7280; }
+  .hmc-search-actions .ic { width: 26px; height: 26px; border-radius: 50%; background: #F0F2F8; color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  @media (max-width: 820px) {
+    .hmc-row { flex-direction: column; gap: 20px; }
+    .hmc-gbp { width: 100%; }
+    .hmc-search { width: 100%; }
+    .hmc-play { margin: -30px 0; }
+    .hmc-gbp-nav { width: 110px; }
+    .hero-note { margin-left: 24px; font-size: 21px; }
+  }
+  @media (max-width: 480px) {
+    .hmc-gbp { flex-direction: column; }
+    .hmc-gbp-nav { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; overflow-x: auto; }
+    .hmc-gbp-brand { margin-bottom: 0; flex-shrink: 0; }
+    .hmc-gbp-nav div:not(.hmc-gbp-brand) { display: none; }
+    .hmc-gbp-stats { flex-wrap: wrap; }
+    .hmc-gbp-stat { min-width: calc(50% - 5px); }
+  }
 
   /* ---- Problem ---- */
   .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
@@ -431,12 +508,72 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-inner">
-    <h1>Let us help you</h1>
-    <p class="hero-sub">You continue doing what made you great. Let us manage your local online presence, the tedious stuff that eats up your time, so you don't have to.</p>
+    <h1>You handle the work.<br>We handle the <span class="accent-underline">online</span> stuff.</h1>
+    <p class="hero-sub">Your business is built on doing good work, not updating Google, answering reviews, posting photos, and keeping your online information straight. That's where we come in.</p>
     <div class="cta-row">
-      <a href="audit.html" class="cta-button">Get Your Free Audit</a>
-      <span class="cta-note">No cost. No commitment.</span>
+      <a href="audit.html" class="cta-button">Get My Free Audit<svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      <span class="cta-note">No sales pitch. Just a clear look at what's working and what's being missed.</span>
     </div>
+  </div>
+
+  <div class="hero-note">
+    <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><path d="M4 6 C 10 22, 24 30, 40 34" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M31 30 L40 34 L37 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <span>Here's what we take off your plate.</span>
+  </div>
+
+  <div class="hmc-wrap">
+    <a href="#hdw" class="hmc" aria-label="See it in action">
+      <div class="hmc-row">
+        <div class="hmc-panel hmc-gbp">
+          <div class="hmc-gbp-nav">
+            <div class="hmc-gbp-brand"><span class="g">G</span>Google Business Profile</div>
+            <div class="on"><span class="ic">&#9633;</span>Overview</div>
+            <div><span class="ic">&#9642;</span>Posts</div>
+            <div><span class="ic">&#9733;</span>Reviews</div>
+            <div><span class="ic">&#9635;</span>Photos</div>
+            <div><span class="ic">&#9432;</span>Info</div>
+          </div>
+          <div class="hmc-gbp-card">
+            <div class="hmc-gbp-top">
+              <div class="hmc-gbp-avatar"></div>
+              <div>
+                <div class="hmc-gbp-name">Riverside Contracting</div>
+                <div class="hmc-gbp-status"><i></i>Business Profile Active</div>
+              </div>
+            </div>
+            <div class="hmc-gbp-stats">
+              <div class="hmc-gbp-stat"><div class="lbl">Profile views</div><div class="val">12.4K</div><div class="delta">&#8599; 18%</div></div>
+              <div class="hmc-gbp-stat"><div class="lbl">Phone calls</div><div class="val">186</div><div class="delta">&#8599; 32%</div></div>
+              <div class="hmc-gbp-stat"><div class="lbl">Website clicks</div><div class="val">421</div><div class="delta">&#8599; 14%</div></div>
+            </div>
+            <div class="hmc-gbp-activity-label">Latest activity</div>
+            <div class="hmc-gbp-activity-row"><span class="ic">&#9733;</span>New review<span class="t">2h ago</span></div>
+            <div class="hmc-gbp-activity-row"><span class="ic">&#9635;</span>Photo added<span class="t">4h ago</span></div>
+            <div class="hmc-gbp-activity-row"><span class="ic">&#9642;</span>Post published<span class="t">1d ago</span></div>
+          </div>
+        </div>
+
+        <div class="hmc-play">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+
+        <div class="hmc-panel hmc-search">
+          <div class="hmc-search-bar"><span>&#128269;</span>Search for a business</div>
+          <div class="hmc-search-photo"></div>
+          <div>
+            <div class="hmc-search-name">Riverside Contracting</div>
+            <div class="hmc-search-rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.8 <span>(124)</span></div>
+          </div>
+          <div class="hmc-search-tabs"><span class="on">Overview</span><span>Updates</span><span>Reviews</span><span>Photos</span></div>
+          <div class="hmc-search-actions">
+            <div><span class="ic">&#9742;</span>Call</div>
+            <div><span class="ic">&#8599;</span>Directions</div>
+            <div><span class="ic">&#9733;</span>Save</div>
+            <div><span class="ic">&#127760;</span>Website</div>
+          </div>
+        </div>
+      </div>
+    </a>
   </div>
 </section>
 
