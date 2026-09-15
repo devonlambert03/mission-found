@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Digital Visibility Score — Mission: Found</title>
+<title>Digital Visibility Score | Mission: Found</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
@@ -366,7 +366,7 @@
 
   <div class="priority-panel">
     <h2><span class="warn-icon">⚠</span> Top Priorities</h2>
-    <div class="sub">Auto-generated from your lowest-scoring criteria, ranked by point opportunity — fix these first.</div>
+    <div class="sub">Auto-generated from your lowest-scoring criteria, ranked by point opportunity. Fix these first.</div>
     <div id="priorityList"></div>
   </div>
 
@@ -388,7 +388,7 @@ const PILLARS = [
       ['Services/products list completeness', 10, 'Pass: complete, specific list, not just category defaults', 'binary'],
       ['Service area configuration', 5, 'If the business travels to customers', 'binary'],
       ['Attributes completed', 5, 'Pass: relevant attributes filled (accessibility, payment, etc.)', 'binary'],
-      ['Photos — quantity & recency', 15, 'Pass: 10+ photos, 3+ added in last 90 days', 'binary'],
+      ['Photos: quantity & recency', 15, 'Pass: 10+ photos, 3+ added in last 90 days', 'binary'],
       ['Google Posts activity', 10, 'Pass: 2+ posts in last 30 days', 'binary'],
       ['Q&A monitored', 5, 'No unanswered questions older than 7 days', 'binary'],
       ['Messaging/booking enabled', 5, 'If supported for business type', 'binary'],
@@ -409,8 +409,8 @@ const PILLARS = [
   {
     key: 'local', name: 'Local Search & Competitive Visibility', weight: 0.15, color: '#6FCF97',
     criteria: [
-      ['Map pack ranking — primary term', 25, 'Pass: appears in the top 3 Google Maps results for "[service] near [city]"', 'binary'],
-      ['Map pack ranking — variant terms', 15, 'Pass: top 3–5 for at least 2 of 3 related search phrases', 'binary'],
+      ['Map pack ranking: primary term', 25, 'Pass: appears in the top 3 Google Maps results for "[service] near [city]"', 'binary'],
+      ['Map pack ranking: variant terms', 15, 'Pass: top 3–5 for at least 2 of 3 related search phrases', 'binary'],
       ['Organic web visibility', 15, 'Pass: business site appears on page 1 for branded + service+city searches', 'binary'],
       ['Citation consistency', 20, 'Pass: NAP matches across 3+ major directories (Yelp, Facebook, BBB, Angi)', 'binary'],
       ['Review volume vs. competitors', 15, 'Pass: review count at or above the median of 3-5 benchmarked competitors', 'binary'],
@@ -522,7 +522,7 @@ function renderPriorities() {
         <div class="pname">${item.name}</div>
         <div class="ppillar">${item.pillar}</div>
       </div>
-      <div class="pgap">${item.scored}/${item.max} — ${item.gap} pts open</div>
+      <div class="pgap">${item.scored}/${item.max} (${item.gap} pts open)</div>
     </div>
   `).join('');
 }
@@ -607,7 +607,7 @@ function loadAudit(event) {
       });
       render();
     } catch (err) {
-      alert('Could not read that file — make sure it\'s a JSON file saved from this tool.');
+      alert('Could not read that file. Make sure it\'s a JSON file saved from this tool.');
     }
   };
   reader.readAsText(file);
@@ -785,8 +785,8 @@ function buildPrintDocument() {
         <div class="pd-cover-date">${dateDisplay}</div>
       </div>
       <div class="pd-cover-bottom">
-        <div class="pd-cover-score">${score.toFixed(1)}/100 — ${interp.label}</div>
-        <div class="pd-cover-footer">Prepared by Mission: Found &nbsp;·&nbsp; Confidential — for client use only</div>
+        <div class="pd-cover-score">${score.toFixed(1)}/100 (${interp.label})</div>
+        <div class="pd-cover-footer">Prepared by Mission: Found &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; For client use only</div>
       </div>
     </section>`;
 
@@ -816,7 +816,7 @@ function buildPrintDocument() {
   gaps.sort((a, b) => b.gap - a.gap);
   const top5 = gaps.slice(0, 5);
   const priorityHtml = top5.length === 0
-    ? '<div class="pd-empty">Every criterion has been scored — no open priorities remain.</div>'
+    ? '<div class="pd-empty">Every criterion has been scored. No open priorities remain.</div>'
     : top5.map((item, i) => `
       <div class="pd-priority-item">
         <div class="pd-priority-rank">${i + 1}</div>
@@ -845,7 +845,7 @@ function buildPrintDocument() {
         <tbody>${pillarRows}</tbody>
       </table>
       <div class="pd-subhead">Top Priorities</div>
-      <div class="pd-priority-sub">Ranked by point opportunity — fix these first.</div>
+      <div class="pd-priority-sub">Ranked by point opportunity. Fix these first.</div>
       ${priorityHtml}
     </section>`;
 
