@@ -202,12 +202,14 @@
   @keyframes hdwEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .hdw-scene-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 23px; }
   .hdw-kicker { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
-  .hdw-scene h2 { font-size: 23px; letter-spacing: -.045em; line-height: 1.15; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
-  .hdw-scene-intro { font-size: 12px; color: var(--muted); line-height: 1.55; margin-top: 8px; max-width: 470px; }
+  .hdw-scene h2 { font-size: 27px; font-weight: 800; letter-spacing: -.045em; line-height: 1.15; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
+  .hdw-scene-intro { font-size: 13px; color: var(--sub-ink); line-height: 1.55; margin-top: 8px; max-width: 470px; }
   .hdw-pill { white-space: nowrap; border: 1px solid #dce4ff; background: var(--blue-soft); color: #4664c6; border-radius: 999px; padding: 7px 10px; font-size: 10px; font-weight: 800; animation: hdwPopIn .4s cubic-bezier(.34,1.56,.64,1) .15s both; }
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
   .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
   .hdw-panel.soft { background: #fafbfe; }
+  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; }
+  .hdw-panel.accent .hdw-panel-title { color: #fff; }
   .hdw-grid > .hdw-panel:nth-child(1) { animation-delay: .12s; }
   .hdw-grid > .hdw-panel:nth-child(2) { animation-delay: .22s; }
   .hdw-panel-title { font-size: 11px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; color: var(--navy-deep); }
@@ -231,7 +233,6 @@
   .hdw-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); }
   .hdw-track { height: 7px; background: #edf0f6; border-radius: 99px; overflow: hidden; }
   .hdw-fill { height: 100%; width: 0; background: var(--blue); border-radius: 99px; animation: hdwFill 1s .25s cubic-bezier(.22,1.4,.36,1) forwards; }
-  .hdw-fill.green { background: var(--green); }
   @keyframes hdwFill { to { width: var(--width); } }
   .hdw-actions { display: grid; gap: 11px; }
   .hdw-action { display: flex; align-items: center; gap: 11px; font-size: 11px; color: var(--ink); animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
@@ -252,7 +253,8 @@
   .hdw-example-badge { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #78829a; background: #eef0f5; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; white-space: nowrap; }
   .hdw-review p { font-size: 12px; line-height: 1.65; color: #4d5874; }
   .hdw-reply { margin-top: 13px; border-left: 2px solid var(--blue); padding-left: 13px; }
-  .hdw-reply label { display: block; font-size: 10px; font-weight: 800; color: var(--blue); margin-bottom: 5px; }
+  .hdw-reply label { display: block; font-size: 10px; font-weight: 800; color: var(--ink); margin-bottom: 5px; }
+  .hdw-reply label span { color: var(--blue); }
   .hdw-reply p { font-size: 11px; color: var(--ink); }
   .hdw-rank-list { display: grid; gap: 9px; }
   .hdw-rank { display: grid; grid-template-columns: 27px 1fr auto; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; font-size: 11px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; color: var(--ink); }
@@ -269,18 +271,19 @@
   .hdw-you-tag { background: var(--blue); color: #fff; font-size: 9.5px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-left: 8px; }
   @keyframes hdwGlowPulse { 0%,100% { box-shadow: 0 4px 14px rgba(94,125,232,.14); } 50% { box-shadow: 0 4px 22px rgba(94,125,232,.3); } }
   .hdw-report { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
-  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 16px; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 20px 16px; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
   .hdw-report-card:nth-child(1) { animation-delay: .06s; }
   .hdw-report-card:nth-child(2) { animation-delay: .16s; }
   .hdw-report-card:nth-child(3) { animation-delay: .26s; }
-  .hdw-report-card span { font-size: 10px; color: var(--muted); }
-  .hdw-report-card strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; letter-spacing: -.05em; margin: 5px 0; color: var(--navy-deep); }
+  .hdw-report-card > span:first-child { font-size: 12px; font-weight: 700; color: var(--navy-deep); }
+  .hdw-report-card strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; letter-spacing: -.05em; margin: 10px 0; color: var(--navy-deep); }
+  .hdw-report-card > span:last-child { font-size: 10px; color: var(--muted); }
   @keyframes hdwRiseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @keyframes hdwPopIn { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
   @media (max-width: 650px) {
     .hdw-scene { padding: 22px 17px; } .hdw-scene-head { display: block; } .hdw-pill { display: inline-block; margin-top: 12px; }
-    .hdw-scene h2 { font-size: 21px; } .hdw-grid { grid-template-columns: 1fr; } .hdw-metrics { gap: 7px; } .hdw-metric { padding: 11px; } .hdw-metric-value { font-size: 20px; }
-    .hdw-report { gap: 7px; } .hdw-report-card { padding: 11px; } .hdw-report-card strong { font-size: 22px; }
+    .hdw-scene h2 { font-size: 23px; } .hdw-grid { grid-template-columns: 1fr; } .hdw-metrics { gap: 7px; } .hdw-metric { padding: 11px; } .hdw-metric-value { font-size: 20px; }
+    .hdw-report { gap: 7px; } .hdw-report-card { padding: 14px 11px; } .hdw-report-card strong { font-size: 26px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hdw *, .hdw *::before, .hdw *::after { animation: none !important; transition: none !important; }
@@ -334,7 +337,6 @@
           <div class="hdw-scene active" data-hdw-scene="0">
             <div class="hdw-scene-head">
               <div><div class="hdw-kicker">01 / Monitor</div><h2>We keep watch while you run the business.</h2><p class="hdw-scene-intro">We check your Google listing every day, so nothing gets missed.</p></div>
-              <span class="hdw-pill">All good</span>
             </div>
             <div class="hdw-metrics">
               <div class="hdw-metric"><div class="hdw-metric-label">Profile views</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="15100" data-format="k1">15.1K</span></div><div class="hdw-metric-note">&#8599; 12.4% this period</div></div>
@@ -360,45 +362,46 @@
 
           <div class="hdw-scene" data-hdw-scene="1">
             <div class="hdw-scene-head"><div><div class="hdw-kicker">02 / Handle</div><h2>A real person takes care of it.</h2><p class="hdw-scene-intro">You don't have to log in, post, or wonder if a review got answered. We handle it.</p></div><span class="hdw-pill">Human-managed</span></div>
-            <div class="hdw-manager"><div class="hdw-avatar">D</div><div><strong>Devon &middot; Your Mission: Found manager</strong><span>Handles your reviews, posts, photos, and listing.</span></div><span class="hdw-pill" style="margin-left:auto">Assigned</span></div>
-            <div class="hdw-grid">
-              <div class="hdw-panel"><div class="hdw-panel-title">Recent work <span class="hdw-muted">This week</span></div><div class="hdw-actions">
-                <div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Published a helpful update</b><small>Service availability and seasonal reminder</small></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">&#8617;</div><div><b>Responded to a customer review</b><small>Personal, not generic</small></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">+</div><div><b>Added fresh business photos</b><small>Keeps your listing looking active</small></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Checked business information</b><small>Hours and service details reviewed</small></div></div>
-              </div></div>
-              <div class="hdw-panel soft"><div class="hdw-panel-title">The point</div><p style="font-size:14px;line-height:1.65;letter-spacing:-.02em">Your Google listing stays active and accurate. One less job for you.</p><div style="margin-top:20px;padding-top:15px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)">No automated filler. No generic copy-paste replies. No dashboard babysitting.</div></div>
-            </div>
+            <div class="hdw-manager"><div class="hdw-avatar">D</div><div><strong>Devon &middot; Your <span style="color:var(--blue);display:inline">Mission: Found</span> manager</strong><span>Handles your reviews, posts, photos, and listing.</span></div><span class="hdw-pill" style="margin-left:auto">Assigned</span></div>
+            <div class="hdw-panel"><div class="hdw-panel-title">Recent work <span class="hdw-muted">This week</span></div><div class="hdw-actions">
+              <div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Published a helpful update</b><small>Service availability and seasonal reminder</small></div></div>
+              <div class="hdw-action"><div class="hdw-action-icon">&#8617;</div><div><b>Responded to a customer review</b><small>Personal, not generic</small></div></div>
+              <div class="hdw-action"><div class="hdw-action-icon">+</div><div><b>Added fresh business photos</b><small>Keeps your listing looking active</small></div></div>
+              <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Checked business information</b><small>Hours and service details reviewed</small></div></div>
+            </div></div>
           </div>
 
           <div class="hdw-scene" data-hdw-scene="2">
             <div class="hdw-scene-head"><div><div class="hdw-kicker">03 / Respond</div><h2>Customers get a thoughtful response.</h2><p class="hdw-scene-intro">Every review gets a real reply, especially when a customer takes the time to write one.</p></div><span class="hdw-pill">Reviews</span></div>
             <div class="hdw-review">
-              <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div><span class="hdw-example-badge">Example review, not an actual customer</span></div>
+              <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div></div>
               <p>&ldquo;The team was on time, communicated clearly, and did exactly what they promised. Would absolutely use them again.&rdquo;</p>
-              <div class="hdw-reply"><label>MISSION: FOUND RESPONSE</label><p>&ldquo;Thank you for the kind words. We&rsquo;re glad it went well, and we look forward to helping you again.&rdquo;</p></div>
+              <div class="hdw-reply"><label><span>MISSION: FOUND</span> RESPONSE</label><p>&ldquo;Thank you for the kind words. We&rsquo;re glad it went well, and we look forward to helping you again.&rdquo;</p></div>
             </div>
-            <div class="hdw-grid" style="margin-top:14px"><div class="hdw-panel soft"><div class="hdw-panel-title">Response standard</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div></div><div class="hdw-panel"><div class="hdw-panel-title">Human touch <span class="hdw-muted">Always</span></div><p style="font-size:12px;line-height:1.6;color:var(--muted)">We don't use AI replies. A real person writes every response.</p></div></div>
+            <div class="hdw-grid" style="margin-top:14px"><div class="hdw-panel soft"><div class="hdw-panel-title">Response standard</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div></div><div class="hdw-panel"><div class="hdw-panel-title">Human touch</div><p style="font-size:12px;line-height:1.6;color:var(--muted)">We don't use AI replies. A real person writes every response.</p></div></div>
           </div>
 
           <div class="hdw-scene" data-hdw-scene="3">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Stay competitive</div><h2>We watch your ranking. We don't promise #1.</h2><p class="hdw-scene-intro">Your ranking moves for a lot of reasons. We keep an eye on it and act on what we can control.</p></div><span class="hdw-pill">Ranking watch</span></div>
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Stay competitive</div><h2>We watch your ranking.</h2><p class="hdw-scene-intro">Your ranking moves for a lot of reasons. We keep an eye on it and act on what we can control.</p></div><span class="hdw-pill">Ranking watch</span></div>
             <div class="hdw-grid">
-              <div class="hdw-panel"><div class="hdw-panel-title">Example ranking <span class="hdw-muted">Not a guarantee</span></div><div class="hdw-rank-list">
+              <div class="hdw-panel"><div class="hdw-panel-title">Example Ranking:</div><div class="hdw-rank-list">
                 <div class="hdw-rank"><div class="hdw-rank-number">1</div><div><b>Northstar Home Care</b><small>12 Main Street &middot; Example market</small></div><div class="hdw-rank-status">Stable</div></div>
                 <div class="hdw-rank you"><div class="hdw-rank-number">2</div><div><b>Brightline Home Services</b><small>48 Oak Avenue &middot; Example market</small></div><div style="display:flex;align-items:center"><div class="hdw-rank-status">Improving</div><span class="hdw-you-tag">You</span></div></div>
                 <div class="hdw-rank"><div class="hdw-rank-number">3</div><div><b>Evergreen Property Co.</b><small>9 Park Road &middot; Example market</small></div><div class="hdw-rank-status">Stable</div></div>
                 <div class="hdw-rank"><div class="hdw-rank-number">4</div><div><b>Summit Local Pros</b><small>71 River Street &middot; Example market</small></div><div class="hdw-rank-status">Watching</div></div>
               </div></div>
-              <div class="hdw-panel soft"><div class="hdw-panel-title">What we can influence</div><div class="hdw-bars"><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Accurate services</span><b>High</b></div><div class="hdw-track"><div class="hdw-fill green" style="--width:90%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Fresh activity</span><b>High</b></div><div class="hdw-track"><div class="hdw-fill green" style="--width:78%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Fast review replies</span><b>High</b></div><div class="hdw-track"><div class="hdw-fill green" style="--width:86%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>What competitors do</span><b>Variable</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:45%"></div></div></div></div><p style="font-size:10px;color:var(--muted);line-height:1.5;margin-top:15px">We report what changed, what we handled, and what deserves attention next.</p></div>
+              <div class="hdw-panel soft"><div class="hdw-panel-title">What We Can Influence</div><div class="hdw-actions">
+                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Accurate services</b></div></div>
+                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Fresh activity</b></div></div>
+                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Fast review replies</b></div></div>
+              </div></div>
             </div>
           </div>
 
           <div class="hdw-scene" data-hdw-scene="4">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">05 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="hdw-scene-intro">A simple recap of what we did and what's next. No new app to learn.</p></div><span class="hdw-pill">Monthly recap</span></div>
-            <div class="hdw-report"><div class="hdw-report-card"><span>Work completed</span><strong><span class="hdw-cu" data-target="18" data-format="int">18</span></strong><span>Everything we did this month</span></div><div class="hdw-report-card"><span>Customer actions</span><strong><span class="hdw-cu" data-target="258" data-format="int">258</span></strong><span>Calls, visits, and requests</span></div><div class="hdw-report-card"><span>Profile rating</span><strong><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></strong><span>Your average rating</span></div></div>
-            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel soft"><div class="hdw-panel-title">The outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:var(--navy-deep)">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:var(--muted);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">05 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="hdw-scene-intro">A simple recap of what we did and what's next.</p></div><span class="hdw-pill">Monthly recap</span></div>
+            <div class="hdw-report"><div class="hdw-report-card"><span>Work Completed</span><strong><span class="hdw-cu" data-target="18" data-format="int">18</span></strong><span>Everything we did this month</span></div><div class="hdw-report-card"><span>Customer Actions</span><strong><span class="hdw-cu" data-target="258" data-format="int">258</span></strong><span>Calls, visits, and requests</span></div><div class="hdw-report-card"><span>Profile Rating</span><strong><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></strong><span>Your average rating</span></div></div>
+            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel accent"><div class="hdw-panel-title">The Outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;text-align:center">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
           </div>
         </div>
       </div>
