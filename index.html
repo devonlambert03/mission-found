@@ -157,6 +157,10 @@
   .gbp-post-card p { font-size: 11.5px; color: var(--sub-ink); line-height: 1.4; margin-top: 2px; }
   .gbp-post-time { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
   .gbp-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 28px; letter-spacing: 0.04em; }
+
+  /* ---- Demo video ---- */
+  .demo-video-frame { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 44px rgba(6,10,22,0.08); }
+  .demo-video-frame video { display: block; width: 100%; height: auto; }
   @media (prefers-reduced-motion: reduce) {
     .gbp-col.reveal-up { transition: none !important; }
   }
@@ -488,6 +492,17 @@
       </div>
     </div>
     <p class="gbp-disclaimer">Illustrative example &mdash; real results may vary.</p>
+  </div>
+</section>
+<!-- DEMO VIDEO -->
+<section id="demo-video">
+  <div class="wrap">
+    <div class="demo-video-frame reveal-up">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Looping demo of the Mission: Found dashboard showing profile monitoring, weekly updates, review responses, and a monthly report">
+        <source src="mission-found-hero-demo.webm" type="video/webm">
+        <source src="mission-found-hero-demo.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 </section>
 <!-- HOW IT WORKS -->
