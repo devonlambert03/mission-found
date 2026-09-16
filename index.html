@@ -210,11 +210,11 @@
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
   .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-panel.soft { background: #fafbfe; }
-  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both, hdwAccentGlow 2.4s ease-in-out infinite; }
+  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both, hdwAccentGlow 2s ease-in-out infinite; }
   .hdw-panel.accent .hdw-panel-title { color: #fff; }
   @keyframes hdwAccentGlow {
-    0%, 100% { box-shadow: 0 10px 24px rgba(74,107,199,.28); }
-    50% { box-shadow: 0 14px 40px rgba(74,107,199,.6); }
+    0%, 100% { box-shadow: 0 10px 24px rgba(74,107,199,.3); transform: scale(1); }
+    50% { box-shadow: 0 22px 56px rgba(74,107,199,.9), 0 0 0 7px rgba(91,127,224,.14); transform: scale(1.018); }
   }
   .hdw-grid > .hdw-panel:nth-child(1) { animation-delay: .12s; }
   .hdw-grid > .hdw-panel:nth-child(2) { animation-delay: .22s; }
@@ -234,8 +234,10 @@
   .hdw-chart path { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 500; stroke-dashoffset: 500; animation: hdwDraw .45s .6s cubic-bezier(.16,1,.3,1) forwards; }
   .hdw-chart .hdw-area { fill: #dfe7ff; stroke: none; opacity: .65; }
   .hdw-chart-dot { fill: var(--blue); opacity: 0; transform-box: fill-box; transform-origin: center; animation: hdwDotPop .45s cubic-bezier(.34,1.56,.64,1) 1.05s both; }
+  .hdw-chart-ping { fill: none; stroke: var(--blue); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; animation: hdwPing 2s cubic-bezier(.16,1,.3,1) 1.5s infinite; }
   @keyframes hdwDraw { to { stroke-dashoffset: 0; } }
   @keyframes hdwDotPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+  @keyframes hdwPing { 0% { opacity: .55; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
   .hdw-bars { display: grid; gap: 12px; }
   .hdw-bar-row { display: grid; gap: 6px; }
   .hdw-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); }
@@ -243,7 +245,9 @@
   .hdw-fill { height: 100%; width: 0; background: var(--blue); border-radius: 99px; animation: hdwFill .7s .75s cubic-bezier(.22,1.4,.36,1) forwards; }
   @keyframes hdwFill { to { width: var(--width); } }
   .hdw-actions { display: grid; gap: 11px; }
-  .hdw-action { display: flex; align-items: center; gap: 11px; font-size: 11px; color: var(--ink); animation: hdwRiseInSm .5s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-action { display: flex; align-items: center; gap: 11px; font-size: 11px; color: var(--ink); animation: hdwRiseInSm .5s cubic-bezier(.16,1,.3,1) both; padding: 6px 8px; margin: -6px -8px; border-radius: 10px; transition: background .35s ease, box-shadow .35s ease; }
+  .hdw-action.hl { background: var(--blue-soft); box-shadow: inset 3px 0 0 0 var(--blue); }
+  .hdw-action.hl .hdw-action-icon { background: var(--blue); color: #fff; }
   .hdw-actions.lg { gap: 14px; }
   .hdw-actions.lg .hdw-action { font-size: 14px; gap: 13px; }
   .hdw-actions.lg .hdw-action small { font-size: 12.5px; margin-top: 4px; }
@@ -252,7 +256,7 @@
   .hdw-action:nth-child(2) { animation-delay: .16s; }
   .hdw-action:nth-child(3) { animation-delay: .26s; }
   .hdw-action:nth-child(4) { animation-delay: .36s; }
-  .hdw-action-icon { width: 29px; height: 29px; border-radius: 10px; background: #f0f3fa; display: grid; place-items: center; color: #52628a; font-weight: 800; flex-shrink: 0; }
+  .hdw-action-icon { width: 29px; height: 29px; border-radius: 10px; background: #f0f3fa; display: grid; place-items: center; color: #52628a; font-weight: 800; flex-shrink: 0; transition: background .3s ease, color .3s ease; }
   .hdw-action small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
   .hdw-manager { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid var(--line); border-radius: 13px; margin-bottom: 13px; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; color: var(--ink); }
   .hdw-manager .hdw-avatar { width: 42px; height: 42px; }
@@ -261,6 +265,13 @@
   .hdw-review { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fff; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-review:nth-child(2) { animation-delay: .12s; }
   .hdw-stars { color: #e7a52f; letter-spacing: 2px; font-size: 13px; line-height: 1; display: block; margin-top: 4px; }
+  .hdw-star { display: inline-block; animation: hdwStarPop .4s cubic-bezier(.34,1.56,.64,1) both; }
+  .hdw-star:nth-child(1) { animation-delay: .15s; }
+  .hdw-star:nth-child(2) { animation-delay: .25s; }
+  .hdw-star:nth-child(3) { animation-delay: .35s; }
+  .hdw-star:nth-child(4) { animation-delay: .45s; }
+  .hdw-star:nth-child(5) { animation-delay: .55s; }
+  @keyframes hdwStarPop { from { opacity: 0; transform: scale(.3) rotate(-15deg); } to { opacity: 1; transform: none; } }
   .hdw-review-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
   .hdw-review-name { font-size: 11px; font-weight: 800; color: var(--navy-deep); }
   .hdw-example-badge { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #78829a; background: #eef0f5; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; white-space: nowrap; }
@@ -347,6 +358,7 @@
               <svg class="hdw-chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
                 <path class="hdw-area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
                 <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
+                <circle class="hdw-chart-ping" cx="500" cy="16" r="5"></circle>
                 <circle class="hdw-chart-dot" cx="500" cy="16" r="5"></circle>
               </svg>
               <div class="hdw-bars"><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Search</span><b>72%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:72%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Maps</span><b>48%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:48%"></div></div></div></div>
@@ -367,7 +379,7 @@
           <div class="hdw-scene" data-hdw-scene="2">
             <div class="hdw-scene-head"><div><div class="hdw-kicker">03 / Respond</div><h2>Customers get a human response.</h2></div><span class="hdw-pill">Reviews</span></div>
             <div class="hdw-review">
-              <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div></div>
+              <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars"><span class="hdw-star">&#9733;</span><span class="hdw-star">&#9733;</span><span class="hdw-star">&#9733;</span><span class="hdw-star">&#9733;</span><span class="hdw-star">&#9733;</span></div></div></div>
               <p>&ldquo;The team was on time, communicated clearly, and did exactly what they promised. Would absolutely use them again.&rdquo;</p>
               <div class="hdw-reply"><label><span>MISSION: FOUND</span> RESPONSE</label><p>&ldquo;Thank you for the kind words. We&rsquo;re glad it went well, and we look forward to helping you again.&rdquo;</p></div>
             </div>
@@ -572,6 +584,7 @@
   const EXIT_MS = 180;   // outgoing scene fade + scale-down
   const GAP_MS = 140;    // blank pause between scenes
   let index = 0, timer = null;
+  let cycleTimer = null, cycleRows = [];
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -617,6 +630,31 @@
     timer = setTimeout(() => goTo((index + 1) % scenes.length), ms);
   }
 
+  // Scene 2's "Recent Work" list cycles a highlight through its rows,
+  // one at a time, while the scene is on screen - its signature motion.
+  function stopActionCycle() {
+    clearInterval(cycleTimer);
+    cycleTimer = null;
+    cycleRows.forEach(r => r.classList.remove('hl'));
+    cycleRows = [];
+  }
+
+  function startActionCycle(scene) {
+    if (reduceMotion) return;
+    cycleRows = [...scene.querySelectorAll('.hdw-action')];
+    if (!cycleRows.length) return;
+    let i = 0;
+    function step() {
+      cycleRows.forEach(r => r.classList.remove('hl'));
+      cycleRows[i].classList.add('hl');
+      i = (i + 1) % cycleRows.length;
+    }
+    setTimeout(() => {
+      step();
+      cycleTimer = setInterval(step, 650);
+    }, 900);
+  }
+
   function activate(i) {
     index = i;
     scenes.forEach((s, j) => {
@@ -624,11 +662,13 @@
       s.classList.toggle('active', j === i);
     });
     animateCounters(scenes[i]);
+    if (i === 1) startActionCycle(scenes[1]);
     scheduleAdvance(DURATIONS[index]);
   }
 
   function goTo(i) {
     const outgoing = scenes[index];
+    stopActionCycle();
     if (reduceMotion) { activate(i); return; }
     outgoing.classList.add('leaving');
     setTimeout(() => {
