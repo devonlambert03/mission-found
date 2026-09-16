@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Demo mockup (reference-style) — not live</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #060A16;
+    --navy: #0E1730;
+    --blue: #5B7FE0;
+    --blue-deep: #4A6BC7;
+    --cream: #F4EFE6;
+    --muted: #9AA6C4;
+    --ink: #1A2340;
+    --sub-ink: #4A5578;
+    --border: #E7EAF3;
+    --green: #2FAE60;
+    --red: #E5484D;
+    --amber: #F5A623;
+    --line: var(--border);
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, #F4EFE6 0%, #E3E8F5 40%, #CBD6F0 100%);
+    margin: 0;
+    padding: 40px 20px 80px;
+    min-height: 100vh;
+  }
+  .mockup-banner {
+    max-width: 780px; margin: 0 auto 20px; text-align: center;
+    font-size: 13px; font-weight: 700; color: var(--blue-deep);
+    background: #fff; border: 1px dashed var(--blue); border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .demo-wrap { display: flex; justify-content: center; }
+  .demo {
+    width: 780px; max-width: 100%; position: relative;
+    background: #fff; border-radius: 25px; box-shadow: 0 30px 60px rgba(14,23,48,0.16);
+    overflow: hidden;
+  }
+  .stage { position: relative; min-height: 480px; }
+  .scene { display: none; padding: 30px 32px; animation: enter .45s ease; }
+  .scene.active { display: block; }
+  @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .scene-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; }
+  .scene h2 { font-size: 25px; font-weight: 800; letter-spacing: -.04em; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
+  .pill { white-space: nowrap; border: 1px solid #dce4ff; background: #EEF1FB; color: #4664c6; border-radius: 999px; padding: 7px 12px; font-size: 11px; font-weight: 800; }
+
+  /* ---- shared cards ---- */
+  .row { display: flex; gap: 12px; }
+  .card { border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: #fff; opacity: 0; animation: riseIn .5s cubic-bezier(.16,1,.3,1) forwards; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .card .lbl { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .card .val { font-size: 24px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
+  .card .delta { font-size: 11px; font-weight: 700; margin-left: 6px; }
+  .delta.up { color: var(--green); }
+  .delta.down { color: var(--red); }
+
+  /* ---- Scene 1: GBP insights ---- */
+  .chart-card { flex: 1; border: 1px solid var(--line); border-radius: 14px; padding: 16px; opacity: 0; animation: riseIn .5s cubic-bezier(.16,1,.3,1) forwards; }
+  .chart-card .chead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--navy-deep); }
+  .legend { display: flex; gap: 8px; font-size: 10px; color: var(--muted); font-weight: 500; align-items: center; }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .lchart { width: 100%; height: 64px; display: block; }
+  .lchart .area { fill: #dfe7ff; stroke: none; opacity: .7; }
+  .lchart .cur { stroke: var(--blue); stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1s .1s ease forwards; }
+  .lchart .prev { stroke: #C7D3F5; stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1s .25s ease forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .breakdown { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+  .breakdown .blabel { font-size: 13px; font-weight: 700; color: var(--navy-deep); flex-shrink: 0; }
+  .btrack { flex: 1; display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: #edf0f6; }
+  .bseg { height: 100%; width: 0; transition: width 1.1s cubic-bezier(.22,1,.36,1); }
+
+  /* ---- Scene 2: Manager activity ---- */
+  .mini-views { border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 10px; opacity: 0; animation: riseIn .5s .2s cubic-bezier(.16,1,.3,1) forwards; }
+  .mini-views .lbl { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .mini-row { display: flex; align-items: flex-end; gap: 14px; }
+  .mini-row .val { font-size: 26px; }
+  .mini-cap { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .actions-panel { border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .actions-title { font-size: 13px; font-weight: 700; color: var(--navy-deep); margin-bottom: 10px; }
+  .action-row { display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-radius: 10px; border: 1.5px solid transparent; font-size: 12.5px; opacity: 0; animation: riseIn .45s cubic-bezier(.16,1,.3,1) forwards; }
+  .action-row.on { border-color: var(--blue); background: #F5F7FE; }
+  .action-row b { display: block; color: var(--navy-deep); }
+  .action-row small { display: block; color: var(--muted); font-size: 10.5px; margin-top: 2px; }
+  .action-check { margin-left: auto; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; color: transparent; font-size: 11px; transition: all .25s ease; flex-shrink: 0; }
+  .action-check.done { border-color: var(--green); color: var(--green); }
+
+  /* ---- Scene 3: Review management ---- */
+  .review { border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 16px; opacity: 0; animation: riseIn .5s cubic-bezier(.16,1,.3,1) forwards; }
+  .review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .review-icon { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; flex-shrink: 0; }
+  .review-name { font-weight: 700; font-size: 13px; color: var(--navy-deep); }
+  .stars { color: var(--amber); font-size: 13px; letter-spacing: 1px; margin-left: 6px; }
+  .review-body { font-size: 12.5px; color: var(--sub-ink); line-height: 1.5; margin-bottom: 12px; }
+  .reply-box { border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; min-height: 44px; font-size: 12.5px; color: var(--navy-deep); position: relative; background: #fff; transition: border-color .2s, background .2s; }
+  .reply-box.focused { border-color: var(--blue); background: #F5F7FE; }
+  .reply-box.sent { border-color: var(--border); background: #F7F8FB; color: var(--sub-ink); }
+  .reply-cursor { display: inline-block; width: 2px; height: 13px; background: var(--navy-deep); vertical-align: middle; margin-left: 1px; animation: blink .9s step-start infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .reply-now { position: absolute; right: 14px; top: 12px; font-size: 10px; color: var(--muted); opacity: 0; transition: opacity .4s; }
+  .reply-now.show { opacity: 1; }
+  .reply-by { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 10.5px; color: var(--muted); opacity: 0; transition: opacity .4s; }
+  .reply-by.show { opacity: 1; }
+  .reply-by .dot { width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(145deg,#e9edff,#b9c8fa); color: #24386e; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
+  /* ---- Scene 4: Local ranking + map ---- */
+  .scene-map { padding: 0; min-height: 480px; position: relative; }
+  .scene-map.active { display: flex; }
+  .rank-col { width: 55%; padding: 30px 20px 30px 32px; position: relative; z-index: 2; }
+  .rank-list { display: grid; gap: 9px; }
+  .rank { display: grid; grid-template-columns: 24px 1fr auto; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; font-size: 12px; background: #fff; opacity: 0; animation: riseIn .45s cubic-bezier(.16,1,.3,1) forwards; }
+  .rank .num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; color: #a1a9bc; }
+  .rank b { display: block; color: var(--navy-deep); font-size: 12.5px; }
+  .rank small { display: block; color: var(--muted); font-size: 10.5px; margin-top: 2px; }
+  .rank.you { border-color: var(--blue); background: var(--blue-soft, #EEF1FB); transition: all .5s ease; }
+  .you-tag { background: var(--blue); color: #fff; font-size: 9px; font-weight: 800; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; margin-left: 8px; }
+  .map-bg { position: absolute; inset: 0; left: 55%; background: #EEF0F5; overflow: hidden; }
+  .map-bg svg.streets { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pin-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); padding: 30px 20px; }
+  .pin { width: 32px; height: 32px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; justify-self: center; align-self: center; opacity: 0; transform: scale(0); animation: pinPop .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+  @keyframes pinPop { to { opacity: 1; transform: scale(1); } }
+
+  /* ---- Scene 5: Reviews ---- */
+  .month-row { display: flex; gap: 12px; margin-bottom: 12px; }
+  .month-card { flex: 1; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; opacity: 0; animation: riseIn .5s cubic-bezier(.16,1,.3,1) forwards; }
+  .month-title { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 15px; color: var(--navy-deep); font-family: 'Plus Jakarta Sans', sans-serif; }
+  .month-title span { color: var(--amber); font-size: 13px; font-weight: 600; }
+  .progress-track { background: #EDEFF6; border-radius: 999px; height: 7px; margin-top: 10px; overflow: hidden; }
+  .progress-fill { background: linear-gradient(90deg, var(--blue), var(--blue-deep)); height: 100%; width: 0%; border-radius: 999px; transition: width 1s ease .1s; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .bottom-row { display: flex; gap: 12px; }
+  .bar-card { flex: 1.5; border: 1px solid var(--line); border-radius: 14px; padding: 16px; opacity: 0; animation: riseIn .5s .1s cubic-bezier(.16,1,.3,1) forwards; }
+  .bar-chart-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; height: 100px; }
+  .bar-col { display: flex; flex-direction: column-reverse; width: 22px; border-radius: 4px; overflow: hidden; }
+  .bar-seg { width: 100%; transition: height .8s cubic-bezier(.2,.8,.3,1); }
+  .bar-legend { display: flex; gap: 10px; margin-top: 10px; font-size: 10px; color: var(--muted); flex-wrap: wrap; }
+  .bar-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+  .gauge-card { flex: 1; border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; align-items: center; opacity: 0; animation: riseIn .5s .2s cubic-bezier(.16,1,.3,1) forwards; }
+  .gauge-card .lbl { align-self: flex-start; font-size: 11px; color: var(--muted); }
+  .gauge-card .val { align-self: flex-start; font-size: 26px; margin-top: 4px; }
+  .gauge-seg { transition: stroke-dashoffset 1s ease; }
+
+  /* ---- dots ---- */
+  .dots { display: flex; justify-content: center; gap: 6px; padding: 14px 0 4px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+  .dot.on { background: var(--blue); }
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">MOCKUP — reference-style timing/animation exploration. Not linked from the live site.</div>
+
+<div class="demo-wrap">
+  <div class="demo">
+    <div class="stage" id="stage">
+
+      <!-- SCENE 1 -->
+      <div class="scene active" data-scene="0">
+        <div class="scene-head"><h2>Google Business Profile insights</h2></div>
+        <div class="row" style="margin-bottom:14px">
+          <div class="card" style="flex:1;animation-delay:.05s"><div class="lbl">Profile views</div><div><span class="val cu" data-target="15100" data-format="k1">0</span><span class="delta up">+18%</span></div></div>
+          <div class="card" style="flex:1;animation-delay:.15s"><div class="lbl">Customer actions</div><div><span class="val cu" data-target="258" data-format="int">0</span><span class="delta down">-4%</span></div></div>
+          <div class="card" style="flex:1;animation-delay:.25s"><div class="lbl">Average rating</div><div><span class="val cu" data-target="4.9" data-format="dec1">0.0</span><span class="delta up">+0.3</span></div></div>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <div class="chart-card" style="animation-delay:.3s">
+            <div class="chead">Search views<span class="legend"><span><i style="background:var(--blue)"></i>2026</span><span><i style="background:#C7D3F5"></i>2025</span></span></div>
+            <svg class="lchart" viewBox="0 0 260 64" preserveAspectRatio="none">
+              <path class="area" d="M0 46 L0 40 L30 34 L60 37 L90 24 L120 29 L150 16 L180 22 L210 10 L240 15 L260 6 L260 64 L0 64 Z"/>
+              <polyline class="cur" points="0,40 30,34 60,37 90,24 120,29 150,16 180,22 210,10 240,15 260,6"/>
+              <polyline class="prev" points="0,52 30,50 60,49 90,48 120,49 150,47 180,48 210,46 240,47 260,45"/>
+            </svg>
+          </div>
+          <div class="chart-card" style="animation-delay:.4s">
+            <div class="chead">Maps views<span class="legend"><span><i style="background:var(--blue)"></i>2026</span><span><i style="background:#C7D3F5"></i>2025</span></span></div>
+            <svg class="lchart" viewBox="0 0 260 64" preserveAspectRatio="none">
+              <path class="area" d="M0 50 L0 44 L30 30 L60 40 L90 22 L120 32 L150 18 L180 24 L210 12 L240 20 L260 8 L260 64 L0 64 Z"/>
+              <polyline class="cur" points="0,44 30,30 60,40 90,22 120,32 150,18 180,24 210,12 240,20 260,8"/>
+              <polyline class="prev" points="0,55 30,52 60,50 90,48 120,49 150,46 180,47 210,44 240,45 260,43"/>
+            </svg>
+          </div>
+        </div>
+        <div class="breakdown">
+          <div class="blabel">Views</div>
+          <div class="btrack">
+            <div class="bseg" data-w="44" style="background:var(--blue-deep)"></div>
+            <div class="bseg" data-w="34" style="background:var(--blue)"></div>
+            <div class="bseg" data-w="12" style="background:#9FB3E8"></div>
+            <div class="bseg" data-w="10" style="background:#D7E0F7"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2 -->
+      <div class="scene" data-scene="1">
+        <div class="scene-head"><h2>Manager activity</h2><span class="pill">Human-managed</span></div>
+        <div style="display:flex; gap:14px">
+          <div style="flex:1">
+            <div class="row">
+              <div class="card" style="flex:1;animation-delay:.05s"><div class="lbl">Interactions</div><div class="val cu" data-target="258" data-format="int">0</div></div>
+              <div class="card" style="flex:1;animation-delay:.15s"><div class="lbl">Avg. rating</div><div class="val">&#9733; <span class="cu" data-target="4.9" data-format="dec1">0.0</span></div></div>
+            </div>
+            <div class="mini-views">
+              <div class="lbl">Views</div>
+              <div class="mini-row">
+                <div class="val cu" data-target="15100" data-format="k1">0</div>
+                <svg width="110" height="40" viewBox="0 0 110 40"><polyline class="cur" style="stroke:var(--blue);stroke-width:2.5;fill:none" points="0,34 15,20 30,26 45,10 60,18 75,6 90,14 110,4"/></svg>
+              </div>
+              <div class="mini-cap">Combined from Google Search and Google Maps</div>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div class="actions-panel">
+              <div class="actions-title">Recent actions</div>
+              <div id="actionList">
+                <div class="action-row" data-i="0" style="animation-delay:.1s"><div><b>Published a post</b><small>30 min ago</small></div><div class="action-check">&#10003;</div></div>
+                <div class="action-row" data-i="1" style="animation-delay:.25s"><div><b>Answered a question</b><small>23 hours ago</small></div><div class="action-check">&#10003;</div></div>
+                <div class="action-row" data-i="2" style="animation-delay:.4s"><div><b>Published a post</b><small>2 days ago</small></div><div class="action-check">&#10003;</div></div>
+                <div class="action-row" data-i="3" style="animation-delay:.55s"><div><b>Business info updated</b><small>1 week ago</small></div><div class="action-check">&#10003;</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3 -->
+      <div class="scene" data-scene="2">
+        <div class="scene-head"><h2>Review management</h2><span class="pill">Managed by your team</span></div>
+        <div class="review" style="animation-delay:.05s">
+          <div class="review-head">
+            <div class="review-icon" style="background:#fff;border:1px solid var(--border)">&#128205;</div>
+            <span class="review-name">Karen L.</span>
+            <span class="stars" id="stars1">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <div class="review-body">Showed up early after the storm and had us cleared before we opened. Can't recommend them enough.</div>
+          <div class="reply-box" id="replyBox"><span id="replyText"></span><span class="reply-cursor" id="replyCursor" style="display:none"></span><span class="reply-now" id="replyNow">Now</span></div>
+          <div class="reply-by" id="replyBy"><span class="dot">D</span>Written by Devon &middot; Mission: Found</div>
+        </div>
+        <div class="review" style="animation-delay:.25s">
+          <div class="review-head">
+            <div class="review-icon" style="background:#1877F2;color:#fff">f</div>
+            <span class="review-name">Danny R.</span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <div class="review-body">Fast, fair pricing, and they actually answer the phone. Rare these days.</div>
+        </div>
+      </div>
+
+      <!-- SCENE 4 -->
+      <div class="scene scene-map" data-scene="3">
+        <div class="rank-col">
+          <div class="rank-list" id="rankList">
+            <div class="rank" data-biz="1" style="animation-delay:.05s"><span class="num">1</span><div><b>Northstar Home Care</b><small>12 Main Street &middot; Example market</small></div><div class="status" style="color:var(--green);font-weight:700;font-size:10.5px">Stable</div></div>
+            <div class="rank you" data-biz="you" id="rankYou" style="animation-delay:.15s"><span class="num" id="youNum">4</span><div><b>Brightline Home Services</b><small>48 Oak Avenue &middot; Example market</small></div><div style="display:flex;align-items:center"><span class="status" id="youStatus" style="color:var(--muted);font-weight:700;font-size:10.5px">Watching</span><span class="you-tag">You</span></div></div>
+            <div class="rank" data-biz="3" style="animation-delay:.25s"><span class="num">3</span><div><b>Evergreen Property Co.</b><small>9 Park Road &middot; Example market</small></div><div class="status" style="color:var(--green);font-weight:700;font-size:10.5px">Stable</div></div>
+            <div class="rank" data-biz="4" style="animation-delay:.35s"><span class="num">4</span><div><b>Summit Local Pros</b><small>71 River Street &middot; Example market</small></div><div class="status" style="color:var(--amber);font-weight:700;font-size:10.5px">Watching</div></div>
+          </div>
+        </div>
+        <div class="map-bg">
+          <svg class="streets" viewBox="0 0 400 480" preserveAspectRatio="none">
+            <g stroke="#dfe2ea" stroke-width="2">
+              <line x1="0" y1="60" x2="400" y2="40"/><line x1="0" y1="160" x2="400" y2="180"/>
+              <line x1="0" y1="280" x2="400" y2="260"/><line x1="0" y1="400" x2="400" y2="420"/>
+              <line x1="70" y1="0" x2="50" y2="480"/><line x1="180" y1="0" x2="200" y2="480"/>
+              <line x1="300" y1="0" x2="320" y2="480"/>
+            </g>
+          </svg>
+          <div class="pin-grid" id="pinGrid"></div>
+        </div>
+      </div>
+
+      <!-- SCENE 5 -->
+      <div class="scene" data-scene="4">
+        <div class="scene-head"><h2>Reviews</h2></div>
+        <div class="month-row">
+          <div class="month-card" style="animation-delay:.05s">
+            <div class="month-title">Last month <span>&#9733; <span class="cu" data-target="4.7" data-format="dec1">0.0</span></span></div>
+            <div class="progress-track"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
+            <div class="progress-label"><span>28 / 95 replied</span><span>29%</span></div>
+          </div>
+          <div class="month-card" style="animation-delay:.15s">
+            <div class="month-title">This month <span>&#9733; <span class="cu" data-target="4.9" data-format="dec1">0.0</span></span></div>
+            <div class="progress-track"><div class="progress-fill" id="prog2" style="width:0%"></div></div>
+            <div class="progress-label"><span>61 / 102 replied</span><span>60%</span></div>
+          </div>
+        </div>
+        <div class="bottom-row">
+          <div class="bar-card">
+            <div class="bar-chart-row" id="barRow">
+              <div class="bar-col"><div class="bar-seg" data-h="30" style="background:#1E9E5A"></div><div class="bar-seg" data-h="22" style="background:#4ECB7C"></div><div class="bar-seg" data-h="16" style="background:var(--amber)"></div><div class="bar-seg" data-h="11" style="background:#E29C3F"></div><div class="bar-seg" data-h="8" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="38" style="background:#1E9E5A"></div><div class="bar-seg" data-h="27" style="background:#4ECB7C"></div><div class="bar-seg" data-h="18" style="background:var(--amber)"></div><div class="bar-seg" data-h="13" style="background:#E29C3F"></div><div class="bar-seg" data-h="11" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="44" style="background:#1E9E5A"></div><div class="bar-seg" data-h="32" style="background:#4ECB7C"></div><div class="bar-seg" data-h="22" style="background:var(--amber)"></div><div class="bar-seg" data-h="16" style="background:#E29C3F"></div><div class="bar-seg" data-h="14" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="36" style="background:#1E9E5A"></div><div class="bar-seg" data-h="25" style="background:#4ECB7C"></div><div class="bar-seg" data-h="17" style="background:var(--amber)"></div><div class="bar-seg" data-h="12" style="background:#E29C3F"></div><div class="bar-seg" data-h="10" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="32" style="background:#1E9E5A"></div><div class="bar-seg" data-h="21" style="background:#4ECB7C"></div><div class="bar-seg" data-h="15" style="background:var(--amber)"></div><div class="bar-seg" data-h="10" style="background:#E29C3F"></div><div class="bar-seg" data-h="8" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="40" style="background:#1E9E5A"></div><div class="bar-seg" data-h="28" style="background:#4ECB7C"></div><div class="bar-seg" data-h="19" style="background:var(--amber)"></div><div class="bar-seg" data-h="14" style="background:#E29C3F"></div><div class="bar-seg" data-h="12" style="background:var(--red)"></div></div>
+              <div class="bar-col"><div class="bar-seg" data-h="36" style="background:#1E9E5A"></div><div class="bar-seg" data-h="23" style="background:#4ECB7C"></div><div class="bar-seg" data-h="16" style="background:var(--amber)"></div><div class="bar-seg" data-h="11" style="background:#E29C3F"></div><div class="bar-seg" data-h="9" style="background:var(--red)"></div></div>
+            </div>
+            <div class="bar-legend"><span><i style="background:#1E9E5A"></i>5&#9733;</span><span><i style="background:#4ECB7C"></i>4&#9733;</span><span><i style="background:var(--amber)"></i>3&#9733;</span><span><i style="background:#E29C3F"></i>2&#9733;</span><span><i style="background:var(--red)"></i>1&#9733;</span></div>
+          </div>
+          <div class="gauge-card">
+            <div class="lbl">Total reviews</div>
+            <div class="val cu" data-target="187" data-format="int">0</div>
+            <svg viewBox="0 0 200 115" width="100%" height="80" style="margin-top:4px">
+              <path class="gauge-seg" d="M20,100 A80,80 0 0,1 23.91,75.28" stroke="var(--red)" stroke-width="20" fill="none"/>
+              <path class="gauge-seg" d="M23.91,75.28 A80,80 0 0,1 32.53,57.02" stroke="#E29C3F" stroke-width="20" fill="none"/>
+              <path class="gauge-seg" d="M32.53,57.02 A80,80 0 0,1 52.98,35.28" stroke="var(--amber)" stroke-width="20" fill="none"/>
+              <path class="gauge-seg" d="M52.98,35.28 A80,80 0 0,1 124.72,23.91" stroke="#4ECB7C" stroke-width="20" fill="none"/>
+              <path class="gauge-seg" d="M124.72,23.91 A80,80 0 0,1 180,100" stroke="#1E9E5A" stroke-width="20" fill="none"/>
+            </svg>
+            <div style="text-align:center; width:100%; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:20px; color:var(--navy-deep); margin-top:-10px"><span class="cu" data-target="4.9" data-format="dec1">0.0</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const scenes = [...document.querySelectorAll('.scene')];
+  const dotsWrap = document.getElementById('dots');
+  scenes.forEach((_,i)=>{ const d=document.createElement('div'); d.className='dot'+(i===0?' on':''); dotsWrap.appendChild(d); });
+  const dots = [...dotsWrap.children];
+  const DURATIONS = [4500, 4500, 8000, 5000, 3500];
+  let idx = 0, timer = null;
+
+  function fmt(v, f){
+    if (f==='k1') return (v/1000).toFixed(1).replace('.', ',') + 'K';
+    if (f==='dec1') return v.toFixed(1);
+    return Math.round(v).toLocaleString();
+  }
+  function countUp(el){
+    const target = parseFloat(el.dataset.target);
+    const format = el.dataset.format;
+    const start = format==='dec1' ? Math.max(0, target - 1.6) : target*0.7;
+    const dur = 900;
+    const t0 = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now-t0)/dur);
+      const e = 1-Math.pow(1-p,3);
+      el.textContent = fmt(start+(target-start)*e, format);
+      if (p<1) requestAnimationFrame(tick); else el.textContent = fmt(target, format);
+    }
+    requestAnimationFrame(tick);
+  }
+  function restartCSS(root){
+    root.querySelectorAll('[style*="animation-delay"], .card, .chart-card, .action-row, .review, .month-card, .bar-card, .gauge-card, .rank, .mini-views').forEach(el=>{
+      el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+    });
+  }
+
+  // ---- Scene 2: sequential checklist ----
+  function runActions(root){
+    const rows = [...root.querySelectorAll('.action-row')];
+    rows.forEach(r=>{ r.classList.remove('on'); r.querySelector('.action-check').classList.remove('done'); });
+    rows.forEach((row, i)=>{
+      if (i === rows.length - 1) return; // last stays pending, matching reference
+      setTimeout(()=>{
+        row.classList.add('on');
+        setTimeout(()=> row.querySelector('.action-check').classList.add('done'), 260);
+        setTimeout(()=> row.classList.remove('on'), 700);
+      }, 500 + i*550);
+    });
+  }
+
+  // ---- Scene 3: typing reply ----
+  function runReply(root){
+    const box = root.querySelector('#replyBox');
+    const textEl = root.querySelector('#replyText');
+    const cursor = root.querySelector('#replyCursor');
+    const now = root.querySelector('#replyNow');
+    const by = root.querySelector('#replyBy');
+    box.className = 'reply-box';
+    textEl.textContent = ''; now.classList.remove('show'); by.classList.remove('show');
+    cursor.style.display = 'none';
+    const msg = "Thank you for the kind words. We're glad it went well, and we look forward to helping you again.";
+    setTimeout(()=>{
+      box.classList.add('focused');
+      cursor.style.display = 'inline-block';
+      let i = 0;
+      const t = setInterval(()=>{
+        textEl.textContent = msg.slice(0, i); i++;
+        if (i > msg.length){
+          clearInterval(t);
+          cursor.style.display = 'none';
+          setTimeout(()=>{
+            box.classList.remove('focused'); box.classList.add('sent');
+            now.classList.add('show'); by.classList.add('show');
+          }, 300);
+        }
+      }, 26);
+    }, 900);
+  }
+
+  // ---- Scene 4: rank climb + pins ----
+  function runMap(root){
+    const pinGrid = root.querySelector('#pinGrid');
+    pinGrid.innerHTML = '';
+    const vals = [19,3,1,3,6,10,16,3,7,5,12,2,3,7,1,3,19,2,1,19];
+    vals.forEach((v,i)=>{
+      const p = document.createElement('div');
+      p.className = 'pin';
+      p.textContent = v;
+      p.style.background = v>=15?'var(--red)': v>=8?'var(--amber)':'var(--green)';
+      p.style.animationDelay = (i*0.03)+'s';
+      pinGrid.appendChild(p);
+    });
+    const youNum = root.querySelector('#youNum');
+    const youStatus = root.querySelector('#youStatus');
+    const rankYou = root.querySelector('#rankYou');
+    youNum.textContent = '4'; youStatus.textContent = 'Watching'; youStatus.style.color = 'var(--muted)';
+    setTimeout(()=>{
+      let n = 4;
+      const t = setInterval(()=>{
+        n--; youNum.textContent = n;
+        if (n<=2){ clearInterval(t); youStatus.textContent = 'Improving'; youStatus.style.color = 'var(--green)'; }
+      }, 380);
+    }, 900);
+  }
+
+  // ---- Scene 5: bars + gauge + progress ----
+  function runReviews(root){
+    setTimeout(()=>{
+      root.querySelector('#prog1').style.width = '29%';
+      root.querySelector('#prog2').style.width = '60%';
+      root.querySelectorAll('.bar-seg').forEach(s=> s.style.height = s.dataset.h+'px');
+      root.querySelectorAll('.gauge-seg').forEach(path=>{
+        const len = path.getTotalLength();
+        path.style.transition = 'none';
+        path.setAttribute('stroke-dasharray', len);
+        path.setAttribute('stroke-dashoffset', len);
+        path.getBoundingClientRect();
+        path.style.transition = 'stroke-dashoffset 1s ease';
+        requestAnimationFrame(()=> path.setAttribute('stroke-dashoffset', '0'));
+      });
+    }, 200);
+  }
+
+  // ---- Scene 1: breakdown bar ----
+  function runBreakdown(root){
+    setTimeout(()=>{
+      root.querySelectorAll('.bseg').forEach(s=> s.style.width = s.dataset.w+'%');
+    }, 500);
+  }
+
+  function activate(i){
+    const root = scenes[i];
+    restartCSS(root);
+    scenes.forEach((s,j)=> s.classList.toggle('active', j===i));
+    dots.forEach((d,j)=> d.classList.toggle('on', j===i));
+    root.querySelectorAll('.cu').forEach(el=>{ el.textContent = el.dataset.format==='dec1' ? '0.0' : '0'; });
+    setTimeout(()=> root.querySelectorAll('.cu').forEach(countUp), 200);
+
+    if (i===0) runBreakdown(root);
+    if (i===1) runActions(root);
+    if (i===2) runReply(root);
+    if (i===3) runMap(root);
+    if (i===4) runReviews(root);
+
+    clearTimeout(timer);
+    timer = setTimeout(()=>{ idx = (idx+1) % scenes.length; activate(idx); }, DURATIONS[i]);
+  }
+
+  activate(0);
+})();
+</script>
+</body>
+</html>
