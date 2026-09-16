@@ -208,6 +208,8 @@
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
   .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
   .hdw-panel.soft { background: #fafbfe; }
+  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; }
+  .hdw-panel.accent .hdw-panel-title { color: #fff; }
   .hdw-grid > .hdw-panel:nth-child(1) { animation-delay: .12s; }
   .hdw-grid > .hdw-panel:nth-child(2) { animation-delay: .22s; }
   .hdw-panel-title { font-size: 11px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; color: var(--navy-deep); }
@@ -258,11 +260,20 @@
   .hdw-reply label { display: block; font-size: 10px; font-weight: 800; color: var(--ink); margin-bottom: 5px; }
   .hdw-reply label span { color: var(--blue); }
   .hdw-reply p { font-size: 11px; color: var(--ink); }
+  .hdw-report { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-report-card:nth-child(1) { animation-delay: .06s; }
+  .hdw-report-card:nth-child(2) { animation-delay: .16s; }
+  .hdw-report-card:nth-child(3) { animation-delay: .26s; }
+  .hdw-report-card > span:first-child { font-size: 12px; font-weight: 700; color: var(--navy-deep); }
+  .hdw-report-card strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; letter-spacing: -.05em; margin: 10px 0; color: var(--navy-deep); }
+  .hdw-report-card > span:last-child { font-size: 10px; color: var(--muted); }
   @keyframes hdwRiseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @keyframes hdwPopIn { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
   @media (max-width: 650px) {
     .hdw-scene { padding: 22px 17px; } .hdw-scene-head { display: block; } .hdw-pill { display: inline-block; margin-top: 12px; }
     .hdw-scene h2 { font-size: 25px; } .hdw-grid { grid-template-columns: 1fr; } .hdw-metrics { gap: 7px; } .hdw-metric { padding: 11px; } .hdw-metric-value { font-size: 20px; }
+    .hdw-report { gap: 7px; } .hdw-report-card { padding: 14px 11px; } .hdw-report-card strong { font-size: 26px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hdw *, .hdw *::before, .hdw *::after { animation: none !important; transition: none !important; }
@@ -353,6 +364,11 @@
             <div class="hdw-panel soft" style="margin-top:14px"><div class="hdw-panel-title">Response Standard</div><div class="hdw-actions lg"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div><p style="font-size:12px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">We don't use AI replies. A real person writes every response.</p></div>
           </div>
 
+          <div class="hdw-scene" data-hdw-scene="3">
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="hdw-scene-intro">A simple recap of what we did and what's next.</p></div><span class="hdw-pill">Monthly recap</span></div>
+            <div class="hdw-report"><div class="hdw-report-card"><span>Work Completed</span><strong><span class="hdw-cu" data-target="18" data-format="int">18</span></strong><span>Everything we did this month</span></div><div class="hdw-report-card"><span>Customer Actions</span><strong><span class="hdw-cu" data-target="258" data-format="int">258</span></strong><span>Calls, visits, and requests</span></div><div class="hdw-report-card"><span>Profile Rating</span><strong><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></strong><span>Your average rating</span></div></div>
+            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel accent"><div class="hdw-panel-title">The Outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;text-align:center">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -542,7 +558,7 @@
   const root = document.getElementById('hdw');
   if (!root) return;
   const scenes = [...root.querySelectorAll('.hdw-scene')];
-  const DURATIONS = [5500, 6000, 6500]; // ms per scene, reading-paced
+  const DURATIONS = [5500, 6000, 6500, 5500]; // ms per scene, reading-paced
   let index = 0, timer = null;
 
   function render() {
