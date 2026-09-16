@@ -108,8 +108,7 @@
   .cta-button .arrow { margin-left: 4px; }
   .hero h1 .accent-underline { color: var(--blue); border-bottom: 5px solid var(--blue); border-radius: 2px; padding-bottom: 2px; }
 
-  /* ---- Problem ---- */
-  #problem { background: var(--cream); }
+  /* ---- Problem (unused, kept for potential reuse) ---- */
   .problem-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
   .problem-headline { font-size: clamp(28px, 5vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
   .problem-headline .accent { color: var(--blue); }
@@ -333,7 +332,6 @@
     <div class="logo-mark"><span class="line1">MISSION:</span><span class="line2">FOUND</span></div>
   </a>
   <div class="nav-links">
-    <a href="#problem">The Problem</a>
     <a href="#hdw">See It Work</a>
     <a href="#how-it-works">How it Works</a>
     <a href="#pricing">Pricing</a>
@@ -343,7 +341,6 @@
   <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#problem">The Problem</a>
   <a href="#hdw">See It Work</a>
   <a href="#how-it-works">How it Works</a>
   <a href="#pricing">Pricing</a>
@@ -363,139 +360,8 @@
 
 </section>
 
-<!-- HERO DEMO WIDGET -->
-<section class="hdw-outer">
-  <div class="wrap hdw-wrap">
-    <div class="hdw" id="hdw">
-      <div class="hdw-workspace">
-        <div class="hdw-stage">
-          <div class="hdw-scene active" data-hdw-scene="0">
-            <div class="hdw-scene-head">
-              <div><div class="hdw-kicker">01 / Monitor</div><h2>We keep watch while you run the business.</h2></div>
-            </div>
-            <div class="hdw-metrics">
-              <div class="hdw-metric"><div class="hdw-metric-label">Profile views</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="15100" data-format="k1">15.1K</span></div><div class="hdw-metric-note">&#8599; 12.4% this period</div></div>
-              <div class="hdw-metric"><div class="hdw-metric-label">Customer actions</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="258" data-format="int">258</span></div><div class="hdw-metric-note">Calls, visits, requests</div></div>
-              <div class="hdw-metric"><div class="hdw-metric-label">Average rating</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></div><div class="hdw-metric-note">Great rating</div></div>
-            </div>
-            <div class="hdw-panel" style="animation-delay:.5s"><div class="hdw-panel-title">Search trend <span class="hdw-muted">Illustrative</span></div>
-              <svg class="hdw-chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
-                <path class="hdw-area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
-                <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
-                <circle class="hdw-chart-dot" cx="500" cy="16" r="5"></circle>
-              </svg>
-              <div class="hdw-bars"><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Search</span><b>72%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:72%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Maps</span><b>48%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:48%"></div></div></div></div>
-            </div>
-          </div>
-
-          <div class="hdw-scene" data-hdw-scene="1">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">02 / Handle</div><h2>A real person takes care of it.</h2></div><span class="hdw-pill">Human-managed</span></div>
-            <div class="hdw-manager"><div class="hdw-avatar">D</div><div><strong>Devon &middot; Your <span style="color:var(--blue);display:inline">Mission: Found</span> manager</strong><span>Handles your reviews, posts, photos, and listing.</span></div><span class="hdw-pill" style="margin-left:auto">Assigned</span></div>
-            <div class="hdw-panel"><div class="hdw-panel-title">Recent Work <span class="hdw-muted">This week</span></div><div class="hdw-actions lg">
-              <div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Published a helpful update</b><small>Service availability and seasonal reminder</small></div></div>
-              <div class="hdw-action"><div class="hdw-action-icon">&#8617;</div><div><b>Responded to a customer review</b><small>Personal, not generic</small></div></div>
-              <div class="hdw-action"><div class="hdw-action-icon">+</div><div><b>Added fresh business photos</b><small>Keeps your listing looking active</small></div></div>
-              <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Checked business information</b><small>Hours and service details reviewed</small></div></div>
-            </div></div>
-          </div>
-
-          <div class="hdw-scene" data-hdw-scene="2">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">03 / Respond</div><h2>Customers get a human response.</h2></div><span class="hdw-pill">Reviews</span></div>
-            <div class="hdw-review">
-              <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div></div>
-              <p>&ldquo;The team was on time, communicated clearly, and did exactly what they promised. Would absolutely use them again.&rdquo;</p>
-              <div class="hdw-reply"><label><span>MISSION: FOUND</span> RESPONSE</label><p>&ldquo;Thank you for the kind words. We&rsquo;re glad it went well, and we look forward to helping you again.&rdquo;</p></div>
-            </div>
-            <div class="hdw-panel soft" style="margin-top:14px"><div class="hdw-panel-title">Response Standard</div><div class="hdw-actions lg"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div><p style="font-size:12px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">We don't use AI replies. A real person writes every response.</p></div>
-          </div>
-
-          <div class="hdw-scene" data-hdw-scene="3">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="hdw-scene-intro">A simple recap of what we did and what's next.</p></div><span class="hdw-pill">Monthly recap</span></div>
-            <div class="hdw-report"><div class="hdw-report-card"><span>Work Completed</span><strong><span class="hdw-cu" data-target="18" data-format="int">18</span></strong><span>Everything we did this month</span></div><div class="hdw-report-card"><span>Customer Actions</span><strong><span class="hdw-cu" data-target="258" data-format="int">258</span></strong><span>Calls, visits, and requests</span></div><div class="hdw-report-card"><span>Profile Rating</span><strong><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></strong><span>Your average rating</span></div></div>
-            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel accent" style="animation-delay:.22s, 1.4s"><div class="hdw-panel-title">The Outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;text-align:center">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section id="problem" aria-labelledby="problem-heading">
-  <div class="wrap">
-    <div class="problem-head">
-      <h2 id="problem-heading" class="problem-headline">Go from this&hellip; <span class="accent">to this.</span></h2>
-      <p class="problem-sub">Your Google Business Profile shouldn&rsquo;t be a forgotten page. We keep it accurate, active, and working for you.</p>
-    </div>
-    <div class="gbp-compare">
-      <div class="gbp-col gbp-col-before reveal-up">
-        <div class="gbp-label">Before</div>
-        <div class="gbp-card" role="img" aria-label="Example listing that looks neglected: a 3.6 star rating, unconfirmed hours, no website listed, and only a couple of photos">
-          <div class="gbp-photo"><span class="gbp-photo-badge">1/3</span></div>
-          <div class="gbp-panel-body">
-            <div class="gbp-biz-name">Your Business</div>
-            <div class="gbp-stars">★★★☆☆ <b>3.6 (9)</b></div>
-            <div class="gbp-status">Hours not confirmed</div>
-            <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
-            <div class="gbp-actions-row">
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg></i>Call</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i>Directions</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg></i>Website</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1Z"/></svg></i>Save</div>
-            </div>
-            <div class="gbp-info">
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg>(555) 010-0123</div>
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>123 Main St, Your City</div>
-              <div class="gbp-info-row is-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>Website not listed</div>
-            </div>
-            <div class="gbp-photos-label">Photos</div>
-            <div class="gbp-photos-grid">
-              <span class="gbp-thumb"></span><span class="gbp-thumb"></span>
-            </div>
-            <p class="gbp-empty-note">No updates in several months.</p>
-          </div>
-        </div>
-      </div>
-      <div class="gbp-col gbp-col-after reveal-up" style="transition-delay:.1s">
-        <div class="gbp-label">After</div>
-        <div class="gbp-card" role="img" aria-label="Example listing that looks active and accurate: a 4.8 star rating, verified badge, complete hours and website, and a recent post">
-          <div class="gbp-photo"><span class="gbp-photo-badge">1/16</span></div>
-          <div class="gbp-panel-body">
-            <div class="gbp-biz-name">Your Business<span class="gbp-verified" title="Verified">&#10003;</span></div>
-            <div class="gbp-category">Local Service Business</div>
-            <div class="gbp-stars">★★★★★ <b>4.8 (96)</b></div>
-            <div class="gbp-status">Open today</div>
-            <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
-            <div class="gbp-actions-row">
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg></i>Call</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i>Directions</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg></i>Website</div>
-              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1Z"/></svg></i>Save</div>
-            </div>
-            <div class="gbp-info">
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg>(555) 010-0123</div>
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>123 Main St, Your City</div>
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>yourbusiness.com</div>
-              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Closes 6:00 PM</div>
-            </div>
-            <div class="gbp-photos-label">Photos</div>
-            <div class="gbp-photos-grid">
-              <span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb more"></span>
-            </div>
-            <div class="gbp-photos-label">Latest update</div>
-            <div class="gbp-post-card">
-              <span class="gbp-post-thumb"></span>
-              <div><b>Recent project completed</b><p>A short note on the work finished this week.</p><span class="gbp-post-time">Posted this week</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="gbp-disclaimer">Illustrative example &mdash; real results may vary.</p>
-  </div>
-</section>
-<!-- DEMO VIDEO -->
-<section id="demo-video">
+<!-- HERO DEMO VIDEO -->
+<section class="hdw-outer" id="hdw">
   <div class="wrap">
     <div class="demo-video-frame reveal-up">
       <video autoplay muted loop playsinline preload="auto" aria-label="Looping demo of the Mission: Found dashboard showing profile monitoring, weekly updates, review responses, and a monthly report">
@@ -599,7 +465,6 @@
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Navigate</div>
-      <a href="#problem">The Problem</a>
       <a href="#how-it-works">How it Works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -651,85 +516,6 @@
     menuBtn.classList.remove('open');
     mobileMenu.classList.remove('open');
   }));
-</script>
-
-<!-- Hero demo widget -->
-<script>
-(() => {
-  const root = document.getElementById('hdw');
-  if (!root) return;
-  const scenes = [...root.querySelectorAll('.hdw-scene')];
-  const DURATIONS = [5500, 6000, 6500, 5500]; // ms per scene, reading-paced
-  const EXIT_MS = 180;   // outgoing scene fade + scale-down
-  const GAP_MS = 140;    // blank pause between scenes
-  let index = 0, timer = null;
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function formatVal(val, format) {
-    if (format === 'k1') return (val / 1000).toFixed(1) + 'K';
-    if (format === 'dec1') return val.toFixed(1);
-    return Math.round(val).toLocaleString();
-  }
-
-  function animateCounters(scene) {
-    const counters = [...scene.querySelectorAll('.hdw-cu')];
-    counters.forEach((el, i) => {
-      const target = parseFloat(el.dataset.target);
-      const format = el.dataset.format;
-      if (reduceMotion) { el.textContent = formatVal(target, format); return; }
-      const duration = 1100;
-      setTimeout(() => {
-        const start = performance.now();
-        function frame(now) {
-          const p = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = formatVal(target * eased, format);
-          if (p < 1) requestAnimationFrame(frame);
-        }
-        requestAnimationFrame(frame);
-      }, i * 100); // counters cascade in with their own card
-    });
-
-    // Delta notes (e.g. "+18%") reveal only after every counter has landed,
-    // then stagger in left to right - a second, later beat, not tied to the
-    // card entrance itself.
-    const notes = [...scene.querySelectorAll('.hdw-metric-note')];
-    notes.forEach((note, i) => {
-      note.classList.remove('show');
-      if (reduceMotion) { note.classList.add('show'); return; }
-      const baseDelay = (counters.length - 1) * 100 + 1100 + 300;
-      setTimeout(() => note.classList.add('show'), baseDelay + i * 450);
-    });
-  }
-
-  function scheduleAdvance(ms) {
-    clearTimeout(timer);
-    timer = setTimeout(() => goTo((index + 1) % scenes.length), ms);
-  }
-
-  function activate(i) {
-    index = i;
-    scenes.forEach((s, j) => {
-      s.classList.remove('leaving');
-      s.classList.toggle('active', j === i);
-    });
-    animateCounters(scenes[i]);
-    scheduleAdvance(DURATIONS[index]);
-  }
-
-  function goTo(i) {
-    const outgoing = scenes[index];
-    if (reduceMotion) { activate(i); return; }
-    outgoing.classList.add('leaving');
-    setTimeout(() => {
-      outgoing.classList.remove('active', 'leaving');
-      setTimeout(() => activate(i), GAP_MS);
-    }, EXIT_MS);
-  }
-
-  activate(0);
-})();
 </script>
 
 </body>
