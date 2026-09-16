@@ -110,31 +110,36 @@
 
   /* ---- Problem ---- */
   .gbp-compare-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 22px; align-items: center; margin-top: 44px; }
-  .gbp-card { border-radius: 18px; padding: 22px; background: #fff; }
-  .gbp-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .gbp-avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .gbp-avatar svg { width: 17px; height: 17px; }
+  .gbp-card { border-radius: 18px; overflow: hidden; background: #fff; }
+  .gbp-photo { height: 112px; position: relative; }
+  .gbp-photo-badge { position: absolute; right: 10px; bottom: 10px; background: rgba(6,10,22,.55); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px; }
+  .gbp-panel-body { padding: 18px 20px 20px; }
   .gbp-biz-name { font-weight: 700; font-size: 15px; color: var(--navy-deep); }
   .gbp-verified { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 9px; margin-left: 5px; }
   .gbp-stars { font-size: 12px; margin-top: 4px; }
   .gbp-stars b { color: var(--sub-ink); font-weight: 600; margin-left: 3px; }
-  .gbp-status { font-size: 12px; font-weight: 700; padding: 7px 0 3px; }
+  .gbp-status { font-size: 12px; font-weight: 700; margin-top: 6px; }
+  .gbp-tabs { display: flex; gap: 15px; font-size: 11px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); margin: 14px 0 0; }
+  .gbp-tabs span { padding-bottom: 9px; }
+  .gbp-tabs span:first-child { color: var(--ink); border-bottom: 2px solid currentColor; }
+  .gbp-actions-row { display: flex; gap: 18px; margin: 14px 0 4px; }
+  .gbp-action-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 600; color: var(--sub-ink); }
+  .gbp-action-btn i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-style: normal; }
   .gbp-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13px; }
   .gbp-row span { color: #9096AD; font-weight: 600; letter-spacing: 0.04em; font-size: 10.5px; text-transform: uppercase; }
   .gbp-row b { color: var(--ink); font-weight: 600; }
-  .gbp-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
-  .gbp-tag { font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
   .gbp-arrow { font-size: 22px; font-weight: 700; color: var(--blue); }
-  .gbp-before { border: 1px solid #E4E6ED; background: linear-gradient(180deg, #F8F9FB 0%, #F1F2F6 100%); box-shadow: 0 10px 22px rgba(14,23,48,0.04); filter: grayscale(0.7); }
-  .gbp-before .gbp-avatar { background: #E9EBF1; color: #9AA6C4; }
+  .gbp-before { border: 1px solid #E4E6ED; box-shadow: 0 10px 22px rgba(14,23,48,0.04); filter: grayscale(0.7); }
+  .gbp-before .gbp-photo { background: linear-gradient(135deg, #C9CCD6 0%, #A9ADBA 100%); }
+  .gbp-before .gbp-panel-body { background: linear-gradient(180deg, #F8F9FB 0%, #F1F2F6 100%); }
+  .gbp-before .gbp-action-btn i { background: #E9EBF1; color: #9AA6C4; }
   .gbp-before .gbp-stars { color: #B7BECF; }
   .gbp-before .gbp-status { color: var(--red); }
-  .gbp-before .gbp-tag { background: #FFF4F0; border-color: #F4D8CC; color: var(--red); }
-  .gbp-after { border: 1px solid #dce4ff; background: linear-gradient(180deg, #fff 0%, #F8FAFF 100%); box-shadow: 0 28px 60px rgba(74,107,199,0.22); }
-  .gbp-after .gbp-avatar { background: #EEF1FB; color: var(--blue); }
+  .gbp-after { border: 1px solid #dce4ff; box-shadow: 0 28px 60px rgba(74,107,199,0.22); }
+  .gbp-after .gbp-photo { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); }
+  .gbp-after .gbp-action-btn i { background: #EEF1FB; color: var(--blue); }
   .gbp-after .gbp-stars { color: var(--amber); }
   .gbp-after .gbp-status { color: var(--green); }
-  .gbp-after .gbp-tag { background: #EEF1FB; border-color: #dce4ff; color: var(--blue-deep); }
   .gbp-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
 
   /* ---- How it works ---- */
@@ -403,42 +408,40 @@
     </div>
     <div class="reveal-up gbp-compare-row">
       <div class="gbp-card gbp-before">
-        <div class="gbp-card-top">
-          <div class="gbp-avatar"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.34 7.01 11.6a1.5 1.5 0 0 0 1.98 0C13.28 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill="currentColor"/></svg></div>
-          <div>
-            <div class="gbp-biz-name">Your Business</div>
-            <div class="gbp-stars">★★★★ <b>3.8 (8)</b></div>
+        <div class="gbp-photo"><span class="gbp-photo-badge">1/3</span></div>
+        <div class="gbp-panel-body">
+          <div class="gbp-biz-name">Your Business</div>
+          <div class="gbp-stars">★★★★ <b>3.8 (8)</b></div>
+          <div class="gbp-status">Permanently closed</div>
+          <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
+          <div class="gbp-actions-row">
+            <div class="gbp-action-btn"><i>&#9742;</i>Call</div>
+            <div class="gbp-action-btn"><i>&#8599;</i>Directions</div>
+            <div class="gbp-action-btn"><i>&#9825;</i>Save</div>
+            <div class="gbp-action-btn"><i>&#8679;</i>Share</div>
           </div>
-        </div>
-        <div class="gbp-status">Permanently closed</div>
-        <div class="gbp-row"><span>Hours</span><b>Not listed</b></div>
-        <div class="gbp-row"><span>Photos</span><b>3, outdated</b></div>
-        <div class="gbp-row"><span>Website</span><b>None</b></div>
-        <div class="gbp-row"><span>Last post</span><b>8 months ago</b></div>
-        <div class="gbp-tags">
-          <span class="gbp-tag">Outdated photos</span>
-          <span class="gbp-tag">Low rating</span>
-          <span class="gbp-tag">No website</span>
+          <div class="gbp-row"><span>Hours</span><b>Not listed</b></div>
+          <div class="gbp-row"><span>Website</span><b>None</b></div>
+          <div class="gbp-row"><span>Last post</span><b>8 months ago</b></div>
         </div>
       </div>
       <div class="gbp-arrow" aria-hidden="true">&#8594;</div>
       <div class="gbp-card gbp-after">
-        <div class="gbp-card-top">
-          <div class="gbp-avatar"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.34 7.01 11.6a1.5 1.5 0 0 0 1.98 0C13.28 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill="currentColor"/></svg></div>
-          <div>
-            <div class="gbp-biz-name">Your Business<span class="gbp-verified" title="Verified">&#10003;</span></div>
-            <div class="gbp-stars">★★★★★ <b>4.9 (124)</b></div>
+        <div class="gbp-photo"><span class="gbp-photo-badge">1/12</span></div>
+        <div class="gbp-panel-body">
+          <div class="gbp-biz-name">Your Business<span class="gbp-verified" title="Verified">&#10003;</span></div>
+          <div class="gbp-stars">★★★★★ <b>4.9 (124)</b></div>
+          <div class="gbp-status">Open &middot; Closes 5:00 PM</div>
+          <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
+          <div class="gbp-actions-row">
+            <div class="gbp-action-btn"><i>&#9742;</i>Call</div>
+            <div class="gbp-action-btn"><i>&#8599;</i>Directions</div>
+            <div class="gbp-action-btn"><i>&#9825;</i>Save</div>
+            <div class="gbp-action-btn"><i>&#8679;</i>Share</div>
           </div>
-        </div>
-        <div class="gbp-status">Open &middot; Closes 5:00 PM</div>
-        <div class="gbp-row"><span>Hours</span><b>Accurate, up to date</b></div>
-        <div class="gbp-row"><span>Photos</span><b>24, updated monthly</b></div>
-        <div class="gbp-row"><span>Website</span><b>yourbusiness.com</b></div>
-        <div class="gbp-row"><span>Last post</span><b>2 days ago</b></div>
-        <div class="gbp-tags">
-          <span class="gbp-tag">Fresh photos</span>
-          <span class="gbp-tag">4.9 rating</span>
-          <span class="gbp-tag">Active listing</span>
+          <div class="gbp-row"><span>Hours</span><b>Accurate, up to date</b></div>
+          <div class="gbp-row"><span>Website</span><b>yourbusiness.com</b></div>
+          <div class="gbp-row"><span>Last post</span><b>2 days ago</b></div>
         </div>
       </div>
     </div>
