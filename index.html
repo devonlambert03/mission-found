@@ -125,9 +125,19 @@
   .gbp-actions-row { display: flex; gap: 18px; margin: 14px 0 4px; }
   .gbp-action-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 600; color: var(--sub-ink); }
   .gbp-action-btn i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-style: normal; }
-  .gbp-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13px; }
-  .gbp-row span { color: #9096AD; font-weight: 600; letter-spacing: 0.04em; font-size: 10.5px; text-transform: uppercase; }
-  .gbp-row b { color: var(--ink); font-weight: 600; }
+  .gbp-info { margin-top: 4px; }
+  .gbp-info-row { display: flex; align-items: center; gap: 11px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--ink); font-weight: 500; }
+  .gbp-info-row svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--muted); }
+  .gbp-photos-label { font-size: 12px; font-weight: 700; color: var(--navy-deep); margin: 16px 0 8px; }
+  .gbp-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gbp-thumb { aspect-ratio: 1.35; border-radius: 8px; background: linear-gradient(135deg, #C9CCD6 0%, #A9ADBA 100%); position: relative; overflow: hidden; }
+  .gbp-thumb.more::after { content: '+9'; position: absolute; inset: 0; background: rgba(6,10,22,.55); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .gbp-after .gbp-thumb { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); }
+  .gbp-post-card { display: flex; gap: 12px; align-items: flex-start; margin-top: 4px; }
+  .gbp-post-thumb { width: 52px; height: 52px; border-radius: 10px; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); flex-shrink: 0; }
+  .gbp-post-card b { display: block; font-size: 12px; color: var(--navy-deep); }
+  .gbp-post-card p { font-size: 11.5px; color: var(--sub-ink); line-height: 1.4; margin-top: 2px; }
+  .gbp-post-time { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
   .gbp-arrow { font-size: 22px; font-weight: 700; color: var(--blue); }
   .gbp-before { border: 1px solid #E4E6ED; box-shadow: 0 10px 22px rgba(14,23,48,0.04); filter: grayscale(0.7); }
   .gbp-before .gbp-photo { background: linear-gradient(135deg, #C9CCD6 0%, #A9ADBA 100%); }
@@ -420,9 +430,15 @@
             <div class="gbp-action-btn"><i>&#9825;</i>Save</div>
             <div class="gbp-action-btn"><i>&#8679;</i>Share</div>
           </div>
-          <div class="gbp-row"><span>Hours</span><b>Not listed</b></div>
-          <div class="gbp-row"><span>Website</span><b>None</b></div>
-          <div class="gbp-row"><span>Last post</span><b>8 months ago</b></div>
+          <div class="gbp-info">
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10 21 3 14 3 5c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z" fill="currentColor"/></svg>(555) 010-0123</div>
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.34 7.01 11.6a1.5 1.5 0 0 0 1.98 0C13.28 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill="currentColor"/></svg>123 Main St, Your City</div>
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>No website</div>
+          </div>
+          <div class="gbp-photos-label">Photos</div>
+          <div class="gbp-photos-grid">
+            <span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb"></span>
+          </div>
         </div>
       </div>
       <div class="gbp-arrow" aria-hidden="true">&#8594;</div>
@@ -439,9 +455,20 @@
             <div class="gbp-action-btn"><i>&#9825;</i>Save</div>
             <div class="gbp-action-btn"><i>&#8679;</i>Share</div>
           </div>
-          <div class="gbp-row"><span>Hours</span><b>Accurate, up to date</b></div>
-          <div class="gbp-row"><span>Website</span><b>yourbusiness.com</b></div>
-          <div class="gbp-row"><span>Last post</span><b>2 days ago</b></div>
+          <div class="gbp-info">
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10 21 3 14 3 5c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z" fill="currentColor"/></svg>(555) 010-0123</div>
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.34 7.01 11.6a1.5 1.5 0 0 0 1.98 0C13.28 21.34 20 15.25 20 10c0-4.42-3.58-8-8-8Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill="currentColor"/></svg>123 Main St, Your City</div>
+            <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>yourbusiness.com</div>
+          </div>
+          <div class="gbp-photos-label">Photos</div>
+          <div class="gbp-photos-grid">
+            <span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb more"></span>
+          </div>
+          <div class="gbp-photos-label">Latest posts</div>
+          <div class="gbp-post-card">
+            <span class="gbp-post-thumb"></span>
+            <div><b>New project in progress</b><p>Site prep and setup for a new job this week.</p><span class="gbp-post-time">2 days ago</span></div>
+          </div>
         </div>
       </div>
     </div>
