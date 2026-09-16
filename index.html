@@ -196,17 +196,19 @@
   @keyframes hdwGlow { from { transform: translate(-2%,-1%) scale(1); } to { transform: translate(2%,1%) scale(1.06); } }
   .hdw-workspace { background: var(--panel); border: 1px solid var(--line); border-radius: 25px; box-shadow: var(--shadow); overflow: hidden; }
   .hdw-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(145deg,#e9edff,#b9c8fa); display: grid; place-items: center; color: #24386e; font-weight: 800; }
-  .hdw-stage { position: relative; min-height: 450px; }
-  .hdw-scene { display: none; padding: 28px 30px 30px; animation: hdwEnter .45s ease; }
-  .hdw-scene.active { display: block; }
-  @keyframes hdwEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .hdw-stage { position: relative; min-height: 450px; overflow: hidden; }
+  .hdw-scene { display: none; padding: 28px 30px 30px; }
+  .hdw-scene.active { display: block; animation: hdwSceneEnter .35s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-scene.active.leaving { animation: hdwSceneExit .18s ease-in both; }
+  @keyframes hdwSceneEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes hdwSceneExit { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.96); } }
   .hdw-scene-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 23px; }
   .hdw-kicker { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
   .hdw-scene h2 { font-size: 32px; font-weight: 800; letter-spacing: -.045em; line-height: 1.12; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
   .hdw-scene-intro { font-size: 13px; color: var(--sub-ink); line-height: 1.55; margin-top: 8px; max-width: 470px; }
   .hdw-pill { white-space: nowrap; border: 1px solid #dce4ff; background: var(--blue-soft); color: #4664c6; border-radius: 999px; padding: 7px 10px; font-size: 10px; font-weight: 800; animation: hdwPopIn .4s cubic-bezier(.34,1.56,.64,1) .15s both; }
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
-  .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-panel.soft { background: #fafbfe; }
   .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; }
   .hdw-panel.accent .hdw-panel-title { color: #fff; }
@@ -215,27 +217,29 @@
   .hdw-panel-title { font-size: 11px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; color: var(--navy-deep); }
   .hdw-muted { color: var(--muted); font-weight: 500; }
   .hdw-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
-  .hdw-metric { padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-metric { padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; text-align: center; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-metric:nth-child(1) { animation-delay: .06s; }
   .hdw-metric:nth-child(2) { animation-delay: .16s; }
   .hdw-metric:nth-child(3) { animation-delay: .26s; }
   .hdw-metric-label { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
   .hdw-metric-value { font-size: 24px; letter-spacing: -.05em; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
   .hdw-metric-note { font-size: 10px; color: var(--green); margin-top: 5px; font-weight: 700; }
+  html.js .hdw-metric-note { opacity: 0; transition: opacity .35s ease; }
+  html.js .hdw-metric-note.show { opacity: 1; }
   .hdw-chart { width: 100%; height: 130px; display: block; }
-  .hdw-chart path { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 500; stroke-dashoffset: 500; animation: hdwDraw 1.3s .15s cubic-bezier(.16,1,.3,1) forwards; }
+  .hdw-chart path { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 500; stroke-dashoffset: 500; animation: hdwDraw .45s .6s cubic-bezier(.16,1,.3,1) forwards; }
   .hdw-chart .hdw-area { fill: #dfe7ff; stroke: none; opacity: .65; }
-  .hdw-chart-dot { fill: var(--blue); opacity: 0; transform-box: fill-box; transform-origin: center; animation: hdwDotPop .45s cubic-bezier(.34,1.56,.64,1) 1.35s both; }
+  .hdw-chart-dot { fill: var(--blue); opacity: 0; transform-box: fill-box; transform-origin: center; animation: hdwDotPop .45s cubic-bezier(.34,1.56,.64,1) 1.05s both; }
   @keyframes hdwDraw { to { stroke-dashoffset: 0; } }
   @keyframes hdwDotPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
   .hdw-bars { display: grid; gap: 12px; }
   .hdw-bar-row { display: grid; gap: 6px; }
   .hdw-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); }
   .hdw-track { height: 7px; background: #edf0f6; border-radius: 99px; overflow: hidden; }
-  .hdw-fill { height: 100%; width: 0; background: var(--blue); border-radius: 99px; animation: hdwFill 1s .25s cubic-bezier(.22,1.4,.36,1) forwards; }
+  .hdw-fill { height: 100%; width: 0; background: var(--blue); border-radius: 99px; animation: hdwFill .7s .75s cubic-bezier(.22,1.4,.36,1) forwards; }
   @keyframes hdwFill { to { width: var(--width); } }
   .hdw-actions { display: grid; gap: 11px; }
-  .hdw-action { display: flex; align-items: center; gap: 11px; font-size: 11px; color: var(--ink); animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-action { display: flex; align-items: center; gap: 11px; font-size: 11px; color: var(--ink); animation: hdwRiseInSm .5s cubic-bezier(.16,1,.3,1) both; }
   .hdw-actions.lg { gap: 14px; }
   .hdw-actions.lg .hdw-action { font-size: 14px; gap: 13px; }
   .hdw-actions.lg .hdw-action small { font-size: 12.5px; margin-top: 4px; }
@@ -246,11 +250,12 @@
   .hdw-action:nth-child(4) { animation-delay: .36s; }
   .hdw-action-icon { width: 29px; height: 29px; border-radius: 10px; background: #f0f3fa; display: grid; place-items: center; color: #52628a; font-weight: 800; flex-shrink: 0; }
   .hdw-action small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
-  .hdw-manager { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid var(--line); border-radius: 13px; margin-bottom: 13px; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; color: var(--ink); }
+  .hdw-manager { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid var(--line); border-radius: 13px; margin-bottom: 13px; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; color: var(--ink); }
   .hdw-manager .hdw-avatar { width: 42px; height: 42px; }
   .hdw-manager strong { font-size: 12px; color: var(--navy-deep); }
   .hdw-manager span { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
-  .hdw-review { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-review { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fff; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-review:nth-child(2) { animation-delay: .12s; }
   .hdw-stars { color: #e7a52f; letter-spacing: 2px; font-size: 13px; line-height: 1; display: block; margin-top: 4px; }
   .hdw-review-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
   .hdw-review-name { font-size: 11px; font-weight: 800; color: var(--navy-deep); }
@@ -261,14 +266,15 @@
   .hdw-reply label span { color: var(--blue); }
   .hdw-reply p { font-size: 11px; color: var(--ink); }
   .hdw-report { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
-  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; text-align: center; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-report-card:nth-child(1) { animation-delay: .06s; }
   .hdw-report-card:nth-child(2) { animation-delay: .16s; }
   .hdw-report-card:nth-child(3) { animation-delay: .26s; }
   .hdw-report-card > span:first-child { font-size: 12px; font-weight: 700; color: var(--navy-deep); }
   .hdw-report-card strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; letter-spacing: -.05em; margin: 10px 0; color: var(--navy-deep); }
   .hdw-report-card > span:last-child { font-size: 10px; color: var(--muted); }
-  @keyframes hdwRiseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes hdwRiseIn { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: none; } }
+  @keyframes hdwRiseInSm { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
   @keyframes hdwPopIn { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
   @media (max-width: 650px) {
     .hdw-scene { padding: 22px 17px; } .hdw-scene-head { display: block; } .hdw-pill { display: inline-block; margin-top: 12px; }
@@ -333,7 +339,7 @@
               <div class="hdw-metric"><div class="hdw-metric-label">Customer actions</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="258" data-format="int">258</span></div><div class="hdw-metric-note">Calls, visits, requests</div></div>
               <div class="hdw-metric"><div class="hdw-metric-label">Average rating</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></div><div class="hdw-metric-note">Great rating</div></div>
             </div>
-            <div class="hdw-panel"><div class="hdw-panel-title">Search trend <span class="hdw-muted">Illustrative</span></div>
+            <div class="hdw-panel" style="animation-delay:.5s"><div class="hdw-panel-title">Search trend <span class="hdw-muted">Illustrative</span></div>
               <svg class="hdw-chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
                 <path class="hdw-area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
                 <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
@@ -559,11 +565,9 @@
   if (!root) return;
   const scenes = [...root.querySelectorAll('.hdw-scene')];
   const DURATIONS = [5500, 6000, 6500, 5500]; // ms per scene, reading-paced
+  const EXIT_MS = 180;   // outgoing scene fade + scale-down
+  const GAP_MS = 140;    // blank pause between scenes
   let index = 0, timer = null;
-
-  function render() {
-    scenes.forEach((s, i) => s.classList.toggle('active', i === index));
-  }
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -574,19 +578,33 @@
   }
 
   function animateCounters(scene) {
-    scene.querySelectorAll('.hdw-cu').forEach(el => {
+    const counters = [...scene.querySelectorAll('.hdw-cu')];
+    counters.forEach((el, i) => {
       const target = parseFloat(el.dataset.target);
       const format = el.dataset.format;
       if (reduceMotion) { el.textContent = formatVal(target, format); return; }
       const duration = 1100;
-      const start = performance.now();
-      function frame(now) {
-        const p = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = formatVal(target * eased, format);
-        if (p < 1) requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
+      setTimeout(() => {
+        const start = performance.now();
+        function frame(now) {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = formatVal(target * eased, format);
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }, i * 100); // counters cascade in with their own card
+    });
+
+    // Delta notes (e.g. "+18%") reveal only after every counter has landed,
+    // then stagger in left to right - a second, later beat, not tied to the
+    // card entrance itself.
+    const notes = [...scene.querySelectorAll('.hdw-metric-note')];
+    notes.forEach((note, i) => {
+      note.classList.remove('show');
+      if (reduceMotion) { note.classList.add('show'); return; }
+      const baseDelay = (counters.length - 1) * 100 + 1100 + 300;
+      setTimeout(() => note.classList.add('show'), baseDelay + i * 450);
     });
   }
 
@@ -595,14 +613,27 @@
     timer = setTimeout(() => goTo((index + 1) % scenes.length), ms);
   }
 
-  function goTo(i) {
+  function activate(i) {
     index = i;
-    render();
+    scenes.forEach((s, j) => {
+      s.classList.remove('leaving');
+      s.classList.toggle('active', j === i);
+    });
     animateCounters(scenes[i]);
     scheduleAdvance(DURATIONS[index]);
   }
 
-  goTo(0);
+  function goTo(i) {
+    const outgoing = scenes[index];
+    if (reduceMotion) { activate(i); return; }
+    outgoing.classList.add('leaving');
+    setTimeout(() => {
+      outgoing.classList.remove('active', 'leaving');
+      setTimeout(() => activate(i), GAP_MS);
+    }, EXIT_MS);
+  }
+
+  activate(0);
 })();
 </script>
 
