@@ -202,7 +202,7 @@
   @keyframes hdwEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .hdw-scene-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 23px; }
   .hdw-kicker { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
-  .hdw-scene h2 { font-size: 27px; font-weight: 800; letter-spacing: -.045em; line-height: 1.15; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
+  .hdw-scene h2 { font-size: 32px; font-weight: 800; letter-spacing: -.045em; line-height: 1.12; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); }
   .hdw-scene-intro { font-size: 13px; color: var(--sub-ink); line-height: 1.55; margin-top: 8px; max-width: 470px; }
   .hdw-pill { white-space: nowrap; border: 1px solid #dce4ff; background: var(--blue-soft); color: #4664c6; border-radius: 999px; padding: 7px 10px; font-size: 10px; font-weight: 800; animation: hdwPopIn .4s cubic-bezier(.34,1.56,.64,1) .15s both; }
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
@@ -215,7 +215,7 @@
   .hdw-panel-title { font-size: 11px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; color: var(--navy-deep); }
   .hdw-muted { color: var(--muted); font-weight: 500; }
   .hdw-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
-  .hdw-metric { padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-metric { padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
   .hdw-metric:nth-child(1) { animation-delay: .06s; }
   .hdw-metric:nth-child(2) { animation-delay: .16s; }
   .hdw-metric:nth-child(3) { animation-delay: .26s; }
@@ -247,8 +247,8 @@
   .hdw-manager strong { font-size: 12px; color: var(--navy-deep); }
   .hdw-manager span { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; }
   .hdw-review { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fff; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
-  .hdw-stars { color: #e7a52f; letter-spacing: 2px; font-size: 13px; }
-  .hdw-review-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .hdw-stars { color: #e7a52f; letter-spacing: 2px; font-size: 13px; line-height: 1; display: block; margin-top: 4px; }
+  .hdw-review-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
   .hdw-review-name { font-size: 11px; font-weight: 800; color: var(--navy-deep); }
   .hdw-example-badge { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #78829a; background: #eef0f5; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; white-space: nowrap; }
   .hdw-review p { font-size: 12px; line-height: 1.65; color: #4d5874; }
@@ -270,8 +270,8 @@
   .hdw-rank.you .hdw-rank-number { color: var(--blue); }
   .hdw-you-tag { background: var(--blue); color: #fff; font-size: 9.5px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-left: 8px; }
   @keyframes hdwGlowPulse { 0%,100% { box-shadow: 0 4px 14px rgba(94,125,232,.14); } 50% { box-shadow: 0 4px 22px rgba(94,125,232,.3); } }
-  .hdw-report { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
-  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 20px 16px; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
+  .hdw-report { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+  .hdw-report-card { border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; text-align: center; animation: hdwRiseIn .55s cubic-bezier(.16,1,.3,1) both; }
   .hdw-report-card:nth-child(1) { animation-delay: .06s; }
   .hdw-report-card:nth-child(2) { animation-delay: .16s; }
   .hdw-report-card:nth-child(3) { animation-delay: .26s; }
@@ -282,7 +282,7 @@
   @keyframes hdwPopIn { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
   @media (max-width: 650px) {
     .hdw-scene { padding: 22px 17px; } .hdw-scene-head { display: block; } .hdw-pill { display: inline-block; margin-top: 12px; }
-    .hdw-scene h2 { font-size: 23px; } .hdw-grid { grid-template-columns: 1fr; } .hdw-metrics { gap: 7px; } .hdw-metric { padding: 11px; } .hdw-metric-value { font-size: 20px; }
+    .hdw-scene h2 { font-size: 25px; } .hdw-grid { grid-template-columns: 1fr; } .hdw-metrics { gap: 7px; } .hdw-metric { padding: 11px; } .hdw-metric-value { font-size: 20px; }
     .hdw-report { gap: 7px; } .hdw-report-card { padding: 14px 11px; } .hdw-report-card strong { font-size: 26px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -336,32 +336,25 @@
         <div class="hdw-stage">
           <div class="hdw-scene active" data-hdw-scene="0">
             <div class="hdw-scene-head">
-              <div><div class="hdw-kicker">01 / Monitor</div><h2>We keep watch while you run the business.</h2><p class="hdw-scene-intro">We check your Google listing every day, so nothing gets missed.</p></div>
+              <div><div class="hdw-kicker">01 / Monitor</div><h2>We keep watch while you run the business.</h2></div>
             </div>
             <div class="hdw-metrics">
               <div class="hdw-metric"><div class="hdw-metric-label">Profile views</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="15100" data-format="k1">15.1K</span></div><div class="hdw-metric-note">&#8599; 12.4% this period</div></div>
               <div class="hdw-metric"><div class="hdw-metric-label">Customer actions</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="258" data-format="int">258</span></div><div class="hdw-metric-note">Calls, visits, requests</div></div>
               <div class="hdw-metric"><div class="hdw-metric-label">Average rating</div><div class="hdw-metric-value"><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></div><div class="hdw-metric-note">Great rating</div></div>
             </div>
-            <div class="hdw-grid">
-              <div class="hdw-panel"><div class="hdw-panel-title">Search trend <span class="hdw-muted">Illustrative</span></div>
-                <svg class="hdw-chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
-                  <path class="hdw-area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
-                  <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
-                  <circle class="hdw-chart-dot" cx="500" cy="16" r="5"></circle>
-                </svg>
-                <div class="hdw-bars"><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Search</span><b>72%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:72%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Maps</span><b>48%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:48%"></div></div></div></div>
-              </div>
-              <div class="hdw-panel soft"><div class="hdw-panel-title">What we look for</div><div class="hdw-actions">
-                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Profile accuracy</b><small>Hours, services, contact details</small></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Customer activity</b><small>Calls, messages, website visits</small></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">&#9733;</div><div><b>New reviews</b><small>Reviews that need a reply</small></div></div>
-              </div></div>
+            <div class="hdw-panel"><div class="hdw-panel-title">Search trend <span class="hdw-muted">Illustrative</span></div>
+              <svg class="hdw-chart" viewBox="0 0 500 140" preserveAspectRatio="none" aria-label="Illustrative upward visibility trend">
+                <path class="hdw-area" d="M0 118 L0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16 L500 118 Z"></path>
+                <path d="M0 95 L70 102 L140 78 L210 85 L280 52 L350 60 L420 28 L500 16"></path>
+                <circle class="hdw-chart-dot" cx="500" cy="16" r="5"></circle>
+              </svg>
+              <div class="hdw-bars"><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Search</span><b>72%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:72%"></div></div></div><div class="hdw-bar-row"><div class="hdw-bar-label"><span>Google Maps</span><b>48%</b></div><div class="hdw-track"><div class="hdw-fill" style="--width:48%"></div></div></div></div>
             </div>
           </div>
 
           <div class="hdw-scene" data-hdw-scene="1">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">02 / Handle</div><h2>A real person takes care of it.</h2><p class="hdw-scene-intro">You don't have to log in, post, or wonder if a review got answered. We handle it.</p></div><span class="hdw-pill">Human-managed</span></div>
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">02 / Handle</div><h2>A real person takes care of it.</h2></div><span class="hdw-pill">Human-managed</span></div>
             <div class="hdw-manager"><div class="hdw-avatar">D</div><div><strong>Devon &middot; Your <span style="color:var(--blue);display:inline">Mission: Found</span> manager</strong><span>Handles your reviews, posts, photos, and listing.</span></div><span class="hdw-pill" style="margin-left:auto">Assigned</span></div>
             <div class="hdw-panel"><div class="hdw-panel-title">Recent work <span class="hdw-muted">This week</span></div><div class="hdw-actions">
               <div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Published a helpful update</b><small>Service availability and seasonal reminder</small></div></div>
@@ -372,27 +365,26 @@
           </div>
 
           <div class="hdw-scene" data-hdw-scene="2">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">03 / Respond</div><h2>Customers get a thoughtful response.</h2><p class="hdw-scene-intro">Every review gets a real reply, especially when a customer takes the time to write one.</p></div><span class="hdw-pill">Reviews</span></div>
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">03 / Respond</div><h2>Customers get a thoughtful response.</h2></div><span class="hdw-pill">Reviews</span></div>
             <div class="hdw-review">
               <div class="hdw-review-head"><div><div class="hdw-review-name">Sample Customer</div><div class="hdw-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div></div>
               <p>&ldquo;The team was on time, communicated clearly, and did exactly what they promised. Would absolutely use them again.&rdquo;</p>
               <div class="hdw-reply"><label><span>MISSION: FOUND</span> RESPONSE</label><p>&ldquo;Thank you for the kind words. We&rsquo;re glad it went well, and we look forward to helping you again.&rdquo;</p></div>
             </div>
-            <div class="hdw-grid" style="margin-top:14px"><div class="hdw-panel soft"><div class="hdw-panel-title">Response standard</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div></div><div class="hdw-panel"><div class="hdw-panel-title">Human touch</div><p style="font-size:12px;line-height:1.6;color:var(--muted)">We don't use AI replies. A real person writes every response.</p></div></div>
+            <div class="hdw-panel soft" style="margin-top:14px"><div class="hdw-panel-title">Response standard</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">1</div><div><b>Understand the context</b><small>Read the actual customer feedback</small></div></div><div class="hdw-action"><div class="hdw-action-icon">2</div><div><b>Write like your business</b><small>Warm, specific, and professional</small></div></div></div><p style="font-size:12px;line-height:1.6;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">We don't use AI replies. A real person writes every response.</p></div>
           </div>
 
           <div class="hdw-scene" data-hdw-scene="3">
-            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Stay competitive</div><h2>We watch your ranking.</h2><p class="hdw-scene-intro">Your ranking moves for a lot of reasons. We keep an eye on it and act on what we can control.</p></div><span class="hdw-pill">Ranking watch</span></div>
+            <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Stay competitive</div><h2>We watch your ranking.</h2></div><span class="hdw-pill">Ranking watch</span></div>
             <div class="hdw-grid">
               <div class="hdw-panel"><div class="hdw-panel-title">Example Ranking:</div><div class="hdw-rank-list">
-                <div class="hdw-rank"><div class="hdw-rank-number">1</div><div><b>Northstar Home Care</b><small>12 Main Street &middot; Example market</small></div><div class="hdw-rank-status">Stable</div></div>
+                <div class="hdw-rank"><div class="hdw-rank-number">1</div><div><b>Northstar Home Care</b><small>12 Main Street &middot; Example market</small></div></div>
                 <div class="hdw-rank you"><div class="hdw-rank-number">2</div><div><b>Brightline Home Services</b><small>48 Oak Avenue &middot; Example market</small></div><div style="display:flex;align-items:center"><div class="hdw-rank-status">Improving</div><span class="hdw-you-tag">You</span></div></div>
-                <div class="hdw-rank"><div class="hdw-rank-number">3</div><div><b>Evergreen Property Co.</b><small>9 Park Road &middot; Example market</small></div><div class="hdw-rank-status">Stable</div></div>
-                <div class="hdw-rank"><div class="hdw-rank-number">4</div><div><b>Summit Local Pros</b><small>71 River Street &middot; Example market</small></div><div class="hdw-rank-status">Watching</div></div>
+                <div class="hdw-rank"><div class="hdw-rank-number">3</div><div><b>Evergreen Property Co.</b><small>9 Park Road &middot; Example market</small></div></div>
+                <div class="hdw-rank"><div class="hdw-rank-number">4</div><div><b>Summit Local Pros</b><small>71 River Street &middot; Example market</small></div></div>
               </div></div>
               <div class="hdw-panel soft"><div class="hdw-panel-title">What We Can Influence</div><div class="hdw-actions">
                 <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Accurate services</b></div></div>
-                <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Fresh activity</b></div></div>
                 <div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Fast review replies</b></div></div>
               </div></div>
             </div>
