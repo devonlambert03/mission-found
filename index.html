@@ -210,8 +210,12 @@
   .hdw-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; align-items: start; }
   .hdw-panel { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: #fff; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both; }
   .hdw-panel.soft { background: #fafbfe; }
-  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; }
+  .hdw-panel.accent { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%); border-color: transparent; animation: hdwRiseIn .75s cubic-bezier(.16,1,.3,1) both, hdwAccentGlow 2.4s ease-in-out infinite; }
   .hdw-panel.accent .hdw-panel-title { color: #fff; }
+  @keyframes hdwAccentGlow {
+    0%, 100% { box-shadow: 0 10px 24px rgba(74,107,199,.28); }
+    50% { box-shadow: 0 14px 40px rgba(74,107,199,.6); }
+  }
   .hdw-grid > .hdw-panel:nth-child(1) { animation-delay: .12s; }
   .hdw-grid > .hdw-panel:nth-child(2) { animation-delay: .22s; }
   .hdw-panel-title { font-size: 11px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; gap: 10px; color: var(--navy-deep); }
@@ -373,7 +377,7 @@
           <div class="hdw-scene" data-hdw-scene="3">
             <div class="hdw-scene-head"><div><div class="hdw-kicker">04 / Report</div><h2>At the end of the month, you know it is handled.</h2><p class="hdw-scene-intro">A simple recap of what we did and what's next.</p></div><span class="hdw-pill">Monthly recap</span></div>
             <div class="hdw-report"><div class="hdw-report-card"><span>Work Completed</span><strong><span class="hdw-cu" data-target="18" data-format="int">18</span></strong><span>Everything we did this month</span></div><div class="hdw-report-card"><span>Customer Actions</span><strong><span class="hdw-cu" data-target="258" data-format="int">258</span></strong><span>Calls, visits, and requests</span></div><div class="hdw-report-card"><span>Profile Rating</span><strong><span class="hdw-cu" data-target="4.9" data-format="dec1">4.9</span></strong><span>Your average rating</span></div></div>
-            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel accent"><div class="hdw-panel-title">The Outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;text-align:center">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
+            <div class="hdw-grid"><div class="hdw-panel"><div class="hdw-panel-title">Your monthly summary</div><div class="hdw-actions"><div class="hdw-action"><div class="hdw-action-icon">&check;</div><div><b>Completed</b><small>Listing upkeep and review replies</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8594;</div><div><b>Next priority</b><small>Refresh service photos and seasonal post</small></div></div><div class="hdw-action"><div class="hdw-action-icon">&#8599;</div><div><b>Watch item</b><small>Your ranking and what competitors are doing</small></div></div></div></div><div class="hdw-panel accent" style="animation-delay:.22s, 1.4s"><div class="hdw-panel-title">The Outcome</div><p style="font-size:19px;line-height:1.35;letter-spacing:-.04em;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;text-align:center">More time for the work that actually makes you money.</p><p style="font-size:11px;line-height:1.6;color:rgba(255,255,255,.8);margin-top:12px">We handle the upkeep. You focus on the work.</p></div></div>
           </div>
         </div>
       </div>
