@@ -109,9 +109,61 @@
   .hero h1 .accent-underline { color: var(--blue); border-bottom: 5px solid var(--blue); border-radius: 2px; padding-bottom: 2px; }
 
   /* ---- Problem ---- */
-  .gbp-compare-row { margin-top: 44px; }
-  .gbp-compare-img { display: block; width: 100%; height: auto; }
-  .gbp-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+  #problem { background: var(--cream); }
+  .problem-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .problem-headline { font-size: clamp(28px, 5vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+  .problem-headline .accent { color: var(--blue); }
+  .problem-sub { text-align: center; max-width: 480px; margin: 14px auto 0; }
+  .gbp-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .gbp-col { display: flex; flex-direction: column; }
+  .gbp-label { text-align: center; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sub-ink); margin-bottom: 12px; }
+  .gbp-col-after .gbp-label { color: var(--blue-deep); }
+  .gbp-card { border: 1px solid var(--border); border-radius: 14px; background: #fff; box-shadow: 0 6px 20px rgba(6,10,22,0.05); overflow: hidden; }
+  .gbp-col-before .gbp-card { filter: grayscale(0.4); }
+  .gbp-photo { height: 120px; position: relative; background: linear-gradient(180deg, #DADCE1 0%, #CDD0D6 100%); }
+  .gbp-col-after .gbp-photo { background: linear-gradient(180deg, #E1E9F8 0%, #CFDBF3 100%); }
+  .gbp-photo-badge { position: absolute; right: 10px; bottom: 10px; background: rgba(6,10,22,.55); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+  .gbp-panel-body { padding: 18px 20px 20px; }
+  .gbp-biz-name { font-weight: 700; font-size: 15px; color: var(--navy-deep); display: flex; align-items: center; gap: 6px; }
+  .gbp-verified { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 8px; flex-shrink: 0; }
+  .gbp-category { font-size: 12px; color: var(--sub-ink); margin-top: 3px; }
+  .gbp-stars { font-size: 12px; margin-top: 6px; color: var(--muted); }
+  .gbp-col-after .gbp-stars { color: var(--amber); }
+  .gbp-stars b { color: var(--sub-ink); font-weight: 600; margin-left: 3px; }
+  .gbp-status { font-size: 12px; font-weight: 600; margin-top: 6px; color: var(--muted); }
+  .gbp-col-after .gbp-status { color: var(--green); }
+  .gbp-tabs { display: flex; gap: 14px; font-size: 11px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); margin: 14px 0 0; }
+  .gbp-tabs span { padding-bottom: 9px; }
+  .gbp-tabs span:first-child { color: var(--ink); border-bottom: 2px solid currentColor; }
+  .gbp-actions-row { display: flex; gap: 16px; margin: 14px 0 4px; }
+  .gbp-action-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 600; color: var(--sub-ink); }
+  .gbp-action-btn i { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-style: normal; background: #F0F1F4; color: #8A93AA; }
+  .gbp-action-btn svg { width: 14px; height: 14px; }
+  .gbp-col-after .gbp-action-btn i { background: #EEF1FB; color: var(--blue); }
+  .gbp-info { margin-top: 2px; }
+  .gbp-info-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--ink); font-weight: 500; }
+  .gbp-col-before .gbp-info-row.is-empty { color: var(--muted); font-style: italic; font-weight: 400; }
+  .gbp-info-row svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--muted); }
+  .gbp-photos-label { font-size: 12px; font-weight: 700; color: var(--navy-deep); margin: 16px 0 8px; }
+  .gbp-photos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .gbp-col-before .gbp-photos-grid { grid-template-columns: repeat(3, 1fr); max-width: 75%; }
+  .gbp-thumb { aspect-ratio: 1; border-radius: 7px; background: #D7D9DE; position: relative; overflow: hidden; }
+  .gbp-col-after .gbp-thumb { background: #DCE6F7; }
+  .gbp-thumb.more::after { content: '+8'; position: absolute; inset: 0; background: rgba(6,10,22,.5); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .gbp-empty-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 4px; }
+  .gbp-post-card { display: flex; gap: 11px; align-items: flex-start; margin-top: 2px; }
+  .gbp-post-thumb { width: 46px; height: 46px; border-radius: 8px; background: #DCE6F7; flex-shrink: 0; }
+  .gbp-post-card b { display: block; font-size: 12px; color: var(--navy-deep); font-weight: 700; }
+  .gbp-post-card p { font-size: 11.5px; color: var(--sub-ink); line-height: 1.4; margin-top: 2px; }
+  .gbp-post-time { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
+  .gbp-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 28px; letter-spacing: 0.04em; }
+
+  /* ---- Demo video ---- */
+  .demo-video-frame { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 44px rgba(6,10,22,0.08); }
+  .demo-video-frame video { display: block; width: 100%; height: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .gbp-col.reveal-up { transition: none !important; }
+  }
 
   /* ---- How it works ---- */
   .steps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 46px; }
@@ -165,6 +217,7 @@
   .footer-bottom { display: flex; justify-content: space-between; margin-top: 46px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12.5px; color: #6E7999; }
   @media (max-width: 700px) {
     .footer-inner { grid-template-columns: 1fr 1fr; }
+    .gbp-compare { grid-template-columns: 1fr; gap: 32px; }
     .steps-row { grid-template-columns: 1fr; }
     .hero h1 { font-size: 38px; }
     .card { padding: 24px; }
@@ -368,17 +421,88 @@
 </section>
 
 <!-- PROBLEM -->
-<section id="problem">
+<section id="problem" aria-labelledby="problem-heading">
   <div class="wrap">
-    <div class="reveal-up">
-      <div class="eyebrow">The Problem</div>
-      <h2 class="section-title">Your work speaks for itself. Your Google listing doesn't.</h2>
-      <p class="section-sub">Customers search, find you, and click. Then they leave because the profile looks abandoned. No hours listed. Barely any photos. Nothing posted in months. That's the difference between a call and a scroll-past.</p>
+    <div class="problem-head">
+      <h2 id="problem-heading" class="problem-headline">Go from this&hellip; <span class="accent">to this.</span></h2>
+      <p class="problem-sub">Your Google Business Profile shouldn&rsquo;t be a forgotten page. We keep it accurate, active, and working for you.</p>
     </div>
-    <div class="reveal-up gbp-compare-row">
-      <img class="gbp-compare-img" src="image-1789581960025.webp" width="1088" height="774" alt="Before and after comparison of a Google Business Profile: outdated, closed-looking listing on the left; accurate, active listing with a verified badge and recent post on the right" loading="lazy">
+    <div class="gbp-compare">
+      <div class="gbp-col gbp-col-before reveal-up">
+        <div class="gbp-label">Before</div>
+        <div class="gbp-card" role="img" aria-label="Example listing that looks neglected: a 3.6 star rating, unconfirmed hours, no website listed, and only a couple of photos">
+          <div class="gbp-photo"><span class="gbp-photo-badge">1/3</span></div>
+          <div class="gbp-panel-body">
+            <div class="gbp-biz-name">Your Business</div>
+            <div class="gbp-stars">★★★☆☆ <b>3.6 (9)</b></div>
+            <div class="gbp-status">Hours not confirmed</div>
+            <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
+            <div class="gbp-actions-row">
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg></i>Call</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i>Directions</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg></i>Website</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1Z"/></svg></i>Save</div>
+            </div>
+            <div class="gbp-info">
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg>(555) 010-0123</div>
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>123 Main St, Your City</div>
+              <div class="gbp-info-row is-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>Website not listed</div>
+            </div>
+            <div class="gbp-photos-label">Photos</div>
+            <div class="gbp-photos-grid">
+              <span class="gbp-thumb"></span><span class="gbp-thumb"></span>
+            </div>
+            <p class="gbp-empty-note">No updates in several months.</p>
+          </div>
+        </div>
+      </div>
+      <div class="gbp-col gbp-col-after reveal-up" style="transition-delay:.1s">
+        <div class="gbp-label">After</div>
+        <div class="gbp-card" role="img" aria-label="Example listing that looks active and accurate: a 4.8 star rating, verified badge, complete hours and website, and a recent post">
+          <div class="gbp-photo"><span class="gbp-photo-badge">1/16</span></div>
+          <div class="gbp-panel-body">
+            <div class="gbp-biz-name">Your Business<span class="gbp-verified" title="Verified">&#10003;</span></div>
+            <div class="gbp-category">Local Service Business</div>
+            <div class="gbp-stars">★★★★★ <b>4.8 (96)</b></div>
+            <div class="gbp-status">Open today</div>
+            <div class="gbp-tabs"><span>Overview</span><span>Services</span><span>Reviews</span><span>Photos</span></div>
+            <div class="gbp-actions-row">
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg></i>Call</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i>Directions</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg></i>Website</div>
+              <div class="gbp-action-btn"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-3.5L6 20V5a1 1 0 0 1 1-1Z"/></svg></i>Save</div>
+            </div>
+            <div class="gbp-info">
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2c0 8.28 6.72 15 15 15a2 2 0 0 0 2-2v-3l-4.5-1.5-1.7 1.7a12.05 12.05 0 0 1-6-6l1.7-1.7L8 3Z"/></svg>(555) 010-0123</div>
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>123 Main St, Your City</div>
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.5 3.4 5.5 3.4 9s-1 6.5-3.4 9c-2.4-2.5-3.4-5.5-3.4-9s1-6.5 3.4-9Z"/></svg>yourbusiness.com</div>
+              <div class="gbp-info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Closes 6:00 PM</div>
+            </div>
+            <div class="gbp-photos-label">Photos</div>
+            <div class="gbp-photos-grid">
+              <span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb"></span><span class="gbp-thumb more"></span>
+            </div>
+            <div class="gbp-photos-label">Latest update</div>
+            <div class="gbp-post-card">
+              <span class="gbp-post-thumb"></span>
+              <div><b>Recent project completed</b><p>A short note on the work finished this week.</p><span class="gbp-post-time">Posted this week</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="gbp-disclaimer">Illustrative example &middot; real results may vary</p>
+    <p class="gbp-disclaimer">Illustrative example &mdash; real results may vary.</p>
+  </div>
+</section>
+<!-- DEMO VIDEO -->
+<section id="demo-video">
+  <div class="wrap">
+    <div class="demo-video-frame reveal-up">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Looping demo of the Mission: Found dashboard showing profile monitoring, weekly updates, review responses, and a monthly report">
+        <source src="mission-found-hero-demo.webm" type="video/webm">
+        <source src="mission-found-hero-demo.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 </section>
 <!-- HOW IT WORKS -->
