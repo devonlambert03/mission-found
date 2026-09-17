@@ -42,12 +42,16 @@ connected to this repo — merging to `main` auto-deploys to mission-found.com.
 - Fonts: **Inter** (body/UI), **Plus Jakarta Sans** (headings, logo
   wordmark) — both via Google Fonts, loaded together in one link tag.
 - Colors: `--navy-deep #060A16` `--navy #0E1730` `--blue #5B7FE0`
-  `--blue-deep #4A6BC7` `--cream #F4EFE6` `--muted #9AA6C4`
-  `--border #E7EAF3`.
-- Look: light gradient backgrounds (cream → soft blue), white rounded
-  cards with subtle shadow, pill-shaped blue-gradient CTA buttons.
-  This replaced an earlier dark-theme/starfield design — **do not
-  reintroduce the dark theme anywhere**, including on about/results.
+  `--blue-deep #4A6BC7` `--purple #8B6FE0` `--purple-deep #7357C9`
+  `--cream #F4EFE6` `--muted #9AA6C4` `--border #E7EAF3`.
+- Look: light gradient backgrounds (cream → soft blue → soft purple),
+  white rounded cards with subtle shadow, pill-shaped blue-gradient CTA
+  buttons. The body background is a fixed blue/purple/cream gradient
+  (added per Devon's request); section-level gradients (hero, hero demo
+  video backdrop, pricing) were updated to blend into the same family.
+  Purple is a background-only accent — CTAs, links, and other UI accents
+  stay blue. This replaced an earlier dark-theme/starfield design — **do
+  not reintroduce the dark theme anywhere**, including on about/results.
 - Logo: real sparkle-icon + "MISSION: FOUND" wordmark. The base64 PNG
   asset is already embedded in index.html's nav and footer — reuse that
   exact `<img>` tag, don't regenerate or approximate the icon.
