@@ -22,6 +22,8 @@
     --navy: #0E1730;
     --blue: #5B7FE0;
     --blue-deep: #4A6BC7;
+    --purple: #8B6FE0;
+    --purple-deep: #7357C9;
     --cream: #F4EFE6;
     --muted: #9AA6C4;
     --ink: #1A2340;
@@ -36,7 +38,8 @@
   body {
     font-family: 'Inter', -apple-system, sans-serif;
     color: var(--ink);
-    background: #fff;
+    background: linear-gradient(160deg, #EDF0FC 0%, #E9E4FA 45%, #F4EFE6 100%);
+    background-attachment: fixed;
   }
   h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--navy-deep); letter-spacing: -0.01em; }
   a { color: inherit; text-decoration: none; }
@@ -90,7 +93,7 @@
 
   /* ---- Hero ---- */
   .hero {
-    background: linear-gradient(180deg, #F4EFE6 0%, #E3E8F5 55%, #CBD6F0 100%);
+    background: linear-gradient(180deg, #F4EFE6 0%, #E6E4F7 55%, #CBD6F0 100%);
     text-align: center;
     padding: 90px 24px 24px;
   }
@@ -172,7 +175,7 @@
   .step-card p { font-size: 14.5px; color: var(--sub-ink); line-height: 1.5; }
 
   /* ---- Pricing ---- */
-  .pricing { background: #F8F9FD; }
+  .pricing { background: linear-gradient(180deg, #F3F1FC 0%, #F8F9FD 100%); }
   .price-card {
     max-width: 460px; margin: 46px auto 0; background: #fff; border: 1px solid var(--border);
     border-radius: 20px; padding: 40px 36px; text-align: center; box-shadow: 0 24px 48px rgba(14,23,48,0.08);
@@ -223,7 +226,7 @@
   }
 
   /* ---- Hero demo widget ---- */
-  .hdw-outer { padding: 48px 0 90px; background: linear-gradient(180deg, #CBD6F0 0%, #fff 100%); }
+  .hdw-outer { padding: 48px 0 90px; background: linear-gradient(180deg, #C9CDF2 0%, #fff 100%); }
   .hdw-wrap { display: flex; justify-content: center; }
   .hdw { --line: var(--border); --panel: #fff; --blue-soft: #EEF1FB; --shadow: 0 30px 60px rgba(14,23,48,0.12); width: 760px; max-width: 100%; position: relative; }
   .hdw::before { content: ''; position: absolute; inset: -40px -20px; z-index: -1; background: radial-gradient(480px 480px at 50% 0%, rgba(91,127,224,.12), transparent 62%); animation: hdwGlow 11s ease-in-out infinite alternate; pointer-events: none; }
