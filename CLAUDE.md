@@ -141,8 +141,13 @@ visibility," "turnkey," "leverage," "seamless."
   are built so far — see index.html's entry above for what's left.
 
 ## Workflow
-- Branch protection is on for `main` — work on a feature branch, open a
-  PR, Devon reviews and merges. Never push directly to main.
-- Flag before changing: the $149/mo price, the "real person not AI"
-  claims, or the actual written content of results.html — these are
-  deliberate business decisions, not copy to optimize away.
+- Work on a feature branch, open a PR — never push directly to main.
+  Once a requested change is complete and checks (CI/Vercel preview)
+  pass, merge the PR yourself so it goes live on a refresh — Devon
+  doesn't want to be the one clicking merge for routine work. Use
+  discretion: ask first if something is genuinely ambiguous, or if a
+  change touches an item flagged below.
+- Flag before merging (ask Devon first, even if the rest of the PR is
+  ready): the $149/mo price, the "real person not AI" claims, or the
+  actual written content of results.html — these are deliberate
+  business decisions, not copy to optimize away.
