@@ -66,7 +66,13 @@
   .nav-links a:hover { color: var(--navy-deep); }
   .nav-cta {
     background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
-    color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 14px; font-weight: 600; white-space: nowrap;
+  }
+  .nav-cta-short { display: none; }
+  @media (max-width: 480px) {
+    .nav-cta { padding: 10px 16px; }
+    .nav-cta-full { display: none; }
+    .nav-cta-short { display: inline; }
   }
   .menu-btn { display: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 6px; }
   .menu-btn span { width: 20px; height: 2px; background: var(--navy-deep); transition: transform .25s ease, opacity .25s ease; }
@@ -130,7 +136,7 @@
 
   /* ---- Footer ---- */
   footer { background: var(--navy-deep); color: var(--cream); padding: 60px 0 26px; }
-  .footer-inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 30px; }
+  .footer-inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 30px; }
   .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .footer-logo-icon { width: 26px; height: 26px; border-radius: 7px; }
   .footer-logo-text { display: flex; gap: 0.28em; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 15px; }
@@ -163,7 +169,7 @@
     <a href="index.html#pricing">Pricing</a>
     <a href="index.html#faq">FAQ</a>
   </div>
-  <a href="audit.html" class="nav-cta">Get Your Free Audit</a>
+  <a href="tel:6039210218" class="nav-cta"><span class="nav-cta-full">Call for Your Free Audit</span><span class="nav-cta-short">Call Now</span></a>
   <div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -234,7 +240,7 @@
   <div class="wrap">
     <h2 class="section-title center">Want to see where your own business stands, right now?</h2>
     <p class="section-sub center">No need to wait for the case study. A free audit shows you your own numbers today.</p>
-    <a href="audit.html" class="cta-button">Get Your Free Audit</a>
+    <a href="tel:6039210218" class="cta-button">Call for Your Free Audit</a>
   </div>
 </section>
 
@@ -254,12 +260,6 @@
       <a href="index.html#how-it-works">How it Works</a>
       <a href="index.html#pricing">Pricing</a>
       <a href="index.html#faq">FAQ</a>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Company</div>
-      <a href="results.html">Results</a>
-      <a href="about.html">About</a>
-      <a href="audit.html">Get Your Free Audit</a>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
