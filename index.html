@@ -177,6 +177,35 @@
   .price-cta { display: inline-block; margin: 26px 0 14px; background: var(--ink); color: var(--cream); padding: 16px 32px; border-radius: 2px; font-weight: 500; font-size: 14px; letter-spacing: 1.5px; }
   .price-micro { display: flex; justify-content: center; gap: 18px; font-size: 12.5px; color: var(--ink); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.08em; }
 
+  /* ---- Lead form ---- */
+  .lead-form-card {
+    max-width: 560px; margin: 32px auto 0; border: 1px solid var(--hairline);
+    border-radius: 2px; padding: 32px; text-align: left;
+  }
+  .lead-form-card h3 { font-size: 19px; margin-bottom: 6px; }
+  .lead-form-sub { font-size: 14px; color: var(--ink); opacity: 0.7; margin-bottom: 22px; }
+  .form-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .form-field label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); opacity: 0.6; }
+  .form-field input, .form-field textarea {
+    font-family: 'Work Sans', sans-serif; font-size: 15px; color: var(--ink);
+    border: 1px solid var(--hairline); border-radius: 2px; padding: 11px 12px; background: var(--cream);
+  }
+  .form-field input:focus, .form-field textarea:focus { outline: none; border-color: var(--ink); }
+  .form-field textarea { resize: vertical; }
+  .form-submit {
+    display: block; width: 100%; background: var(--ink); color: var(--cream); border: none;
+    padding: 15px; border-radius: 2px; font-weight: 500; font-size: 14px; letter-spacing: 1.5px;
+    cursor: pointer; margin-top: 4px;
+  }
+  .form-submit:disabled { opacity: 0.5; cursor: default; }
+  .form-status { font-size: 13.5px; margin-top: 12px; min-height: 1em; }
+  .form-status.success { color: var(--ink); }
+  .form-status.error { color: var(--ink); }
+  @media (min-width: 860px) {
+    .form-row { grid-template-columns: 1fr 1fr; }
+  }
+
   /* ---- FAQ ---- */
   .faq-wrap { max-width: 720px; margin: 46px auto 0; }
   .faq-item { border-bottom: 1px solid var(--hairline); }
@@ -369,6 +398,41 @@
       <a href="tel:6039210218" class="price-cta">LET'S GET STARTED</a>
       <div class="price-micro"><span>Secure checkout</span><span>Cancel anytime</span></div>
     </div>
+
+    <div class="lead-form-card">
+      <h3>Or send your info &mdash; I'll call you.</h3>
+      <p class="lead-form-sub">Fill this out and I'll reach out to walk through your free audit.</p>
+      <form class="lead-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New lead from mission-found.com">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="lead-name">Name</label>
+            <input type="text" id="lead-name" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="lead-business">Business Name</label>
+            <input type="text" id="lead-business" name="business" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="lead-email">Email</label>
+            <input type="email" id="lead-email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="lead-phone">Phone</label>
+            <input type="tel" id="lead-phone" name="phone" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="lead-message">Anything we should know?</label>
+          <textarea id="lead-message" name="message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="form-submit">SEND</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -444,6 +508,41 @@
       if (!isOpen) { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
     });
   });
+
+  // ---- Lead form (Formspree) ----
+  const leadForm = document.querySelector('.lead-form');
+  if (leadForm) {
+    const submitBtn = leadForm.querySelector('.form-submit');
+    const status = leadForm.querySelector('.form-status');
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SENDING...';
+      status.textContent = '';
+      status.className = 'form-status';
+      try {
+        const res = await fetch(leadForm.action, {
+          method: 'POST',
+          body: new FormData(leadForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          leadForm.reset();
+          status.textContent = "Thanks — I'll be in touch soon.";
+          status.classList.add('success');
+          submitBtn.textContent = 'SEND';
+          submitBtn.disabled = false;
+        } else {
+          throw new Error('submit failed');
+        }
+      } catch (err) {
+        status.textContent = 'Something went wrong. Please call 603-921-0218 instead.';
+        status.classList.add('error');
+        submitBtn.textContent = 'SEND';
+        submitBtn.disabled = false;
+      }
+    });
+  }
 </script>
 
 </body>
