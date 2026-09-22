@@ -207,6 +207,21 @@
   .footer-col a { display: block; font-size: 14px; color: var(--ink); opacity: 0.8; margin-bottom: 9px; }
   .footer-col a:hover { opacity: 1; }
   .footer-bottom { display: flex; justify-content: space-between; margin-top: 46px; padding-top: 22px; border-top: 1px solid var(--hairline); font-size: 12.5px; color: var(--ink); opacity: 0.5; }
+
+  /* ---- Mobile spacing tightening (desktop untouched) ---- */
+  @media (max-width: 859px) {
+    section { padding: 40px 0; }
+    .hero { min-height: 0; padding: 40px 24px 16px; }
+    .wwd-grid { margin-top: 24px; gap: 14px; }
+    .steps-row { margin-top: 24px; gap: 16px; }
+    .step-card { padding: 22px; }
+    .price-card { margin-top: 24px; padding: 32px 24px; }
+    .faq-wrap { margin-top: 24px; }
+    .faq-contact-card { margin-top: 28px; }
+    footer { padding: 40px 0 24px; }
+    .footer-bottom { margin-top: 28px; }
+  }
+
   @media (max-width: 700px) {
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .steps-row { grid-template-columns: 1fr; }
@@ -435,7 +450,7 @@
   const revealEls = document.querySelectorAll('.reveal-up');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.15 });
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => io.observe(el));
 
   // ---- FAQ accordion ----
