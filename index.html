@@ -36,7 +36,7 @@
   .section-title { font-size: 34px; line-height: 1.2; margin-bottom: 14px; }
   .section-sub { font-size: 17px; color: var(--ink); opacity: 0.7; line-height: 1.55; max-width: 620px; }
   .center { text-align: center; margin-left: auto; margin-right: auto; }
-  section { padding: 90px 0; }
+  section { padding: 56px 0; }
   .reveal-up { transition: opacity 0.6s ease, transform 0.6s ease; }
   html.js .reveal-up { opacity: 0; transform: translateY(16px); }
   html.js .reveal-up.in { opacity: 1; transform: translateY(0); }
@@ -150,6 +150,14 @@
     .hero-cta .call-btn { width: auto; padding: 16px 36px; }
   }
 
+  /* ---- What we do ---- */
+  .wwd-grid { display: grid; grid-template-columns: 1fr; gap: 16px 40px; margin-top: 40px; }
+  .wwd-item { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+  .wwd-item .check { color: var(--ink); font-weight: 700; flex: 0 0 auto; }
+  @media (min-width: 860px) {
+    .wwd-grid { grid-template-columns: 1fr 1fr; gap: 20px 48px; }
+  }
+
   /* ---- How it works ---- */
   .steps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 46px; }
   .step-card { border: 1px solid var(--hairline); border-radius: 2px; padding: 26px; background: var(--cream); }
@@ -252,7 +260,7 @@
 
   <div class="hero-copy">
     <h1>You Handle The Work Stuff,<br>We Handle The Google Stuff.</h1>
-    <p>Google Business Profile, reviews, and local search &mdash; managed for $149/mo. No contract. Handled by a real person.</p>
+    <p>No AI slop. Only human interactions throughout.</p>
     <div class="hero-cta">
       <a class="call-btn" href="tel:6039210218">CALL FOR YOUR FREE AUDIT</a>
       <span class="price-line">603-921-0218 &middot; $149/mo</span>
@@ -289,6 +297,30 @@
   </svg>
 </section>
 
+<!-- WHAT WE DO -->
+<section id="what-we-do">
+  <div class="wrap">
+    <div class="reveal-up">
+      <div class="eyebrow">What We Do</div>
+      <h2 class="section-title">Here's everything we handle every month.</h2>
+      <p class="section-sub">No jargon, no guesswork. Just the stuff that gets you found and picked on Google.</p>
+    </div>
+    <div class="wwd-grid reveal-up">
+      <div class="wwd-item"><span class="check">&check;</span><span>Your name, address, and phone number match everywhere online.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>We watch your reviews and reply to them for you.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Your hours stay correct on Google, holidays included.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Your website links straight to your Google profile.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Real photos of your work keep your profile fresh.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Clear calls to action in your profile, not just info.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Offers and promotions added to your profile when it makes sense.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Your services and pricing stay filled out and current.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Your service area matches where you actually work.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>Awards and certifications listed when you have them.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>New posts on your profile every week.</span></div>
+      <div class="wwd-item"><span class="check">&check;</span><span>We track where you rank in local search near you.</span></div>
+    </div>
+  </div>
+</section>
 <!-- HOW IT WORKS -->
 <section id="how-it-works">
   <div class="wrap">
