@@ -67,11 +67,13 @@ including if/when about.html or results.html get rebuilt.
 - **Fonts:** Playfair Display (headings, logo reference, nav — weights
   500/600/700) + Work Sans (body/UI — weights 400/500/600), one Google
   Fonts `css2` link. Remove old Inter/Plus Jakarta Sans references.
-- **Colors:** `--ink: #1C1A17` (text/borders/fills), `--cream: #F7F3EC`
-  (background). Two-tone only — no accent color, no gradients, no
-  shadows. Deliberate black-on-ivory, boutique/editorial look, referencing
-  a high-contrast-serif + laurel-wreath aesthetic (think classic
-  film-festival laurels).
+- **Colors:** `--ink: #1C1A17` (text/borders/fills), `--cream: #FFFFFF`
+  (background — pure white, not off-white; changed from the original
+  `#F7F3EC` per Devon's Sept 2026 call). Two-tone only — no accent color,
+  no gradients, no shadows. Deliberate black-on-white, boutique/editorial
+  look, referencing a high-contrast-serif + laurel-wreath aesthetic
+  (think classic film-festival laurels). The `--cream` variable name is
+  kept for continuity even though the value is now pure white.
 - **Logo:** `logo-mark.png` — a real uploaded asset, cropped tight and
   background knocked out to transparency. Reuse this exact file
   everywhere the wordmark appears; don't regenerate or approximate it.
