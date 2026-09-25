@@ -24,7 +24,12 @@ copy or the product demo — this was a specific decision to differentiate
 from competitors (e.g. Semrush) who lead with AI automation.
 
 ## Stack & deploy
-Static HTML/CSS/JS, no build step, no framework. Deployed via Vercel,
+Static HTML/CSS/JS, no build step, no framework. The client portal (`/app/`)
+adds Supabase (Postgres + auth + storage) and Vercel serverless functions in
+`/api` (root `package.json` is for those only — still no frontend build).
+Secrets (service-role key, Resend key) live only in Vercel env vars and are
+read only in `/api`; run `scripts/check-no-secrets.sh` before merging site
+changes. Portal setup and data entry: `app/README.md`. Deployed via Vercel,
 connected to this repo — merging to `main` auto-deploys to mission-found.com.
 Branch protection is on for `main` — work on a feature branch, open a PR,
 Devon reviews and merges. Never push directly to main.
@@ -54,6 +59,13 @@ Devon reviews and merges. Never push directly to main.
   the repo, just not linked anywhere public. The word "audit" stays in
   site copy either way — audits are now offered/performed via phone
   intake instead of the web form.
+- `/app/` — **client portal (Phase 1, Sept 2026).** Results dashboard vs
+  baseline, photo uploads (signed-in + per-client secret link), change
+  requests, account/billing link. noindex, disallowed in robots.txt, not in
+  public nav. Phase 2 = admin UI + CSV import; Phase 3 = PDF reports +
+  monthly summary. Schema/RLS in `supabase/migrations/`, RLS tests in
+  `supabase/tests/`. Uses the locked design system via `app/css/tokens.css`
+  (plus a dark theme). Never add AI framing to portal copy.
 - `audit-dashboard.html` — internal tool, not linked from public nav.
   4-pillar weighted scoring: GBP 35%, Reviews 25%, Local Search 15%,
   Website 25%. Has its own print/PDF export system — leave its logic alone

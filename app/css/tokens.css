@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Mission Found portal — design tokens. Re-theme the portal from this file.
+   Source: the live site's locked system (index.html): Playfair Display +
+   Work Sans, ink (#1C1A17) on white, hairline borders, 2px radii, no
+   gradients, no shadows. Ink is the single brand accent. Green/red are
+   reserved for up/down deltas and always ship with an arrow and +/- sign.
+
+   The live site dims secondary text with opacity (0.5–0.72). The portal
+   uses solid muted colors instead so contrast is predictable (WCAG AA).
+
+   Contrast (checked): ink 17.4:1, muted 7.1:1, border 3.7:1, up/down 6.5:1
+   on light; ink 16.0:1, muted 8.4:1, border 4.1:1, up 10.6:1, down 9.0:1 on dark.
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* Color — light (default) */
+  --color-bg: #FFFFFF;             /* site --cream (pure white) */
+  --color-surface: #FFFFFF;
+  --color-sunken: #F5F4F1;         /* skeletons, bar tracks, chart panel */
+  --color-ink: #1C1A17;            /* site --ink: text, borders, fills, accent */
+  --color-ink-muted: #5C5852;
+  --color-on-ink: #FFFFFF;         /* text on solid ink buttons */
+  --color-hairline: rgba(28, 26, 23, 0.14);  /* site --hairline, decorative only */
+  --color-border: #8A857D;         /* inputs and controls: >= 3:1 */
+  --color-up: #1D6B38;
+  --color-down: #B3261E;
+  --color-focus: #1C1A17;
+  --logo-filter: none;             /* logo-mark.png is black-on-transparent */
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 0.8125rem;   /* 13px — bottom tab labels only */
+  --text-sm: 0.9375rem;   /* 15px — secondary text only */
+  --text-base: 1rem;      /* 16px — body; also stops iOS zooming into inputs */
+  --text-md: 1.125rem;    /* 18px */
+  --text-lg: 1.375rem;    /* 22px */
+  --text-xl: 1.75rem;     /* 28px */
+  --text-2xl: 2.25rem;    /* 36px */
+  --text-kpi: 2.5rem;     /* 40px */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --leading-tight: 1.2;
+  --leading-body: 1.55;
+  --tracking-caps: 0.1em; /* site eyebrow/button letter-spacing */
+  --tracking-button: 0.02em;
+  --tracking-code: 0.3em; /* 6-digit sign-in code */
+
+  /* Spacing (4px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Shape and depth */
+  --radius: 2px;          /* site buttons, cards, badges */
+  --radius-full: 999px;   /* round things only: progress ring, dots */
+  --border-width: 1px;
+  --border-accent: 3px;   /* left rule on notices */
+  --focus-width: 2px;
+  --shadow-card: none;    /* brand rule: no shadows */
+
+  /* Layout. Media queries can't read custom properties, so the portal's
+     single breakpoint is written as 720px in app.css — keep them in sync. */
+  --content-max: 1080px;  /* site .wrap */
+  --gutter: 16px;
+  --tap-min: 44px;
+  --bottom-nav-height: 64px;
+  --breakpoint: 720px;
+  --card-min: 15rem;      /* section grid column minimum */
+  --thumb-size: 7rem;     /* photo grid thumbnails */
+  --ring-size: 7.5rem;    /* profile health ring */
+  --icon-size: 1.5rem;
+  --bar-height: 0.75rem;  /* "since we started" bars */
+  --chart-height: 16rem;
+  --measure: 38rem;       /* max line length for forms and prose */
+  --bar-label-width: 5.5rem;
+  --bar-value-width: 3.5rem;
+  --control-size: 1.25rem; /* radio buttons */
+  --select-min: 12rem;
+
+  /* Motion */
+  --duration: 180ms;
+  --ease: ease;
+  --pulse-duration: 1.4s;  /* skeleton loading pulse */
+  --hover-opacity: 0.88;
+
+  /* Charts (read by charts.js via getComputedStyle) */
+  --chart-line: var(--color-ink);
+  --chart-baseline: var(--color-ink-muted);
+  --chart-grid: var(--color-hairline);
+  --chart-marker: var(--color-ink-muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #161513;
+    --color-surface: #1E1C19;
+    --color-sunken: #24221F;
+    --color-ink: #F3F0EA;
+    --color-ink-muted: #B5AFA5;
+    --color-on-ink: #161513;
+    --color-hairline: rgba(243, 240, 234, 0.16);
+    --color-border: #7D776E;
+    --color-up: #7BD99A;
+    --color-down: #FF9B8F;
+    --color-focus: #F3F0EA;
+    --logo-filter: invert(1);
+  }
+}
+
+@media (min-width: 720px) {
+  :root { --gutter: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 0ms; }
+}
