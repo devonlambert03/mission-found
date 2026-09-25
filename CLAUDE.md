@@ -159,8 +159,8 @@ Rollback word: REDLEG
 Checkpoint tag: checkpoint-pre-dashboard
 
 When Devon says "REDLEG" (optionally followed by a branch name), do this:
-1. Show the branches and open PRs that will be discarded, and ask for a single "yes" confirmation before deleting anything.
-2. Close any open PR from the dashboard branches (`gh pr close <n> --delete-branch`), or delete the named branch locally and remotely.
-3. `git checkout main && git fetch origin && git reset --hard origin/main`.
-4. Verify main matches the checkpoint tag or its approved descendants, and report the current commit hash.
-5. Never force-push to main, never delete the checkpoint tag, and never touch the Supabase database or Vercel settings as part of rollback — tell Devon what to do manually there instead.
+1. `git fetch origin --tags` and work out what dashboard work exists: open PRs and branches that aren't merged, plus anything merged to main since the checkpoint (`git log --first-parent --oneline checkpoint-pre-dashboard..origin/main`). Show Devon exactly what will be closed, deleted, or reverted, and ask for a single "yes" confirmation before touching anything.
+2. **Not merged:** close the open dashboard PR(s) and delete their branch(es) on GitHub and locally (or just the branch Devon named). Main is untouched.
+3. **Merged:** don't touch main directly. Create a branch `redleg/revert-dashboard` from `origin/main` and revert each dashboard merge, newest first, with `git revert -m 1 <merge-sha>` (a squash-merged PR is a plain commit, so `git revert <sha>` with no `-m`). Push the branch and open a PR titled "REDLEG: revert dashboard". Do not merge it yourself — it waits for Devon's review, even though routine PRs normally get self-merged. Then tell Devon to use Vercel Instant Rollback now to restore the live site to the last pre-dashboard deployment while the revert PR is reviewed.
+4. Report the commit hash of `origin/main` and of the checkpoint tag, and say whether main already matches the checkpoint or is waiting on the revert PR.
+5. Never force-push or reset main, never delete or move the checkpoint tag, and never change the Supabase database or Vercel settings as part of rollback. A git revert doesn't undo database migrations or data — tell Devon what to do by hand there instead.
