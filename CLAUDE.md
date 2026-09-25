@@ -153,3 +153,14 @@ visibility," "turnkey," "leverage," "seamless."
   ready): the $149/mo price, the "real person not AI" claims, or the
   actual written content of results.html — these are deliberate
   business decisions, not copy to optimize away.
+
+## Rollback procedure
+Rollback word: REDLEG
+Checkpoint tag: checkpoint-pre-dashboard
+
+When Devon says "REDLEG" (optionally followed by a branch name), do this:
+1. Show the branches and open PRs that will be discarded, and ask for a single "yes" confirmation before deleting anything.
+2. Close any open PR from the dashboard branches (`gh pr close <n> --delete-branch`), or delete the named branch locally and remotely.
+3. `git checkout main && git fetch origin && git reset --hard origin/main`.
+4. Verify main matches the checkpoint tag or its approved descendants, and report the current commit hash.
+5. Never force-push to main, never delete the checkpoint tag, and never touch the Supabase database or Vercel settings as part of rollback — tell Devon what to do manually there instead.
