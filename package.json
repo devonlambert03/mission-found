@@ -1,0 +1,12 @@
+{
+  "name": "mission-found",
+  "private": true,
+  "description": "Static site + Vercel serverless functions in /api. There is no frontend build step; these dependencies are only for /api.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.117.2"
+  }
+}

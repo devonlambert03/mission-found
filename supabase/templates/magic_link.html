@@ -1,0 +1,12 @@
+<!-- Supabase "Magic Link" email template. The 6-digit code is the primary
+     sign-in path: links get opened inside email apps' in-app browsers or
+     pre-clicked by link scanners, both of which break or consume them. -->
+<div style="font-family: Arial, Helvetica, sans-serif; color: #1C1A17; max-width: 480px;">
+  <p style="font-size: 16px;">Here is your Mission Found sign-in code:</p>
+  <p style="font-size: 34px; font-weight: bold; letter-spacing: 6px; margin: 16px 0;">{{ .Token }}</p>
+  <p style="font-size: 16px;">Type it on the sign-in screen. It works for one hour.</p>
+  <p style="font-size: 14px; color: #55524C;">Or tap this link on the same phone:
+    <a href="{{ .ConfirmationURL }}" style="color: #1C1A17;">sign in to Mission Found</a></p>
+  <p style="font-size: 14px; color: #55524C;">Didn't ask for this? You can ignore this email.
+    Questions? Call 603-921-0218.</p>
+</div>
